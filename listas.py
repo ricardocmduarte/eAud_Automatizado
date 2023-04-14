@@ -200,3 +200,6 @@ def listar():
         lista_termo_compromisso_consultoria)
     importacoes.itemprocessoanalisetce.get_item_processo(lista_item_processo)
     importacoes.kpaiacm.get_lista_kpa_iacm(lista_kpa_iacm)
+
+
+listar()

@@ -12,13 +12,17 @@ def get_achados(ids_achados):
         if ids_achados:
             for i, id in enumerate(ids_achados):
                 lista_dados.append(get_achados_requisicao(id))
+                if lista_dados == None:
+                    break
                 print(f"Iteração get_achados {str(i)} registrada com sucesso")
 
         # lista final passa por um tratamento de dados
-        lista_final = tratamento_dados(lista_dados)
+        if lista_dados:
+            lista_final = tratamento_dados(lista_dados)
 
         # comando para salvar os dados tratados
-        salvar_dados(lista_final)
+        if lista_final:
+            salvar_dados(lista_final)
         get_log("Lista de achados ok")
         return print("Lista de achados ok")
     except NameError as err:
@@ -208,7 +212,9 @@ def get_achados_requisicao(id):
         if resp.status_code != 200:
             get_log(
                 f"Erro ao conectar com a url get_tarefas, código do erro HTTP: {str(resp.status_code)}".upper())
-            return print(f"Erro ao conectar com a url get_tarefas, código do erro HTTP: {str(resp.status_code)}")
+            print(
+                f"Erro ao conectar com a url get_tarefas, código do erro HTTP: {str(resp.status_code)}")
+            return None
 
         if resp.text == '[]':
             get_log("Requisição não contém dados".upper())
