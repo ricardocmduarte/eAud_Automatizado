@@ -1,0 +1,13 @@
+altgraph==0.17.3
+autopep8==2.0.2
+certifi==2022.12.7
+charset-normalizer==3.1.0
+idna==3.4
+pefile==2023.2.7
+psycopg2==2.9.6
+pycodestyle==2.10.0
+pyinstaller==5.10.0
+pyinstaller-hooks-contrib==2023.2
+pywin32-ctypes==0.2.0
+requests==2.28.2
+urllib3==1.26.15
