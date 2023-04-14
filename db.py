@@ -67,14 +67,13 @@ def get_idtarefas(tabela, banco):
 
 
 def delete_datas(banco):
-    lista_tabelas = ['achados_auditoria_pendencias', 'achados_auditoria', 'analise_auditoria_pendencias', 'analise_auditoria',
-                     'analise_preliminar_pendencias', 'analise_preliminar', 'auditorias_pendencias', 'auditorias_localidade',
-                     'auditorias_unidades_envolvidas', 'auditorias_unidades_auditadas', 'auditorias_arquivos', 'auditorias', 'beneficios_pendencias',
-                     'beneficios', 'escopo_auditoria_pendencias', 'escopo_auditoria', 'indicadores', 'localidades', 'matriz_planejamento_pendencias',
-                     'matriz_planejamento', 'monitoramento_manifestacao', 'monitoramento_pendencias', 'monitoramento_posicionamento',
-                     'monitoramento_unidades', 'monitoramento', 'plano_operacional_pactuacao', 'plano_operacional_pendencias', 'plano_operacional',
-                     'plano_trabalho_localidades', 'plano_trabalho_pendencias', 'plano_trabalho_unidades_envolvidas', 'plano_trabalho',
-                     'relatorio_auditoria_pendencias', 'relatorio_auditoria', 'tarefas_pendencias', 'tarefas_arquivos', 'tarefas',
+    lista_tabelas = ['achados_auditoria',  'analise_auditoria',
+                     'analise_preliminar',  'auditorias',
+                     'beneficios', 'escopo_auditoria', 'indicadores',
+                     'matriz_planejamento',
+                     'monitoramento',  'plano_operacional',
+                     'plano_trabalho',
+                     'relatorio_auditoria',  'tarefas',
                      'unidade_gestores', 'unidade_tipos', 'unidade', 'usuario']
 
     try:
