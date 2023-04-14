@@ -1,7 +1,7 @@
 import psycopg2
-import geral
+import conf.geral as geral
 from datetime import datetime
-from log import get_log
+from misc.log import get_log
 
 
 def db_connection():

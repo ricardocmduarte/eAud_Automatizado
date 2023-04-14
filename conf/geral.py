@@ -1,4 +1,4 @@
-import dadosreader
+import database.dadosreader as dadosreader
 import requests
 
 dados = dadosreader.read_ini_file()
