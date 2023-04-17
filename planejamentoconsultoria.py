@@ -245,7 +245,7 @@ def salvar_dados(lista_consultoria):
                                                 titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao, analisepreliminar,unidadesenvolvidas,anexosgerais
-                                                observadores,hipoteselegal,docplanejamento,coordenadorequipe,equipegeral,supervisores,,arquivocomportamento, estadosituacao,
+                                                observadores,hipoteselegal,docplanejamento,coordenadorequipe,equipegeral,supervisores,arquivocomportamento, estadosituacao,
                                                 tags,listapendencia,listaabaatividades,dataatualizacao) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
