@@ -173,7 +173,7 @@ def listar():
     importacoes.atividadecontinuada.get_atividade_continuada(
         lista_atividade_continuada)
     importacoes.auditoria.get_auditoria(lista_auditoria)
-    importacoes.autoavaliacaoiacm.get_ia_cm(lista_ia_cm)
+    importacoes.autoavaliacaoiacm.get_autoavaliacao_iacm(lista_ia_cm)
     importacoes.comunicacaoauditoria.get_comunicacao_auditoria(
         lista_comunicacao_auditoria)
     importacoes.escopoauditoria.get_escopo_auditoria(lista_escopo_auditoria)
