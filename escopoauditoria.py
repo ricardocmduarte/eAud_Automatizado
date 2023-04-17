@@ -61,42 +61,16 @@ def tratamento_dados(data):
             dataultimamodificacao = tarefa['dataUltimaModificacao']
             autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-            indminutadestinatario = tarefa['campos']['indMinutaDestinatario']['valor']
-            detalhamento = tarefa['campos']['Detalhamento']['valor']
+            escopo = tarefa['campos']['escopos']['valor']
+            if escopo:
+                escopodescricao = []
+                escopovalortotal = []
+                escopovalorauditado = []
 
-            anexosgerais = tarefa['campos']['anexosGerais']['valor']
-            anexgerais = []
-            if anexosgerais:
-                for i, anex in enumerate(anexosgerais):
-                    anexgerais.append(anex['nome'])
-
-                anexgerais = join_data(anexgerais)
-
-            coordenadorequipe = tarefa['campos']['CoordenadorEquipe']['valor']
-            coordenador = []
-            if coordenadorequipe:
-                for i, coordequipe in enumerate(coordenadorequipe):
-                    coordenador.append(coordequipe['nomeExibicao'])
-
-                coordenador = join_data(coordenador)
-
-            destinatarios = tarefa['campos']['destinatarios']['valor']
-            destinatario = []
-            if destinatarios:
-                for i, dest in enumerate(destinatarios):
-                    destinatario.append(dest['nomeExibicao'])
-
-                destinatario = join_data(destinatario)
-
-            copiacomunicacao = tarefa['campos']['copiaComunicacao']['valor']
-
-            supervisores = tarefa['campos']['EquipeGeral']['valor']
-            supervisor = []
-            if supervisores:
-                for i, super in enumerate(supervisores):
-                    supervisor.append(super['nomeExibicao'])
-
-                supervisor = join_data(supervisor)
+                for i, esco in enumerate(escopo):
+                    escopodescricao.append(esco['descricao'])
+                    escopovalortotal.append(esco['valorTotal'])
+                    escopovalorauditado.append(esco['valorAuditado'])
 
             unidadesenvolvidas = tarefa['campos']['unidEnvolvidas']['valor']
             unidadesenvol = []
@@ -106,10 +80,10 @@ def tratamento_dados(data):
 
                 unidadesenvol = join_data(unidadesenvol)
 
-            prazo = tarefa['campos']['Prazo']['valor']
             tarefasprecedentes = tarefa['campos']['tarefasPrecedentes']['valor']
-            dataenviocomunicacao = tarefa['campos']['dataEnvioComunicacao']['valor']
-            dataciencia = tarefa['campos']['dataCiencia']['valor']
+            macroprocessoescopo = tarefa['campos']['macroprocessosDoEscopo']['valor']
+            observadores = tarefa['campos']['observadores']['valor']
+            hiposetelegal = tarefa['campos']['hipoteseLegal']['valor']
 
             descricaotag = tarefa['campos']['tags']['valor']
             tags = []
@@ -119,6 +93,14 @@ def tratamento_dados(data):
 
                 tags = join_data(tags)
 
+            coordenadorequipe = tarefa['campos']['CoordenadorEquipe']['valor']
+            coordenador = []
+            if coordenadorequipe:
+                for i, coordequipe in enumerate(coordenadorequipe):
+                    coordenador.append(coordequipe['nomeExibicao'])
+
+                coordenador = join_data(coordenador)
+
             equipegeral = tarefa['campos']['EquipeGeral']['valor']
             equipe = []
             if equipegeral:
@@ -127,7 +109,13 @@ def tratamento_dados(data):
 
                 equipe = join_data(equipe)
 
-            indminutaremente = tarefa['campos']['indMinutaRemetente']['valor']
+            supervisores = tarefa['campos']['EquipeGeral']['valor']
+            supervisor = []
+            if supervisores:
+                for i, super in enumerate(supervisores):
+                    supervisor.append(super['nomeExibicao'])
+
+                supervisor = join_data(supervisor)
 
             pendencias = tarefa['pendencias']
             listapendencia = []
@@ -164,21 +152,18 @@ def tratamento_dados(data):
                 'idsituacao': idsituacao,
                 'dataultimamodificacao': dataultimamodificacao,
                 'autorultimamodificacao': autorultimamodificacao,
-                'indminutadestinatario': indminutadestinatario,
-                'detalhamento': detalhamento,
-                'anexogerais': anexgerais,
-                'destinatarios': destinatario,
-                'copiacomunicacao': copiacomunicacao,
-                'prazo': prazo,
-                'dataenviocomunicacao': dataenviocomunicacao,
-                'dataciencia': dataciencia,
-                'indminutaremetente': indminutaremente,
+                'escopodescricao': escopodescricao,
+                'escopovalortotal': escopovalortotal,
+                'escopovalorauditado': escopovalorauditado,
+                'macroprocessoescopo': macroprocessoescopo,
+                'observadores': observadores,
+                'hiposetelegal': hiposetelegal,
                 'tarefasprecedentes': tarefasprecedentes,
                 'unidadesenvolvidas': unidadesenvol,
                 'coordenadorequipe': coordenador,
                 'equipegeral': equipe,
                 'supervisores': supervisor,
-                'tags': tags,
+                'tags': descricaotag,
                 'pendencias': listapendencia,
                 'abasatividade': listaabaatividades,
             })
@@ -217,15 +202,12 @@ def salvar_dados(lista_iacm):
                  tarefa['idsituacao'],
                  tarefa['dataultimamodificacao'],
                  tarefa['autorultimamodificacao'],
-                 tarefa['indminutadestinatario'],
-                 tarefa['detalhamento'],
-                 tarefa['anexgerais'],
-                 tarefa['destinatario'],
-                 tarefa['copiacomunicacao'],
-                 tarefa['prazo'],
-                 tarefa['dataenviocomunicacao'],
-                 tarefa['dataciencia'],
-                 tarefa['indminutaremente'],
+                 tarefa['escopodescricao'],
+                 tarefa['escopovalortotal'],
+                 tarefa['escopovalorauditado'],
+                 tarefa['macroprocessoescopo'],
+                 tarefa['observadores'],
+                 tarefa['hiposetelegal'],
                  tarefa['tarefasprecedentes'],
                  tarefa['unidadesenvol'],
                  tarefa['coordenador'],
@@ -240,10 +222,9 @@ def salvar_dados(lista_iacm):
             insert_query = (f"""INSERT INTO achados_auditoria (id, situacao, estado, atividade, titulo, titulotarefaassociada,
                                                 titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
-                                                dataultimamodificacao,autorultimamodificacao,indminutadestinatario,detalhamento,anexgerais,
-                                                destinatario,copiacomunicacao,prazo,dataenviocomunicacao,dataciencia,indminutaremente,
-                                                tarefasprecedentes,unidadesenvol,coordenador,equipe,supervisor,tags,listapendencia,listaabaatividades,
-                                                dataatualizacao) VALUES {array_records}""")
+                                                dataultimamodificacao,autorultimamodificacao,escopodescricao,escopovalortotal,escopovalorauditado,
+                                                macroprocessoescopo,observadores,hiposetelegal,tarefasprecedentes,unidadesenvol,coordenador,
+                                                equipe,supervisor,tags,listapendencia,listaabaatividades,dataatualizacao) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
             get_log(f"{tipo_arquivo} salvo com sucesso")
