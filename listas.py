@@ -164,43 +164,63 @@ def listar():
         else:
             return ("Erro ao salvar os dados")
 
+    # def achados auditoria
     importacoes.achadosauditoria.get_achados(lista_achados)
+    # def analise auditoria
+    importacoes.analiseauditoria.get_analise_auditoria(lista_analise_auditoria)
+    # def analise preliminar
     importacoes.analisepreliminar.get_analise_preliminar(
         lista_analise_preliminar)
-    importacoes.analiseauditoria.get_analise_auditoria(lista_analise_auditoria)
+    # def apuração preliminar
     importacoes.apuracaopreliminar.get_apuracao_preliminar(
         lista_apuracao_preliminar)
+    # def atividade continuada
     importacoes.atividadecontinuada.get_atividade_continuada(
         lista_atividade_continuada)
+    # def auditoria
     importacoes.auditoria.get_auditoria(lista_auditoria)
+    # def autoavaliação iacm
     importacoes.autoavaliacaoiacm.get_autoavaliacao_iacm(lista_ia_cm)
+    # def comunicacao auditoria
     importacoes.comunicacaoauditoria.get_comunicacao_auditoria(
         lista_comunicacao_auditoria)
+    # def escopo auditoria
     importacoes.escopoauditoria.get_escopo_auditoria(lista_escopo_auditoria)
+    # def execucao consultoria
     importacoes.execucaoconsultoria.get_execucao_consultoria(
         lista_execucao_consultoria)
+    # def item processo analise tce
     importacoes.itemprocessoanalisetce.get_item_processo_analise_tce(
         lista_item_processo_analise_tce)
+    # def item trabalho atividade
     importacoes.itemtrabalhoatividade.get_item_trabalho_atividade(
         lista_item_trabalho_atividade)
+    # def item trabalho projeto
     importacoes.itemtrabalhoprojeto.get_item_trabalho_projeto(
         lista_item_trabalho_projeto)
+    # def kpa iacm
+    importacoes.kpaiacm.get_kpa_iacm(lista_kpa_iacm)
+    # def matriz planejamento
     importacoes.matrizplanejamento.get_matriz_planejamento(
         lista_matriz_planejamento)
+    # def minuta posicionamento
     importacoes.minutaposicionamento.get_minuta_posicionamento(
         lista_minuta_posicionamento)
+    # def monitoramento
     importacoes.monitoramento.get_monitoramento(lista_monitoramento)
+    # def planejamento consultoria
     importacoes.planejamentoconsultoria.get_planejamento_consultoria(
         lista_planejamento_consultoria)
+    # def projeto geral
     importacoes.projetogeral.get_projeto_geral(lista_projeto_geral)
+    # def relatorio final
     importacoes.relatoriofinal.get_relatorio_final(lista_relatorio_final)
+    # def relatorio preliminar
     importacoes.relatoriopreliminar.get_relatorio_preliminar(
         lista_relatorio_preliminar)
-    importacoes.resultadosconsultoria.get_resultados(
+    # def resultado consultoria
+    importacoes.resultadosconsultoria.get_resultados_consultoria(
         lista_resultados_consultoria)
-    importacoes.termocompromissoconsultoria.get_termo_compromisso(
+    # def termo compromisso consultoria
+    importacoes.termocompromissoconsultoria.get_termo_compromisso_consultoria(
         lista_termo_compromisso_consultoria)
-    importacoes.kpaiacm.get_kpa_iacm(lista_kpa_iacm)
-
-
-listar()
