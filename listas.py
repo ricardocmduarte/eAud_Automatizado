@@ -85,7 +85,7 @@ def listar():
         elif tipo == 'CGE - Termo de Compromisso (Consultoria)':
             lista_termo_compromisso_consultoria = []
         elif tipo == 'CGEMG - Item de Processo (Análise de TCE)':
-            lista_item_processo = []
+            lista_item_processo_analise_tce = []
         elif tipo == 'KPA IACM':
             lista_kpa_iacm = []
         else:
@@ -157,7 +157,7 @@ def listar():
             lista_termo_compromisso_consultoria.append(tarefa['id'])
         # lista de item processo
         elif tarefa['atividade'] == lista_titulo_atividade[21]:
-            lista_item_processo.append(tarefa['id'])
+            lista_item_processo_analise_tce.append(tarefa['id'])
         # lista de kpa iacm
         elif tarefa['atividade'] == lista_titulo_atividade[22]:
             lista_kpa_iacm.append(tarefa['id'])
@@ -179,6 +179,8 @@ def listar():
     importacoes.escopoauditoria.get_escopo_auditoria(lista_escopo_auditoria)
     importacoes.execucaoconsultoria.get_execucao_consultoria(
         lista_execucao_consultoria)
+    importacoes.itemprocessoanalisetce.get_item_processo_analise_tce(
+        lista_item_processo_analise_tce)
     importacoes.itemtrabalhoatividade.get_item_trabalho_atividade(
         lista_item_trabalho_atividade)
     importacoes.itemtrabalhoprojeto.get_item_trabalho_projeto(
@@ -198,7 +200,6 @@ def listar():
         lista_resultados_consultoria)
     importacoes.termocompromissoconsultoria.get_termo_compromisso(
         lista_termo_compromisso_consultoria)
-    importacoes.itemprocessoanalisetce.get_item_processo(lista_item_processo)
     importacoes.kpaiacm.get_lista_kpa_iacm(lista_kpa_iacm)
 
 
