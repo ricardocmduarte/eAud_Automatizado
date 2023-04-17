@@ -3,6 +3,7 @@ import requests
 import geral
 from log import get_log
 import json
+from join_function import join_data
 
 
 def get_achados(ids_achados):
@@ -60,40 +61,47 @@ def tratamento_dados(data):
 
             equipeavaliacao = tarefa['campos']['equipeAvaliacaoIACM']['valor']
             equipeiacm = []
-            for i, equipe in enumerate(equipeavaliacao):
-                equipeiacm.append(equipe['nomeExibicao'])
+            if equipeavaliacao:
+                for i, equipe in enumerate(equipeavaliacao):
+                    equipeiacm.append(equipe['nomeExibicao'])
+
+                equipeiacm = join_data(equipeiacm)
 
             unidadeauditoriasuptec = tarefa['campos']['unidadeAuditoriaSupTec']['valor']
             tarefaprecedentes = tarefa['campos']['tarefasPrecedentes']['valor']
 
-            niveliacm = tarefa['campos']['nivelIACM']['valor']
-            valorniveliacm = []
-            for i, valor in enumerate(niveliacm):
-                valorniveliacm.append(valor['valor'])
+            valorniveliacm = tarefa['campos']['nivelIACM']['valor']
 
             textohistorico = tarefa['campos']['textoDoHistorico']['valor']
 
-            tags = tarefa['campos']['tags']['valor']
-            descricaotag = []
-            for i, tagdesc in enumerate(tags):
-                descricaotag.append(tagdesc['descricao'])
+            descricaotag = tarefa['campos']['tags']['valor']
+            tags = []
+            if descricaotag:
+                for i, tagdesc in enumerate(descricaotag):
+                    tags.append(tagdesc['descricao'])
+
+                tags = join_data(tags)
 
             iacmplanoacao = tarefa['campos']['iacmPlanoDeAcao']['valor']
-            unidadesup = tarefa['campos']['unidadeSup']['valor']
-            nomesup = unidadesup['nome']
-            nomeexibicaosup = unidadesup['nomeExibicao']
+            uniadesuperior = tarefa['campos']['unidadeSup']['valor']['nomeExibicao']
             mesconclusaoprevisto = tarefa['mesConclusaoPrevisto']
             textoajuda = tarefa['textoAjudaSituacao']
 
             pendencias = tarefa['pendencias']
             listapendencia = []
-            for i, pendencia in enumerate(pendencias):
-                listapendencia.append(pendencia['nomeUsuarioUnidade'])
+            if pendencias:
+                for i, pendencia in enumerate(pendencias):
+                    listapendencia.append(pendencia['nomeUsuarioUnidade'])
+
+                listapendencia = join_data(listapendencia)
 
             abasatividade = tarefa['abasAtividade']
             listaabaatividades = []
-            for i, abas in enumerate(abasatividade):
-                listaabaatividades.append(abas['descricao'])
+            if abasatividade:
+                for i, abas in enumerate(abasatividade):
+                    listaabaatividades.append(abas['descricao'])
+
+                listaabaatividades = join_data(listaabaatividades)
 
             lista_final.append({
                 'id': id,
@@ -123,9 +131,9 @@ def tratamento_dados(data):
                 'tarefaprecedentes': tarefaprecedentes,
                 'niveliacm': valorniveliacm,
                 'textohistorico': textohistorico,
-                'tags': descricaotag,
+                'tags': tags,
                 'iacmplanoacao': iacmplanoacao,
-                'unidadesuperior': nomeexibicaosup,
+                'unidadesuperior': uniadesuperior,
                 'mesconclusaoprevisto': mesconclusaoprevisto,
                 'textoajuda': textoajuda,
                 'pendencias': listapendencia,
@@ -154,6 +162,7 @@ def salvar_dados(lista_achados):
                  tarefa['atividade'],
                  tarefa['titulo'],
                  tarefa['idtarefaassociada'],
+                 tarefa['titulotarefaassociada'],
                  tarefa['dtprevisaoinicio'],
                  tarefa['dtprevisaofim'],
                  tarefa['dtrealizadainicio'],
@@ -183,15 +192,13 @@ def salvar_dados(lista_achados):
                  tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
-            insert_query = (f"""INSERT INTO achados_auditoria (id, situacao, estado, atividade, titulo,
-                                                tituloTarefaAssociada,dtPrevisaoInicio,dtPrevisaoFim,dtRealizadaInicio,dtRealizadaFim,
-                                                prioridade,colunaCalculada,assunto,idAtividade,descricaoAtividade,
-                                                dataUltimaModificacao,autorUltimaModificacao,campos,quantidade,qtdTotalInteracoes,
-                                                arquivoComportamentoEspecifico,tarefaAssociada,papelPendencia,
-                                                mesConclusaoPrevisto,mesConclusaoRealizado,idAnalisePreliminar,nomePessoaPendencia,
-                                                siglaUnidadePendencia,nomeEquipePendencia,valorParaFiltragemDeFatiaDeGrafico,
-                                                estadoSituacao,textoAjudaSituacao,acompanhamento,sistema,usuarioPodeGerenciarAtividade,
-                                                mesAnoUltimaModificacao, dataatualizacao) VALUES {array_records}""")
+            insert_query = (f"""INSERT INTO achados_auditoria (id, situacao, estado, atividade, titulo,idtarefaassociada,dtrealizadafim
+                                                titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtRealizadaFim,
+                                                prioridade,assunto,idatividade,descricaoatividade,idsituacao,
+                                                dataultimamodificacao,autorultimamodificacao,anexosgerais,equipevalidacaoexterna,unidadevalidadoras,
+                                                arquivoComportamentoEspecifico,relatoriovalidacao,equipeiacm,unidadeauditoriasuptec,
+                                                tarefaprecedentes,niveliacm,textohistorico,tags,iacmplanoacao,unidadesuperior,
+                                                mesconclusaoprevisto,textoajuda,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
             get_log("Auditorias salvo com sucesso")

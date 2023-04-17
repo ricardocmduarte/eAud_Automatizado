@@ -6,12 +6,12 @@ import json
 from join_function import join_data
 
 
-def get_analise_auditoria(ids_achados):
+def get_analise_auditoria(ids_analise_auditoria):
     lista_dados = []
     lista_final = []
     try:
-        if ids_achados:
-            for i, id in enumerate(ids_achados):
+        if ids_analise_auditoria:
+            for i, id in enumerate(ids_analise_auditoria):
                 lista_dados.append(get_analise_auditoria_requisicao(id))
                 if lista_dados == None:
                     break
@@ -27,9 +27,9 @@ def get_analise_auditoria(ids_achados):
         get_log("Lista de achados ok")
         return print("Lista de achados ok")
     except NameError as err:
-        get_log("Erro ao salvar os dados get_achados".upper())
+        get_log("Erro ao salvar os dados get_analise_auditoria".upper())
         get_log(err)
-        return print("Erro ao salvar os dados get_achados", err)
+        return print("Erro ao salvar os dados get_analise_auditoria", err)
 
 
 def tratamento_dados(data):
@@ -61,24 +61,31 @@ def tratamento_dados(data):
             if unidadesenvolvidas:
                 for i, envolvidasunidades in enumerate(unidadesenvolvidas):
                     nomeunidadesenvolvidas.append(envolvidasunidades['nome'])
-
                 nomeunidadesenvolvidas = join_data(nomeunidadesenvolvidas)
 
-            anexosgerais = tarefa['campos']['anexosGerais']['valor']
-            anexos = []
-            if anexosgerais:
-                for i, anexo in enumerate(anexosgerais):
-                    anexos.append(anexo['nome'])
+            idanalise = tarefa['campos']['itensDaAnaliseAuditoria']['valor']['idAnaliseAuditoria']
+            conclusaodesc = tarefa['campos']['itensDaAnaliseAuditoria']['valor']['conclusao'[
+                'descricao']]
+            descricoes = conclusaodesc['teste']
+            descteste = descricoes['descTeste']
+            desccriterio = descricoes['descCriterio']
+            descinformacao = descricoes['descInformacao']
+            descfonte = descricoes['descFonte']
+            desclimitacao = descricoes['descLimitacao']
+            descachado = descricoes['descAchado']
 
-                anexos = join_data(anexos)
+            '''for i, itens in enumerate(itemanaliseauditoria):
+                idanalise = itens['idAnaliseAuditoria']
 
-            anexosanalisepreliminar = tarefa['campos']['anexosAnalisePreliminar']['valor']
-            anexosanalise = []
-            if anexosanalisepreliminar:
-                for i, anexo in enumerate(anexosanalisepreliminar):
-                    anexosanalise.append(anexo['nome'])
+                conclusaodesc = itens['conclusao']['descricao']
 
-                anexosanalise = join_data(anexosanalise)
+                descricoes = itens['teste']
+                descteste = descricoes['descTeste']
+                desccriterio = descricoes['descCriterio']
+                descinformacao = descricoes['descInformacao']
+                descfonte = descricoes['descFonte']
+                desclimitacao = descricoes['descLimitacao']
+                descachado = descricoes['descAchado']'''
 
             tarefasprecedentes = tarefa['campos']['tarefasPrecedentes']['valor']
             observadores = tarefa['campos']['observadores']['valor']
@@ -92,8 +99,8 @@ def tratamento_dados(data):
 
                 tags = join_data(tags)
 
-            universoauditavel = tarefa['campos']['universosAuditaveisAnalisePreliminar']['valor']
-            objetosauditoria = tarefa['campos']['objetosAuditoriaAnalisePreliminar']['valor']
+            matrizachados = tarefa['campos']['matrizAchados']['valor']
+            matriz = matrizachados['nome']
 
             coordenadorequipe = tarefa['campos']['CoordenadorEquipe']['valor']
             coordenador = []
@@ -103,8 +110,6 @@ def tratamento_dados(data):
 
                 coordenador = join_data(coordenador)
 
-            matrizcontrole = tarefa['campos']['matrizRiscosControles']['valor']['nome']
-
             equipegeral = tarefa['campos']['EquipeGeral']['valor']
             equipe = []
             if equipegeral:
@@ -112,8 +117,6 @@ def tratamento_dados(data):
                     equipe.append(geralequipe['nomeExibicao'])
 
                 equipe = join_data(equipe)
-
-            classificacaoacesso = tarefa['campos']['classificacaoAcesso']['valor']
 
             supervisores = tarefa['campos']['EquipeGeral']['valor']
             supervisor = []
@@ -139,47 +142,51 @@ def tratamento_dados(data):
 
                 listaabaatividades = join_data(listaabaatividades)
 
-        lista_final.append({
-            'id': id,
-            'situacao': situacao,
-            'estado': estado,
-            'atividade': atividade,
-            'titulo': titulo,
-            'idtarefaassociada': idtarefaassociada,
-            'titulotarefaassociada': titulotarefaassociada,
-            'dtprevisaoinicio': dtprevisaoinicio,
-            'dtprevisaofim': dtprevisaofim,
-            'dtrealizadainicio': dtrealizadainicio,
-            'dtrealizadafim': dtrealizadafim,
-            'prioridade': prioridade,
-            'assunto': assunto,
-            'idatividade': idatividade,
-            'descricaoatividade': descricaoatividade,
-            'idsituacao': idsituacao,
-            'dataultimamodificacao': dataultimamodificacao,
-            'autorultimamodificacao': autorultimamodificacao,
-            'unidadesenvolvidas': nomeunidadesenvolvidas,
-            'universosauditaveis': universoauditavel,
-            'anexosgerais': anexos,
-            'objetosauditoria': objetosauditoria,
-            'matrizcontrole': matrizcontrole,
-            'tarefasprecedentes': tarefasprecedentes,
-            'observadores': observadores,
-            'hipoteselegal': hipoteselegal,
-            'coordenadorequipe': coordenador,
-            'equipegeral': equipe,
-            'classificacaoacesso': classificacaoacesso,
-            'supervisores': supervisor,
-            'tags': descricaotag,
-            'pendencias': listapendencia,
-            'abasatividade': listaabaatividades,
-        })
+            lista_final.append({
+                'id': id,
+                'situacao': situacao,
+                'estado': estado,
+                'atividade': atividade,
+                'titulo': titulo,
+                'idtarefaassociada': idtarefaassociada,
+                'titulotarefaassociada': titulotarefaassociada,
+                'dtprevisaoinicio': dtprevisaoinicio,
+                'dtprevisaofim': dtprevisaofim,
+                'dtrealizadainicio': dtrealizadainicio,
+                'dtrealizadafim': dtrealizadafim,
+                'prioridade': prioridade,
+                'assunto': assunto,
+                'idatividade': idatividade,
+                'descricaoatividade': descricaoatividade,
+                'idsituacao': idsituacao,
+                'dataultimamodificacao': dataultimamodificacao,
+                'autorultimamodificacao': autorultimamodificacao,
+                'unidadesenvolvidas': nomeunidadesenvolvidas,
+                'idanalise': idanalise,
+                'conclusaodesc': conclusaodesc,
+                'descteste': descteste,
+                'desccriterio': desccriterio,
+                'descinformacao': descinformacao,
+                'descfonte': descfonte,
+                'desclimitacao': desclimitacao,
+                'descachado': descachado,
+                'matrizachados': matriz,
+                'tarefasprecedentes': tarefasprecedentes,
+                'observadores': observadores,
+                'hipoteselegal': hipoteselegal,
+                'coordenadorequipe': coordenador,
+                'equipegeral': equipe,
+                'supervisores': supervisor,
+                'tags': descricaotag,
+                'pendencias': listapendencia,
+                'abasatividade': listaabaatividades,
+            })
         get_log("Lista analise_auditoria_preliminar tratada com sucesso")
         return lista_final
     except NameError as err:
-        get_log("Erro ao tratar os dados get_analise_auditoria_preliminar".upper())
+        get_log("Erro ao tratar os dados get_analise_auditoria".upper())
         get_log(err)
-        return print("Erro ao tratar os dados get_analise_auditoria_preliminar", err)
+        return print("Erro ao tratar os dados get_analise_auditoria", err)
 
 
 def salvar_dados(lista_achados):
@@ -208,11 +215,15 @@ def salvar_dados(lista_achados):
                  tarefa['idsituacao'],
                  tarefa['dataultimamodificacao'],
                  tarefa['autorultimamodificacao'],
-                 tarefa['nomeunidadesenvolvidas'],
-                 tarefa['universoauditavel'],
-                 tarefa['anexos'],
-                 tarefa['objetosauditoria'],
-                 tarefa['matrizcontrole'],
+                 tarefa['idanalise'],
+                 tarefa['conclusaodesc'],
+                 tarefa['descteste'],
+                 tarefa['desccriterio'],
+                 tarefa['descinformacao'],
+                 tarefa['descfonte'],
+                 tarefa['desclimitacao'],
+                 tarefa['descachado'],
+                 tarefa['matriz'],
                  tarefa['tarefasprecedentes'],
                  tarefa['observadores'],
                  tarefa['hipoteselegal'],
@@ -227,9 +238,10 @@ def salvar_dados(lista_achados):
             insert_query = (f"""INSERT INTO achados_auditoria (id, situacao, estado, atividade, titulo, titulotarefaassociada,
                                                 titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
-                                                dataultimamodificacao,autorultimamodificacao,nomeunidadesenvolvidas,universoauditavel,anexos,
-                                                arquivoComportamentoEspecifico,
-                                                objetosauditoria,matrizcontrole,tarefasprecedentes,observadores, hipoteselegal,
+                                                dataultimamodificacao,autorultimamodificacao,idanalise
+                                                nomeunidadesenvolvidas,universoauditavel,anexos,conclusaodesc,descteste,desccriterio,
+                                                descinformacao,descfonte,desclimitacao,descachado,arquivoComportamentoEspecifico,
+                                                matriz,tarefasprecedentes,observadores, hipoteselegal,
                                                 coordenador,equipe,supervisor, tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
