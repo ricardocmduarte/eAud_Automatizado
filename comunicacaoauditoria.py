@@ -16,7 +16,7 @@ def get_comunicacao_auditoria(ids_comunicacao):
     try:
         if ids_comunicacao:
             for i, id in enumerate(ids_comunicacao):
-                lista_dados.append(get_iacm_requisicao(id))
+                lista_dados.append(get_comunicacao_requisicao(id))
                 if lista_dados == None:
                     break
                 print(
@@ -255,7 +255,7 @@ def salvar_dados(lista_iacm):
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
 
-def get_iacm_requisicao(id):
+def get_comunicacao_requisicao(id):
     try:
         url = geral.url + \
             f"tarefa/{id}/dto/json"
