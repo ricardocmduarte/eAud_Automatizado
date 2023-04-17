@@ -200,7 +200,7 @@ def listar():
         lista_resultados_consultoria)
     importacoes.termocompromissoconsultoria.get_termo_compromisso(
         lista_termo_compromisso_consultoria)
-    importacoes.kpaiacm.get_lista_kpa_iacm(lista_kpa_iacm)
+    importacoes.kpaiacm.get_kpa_iacm(lista_kpa_iacm)
 
 
 listar()
