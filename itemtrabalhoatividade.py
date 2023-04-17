@@ -182,7 +182,7 @@ def tratamento_dados(data):
                 'homemhora': homemhora,
                 'unidadesenvolvidas': unidadesenvolvidas,
                 'destinatariousuariounidade': destinatariousuariounidade,
-                'tarefasprecedentes': tarefasprec,
+                'tarefasprecedentes': tarefasprecedentes,
                 'executor': executores,
                 'tags': tags,
                 'estadosituacao': estadosituacao,
@@ -234,7 +234,7 @@ def salvar_dados(lista_iacm):
                  tarefa['homemhora'],
                  tarefa['unidadesenvolvidas'],
                  tarefa['destinatariousuariounidade'],
-                 tarefa['tarefasprec'],
+                 tarefa['tarefasprecedentes'],
                  tarefa['executores'],
                  tarefa['tags'],
                  tarefa['listapendencia'],
@@ -247,7 +247,7 @@ def salvar_dados(lista_iacm):
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,unidadeexecutoras,detalhamento,anexos,
                                                 processosassociados,processt,origemdemanda,links,homemhora,unidadesenvolvidas,destinatariousuariounidade,
-                                                tarefasprec,executores,,estadosituacao,
+                                                tarefasprecedentes,executores,,estadosituacao,
                                                 tags,listapendencia,listaabaatividades,dataatualizacao) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
