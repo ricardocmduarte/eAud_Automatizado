@@ -23,9 +23,6 @@ def get_achados(ids):
         if ids:
             for i, id in enumerate(ids):
                 lista_dados.append(get_achados_requisicao(id))
-                if lista_dados == 200:
-                    print(
-                        f"Iteração get_achados {str(i)} registrada com sucesso")
 
         get_log(
             f"Esta requisicao {tipo_arquivo} contém {len(lista_final)} itens")
@@ -67,25 +64,88 @@ def tratamento_dados(data):
             idsituacao = tarefa['idSituacao']
             dataultimamodificacao = tarefa['dataUltimaModificacao']
             autorultimamodificacao = tarefa['autorUltimaModificacao']
-            anexosgerais = tarefa['campos']['anexosGerais']['valor']
-            equipevalidacaoexterna = tarefa['campos']['equipeValidacaoExternaIACM']['valor']
-            unidadevalidadoras = tarefa['campos']['unidadesValidadorasIACM']['valor']
-            relatoriovalidacao = tarefa['campos']['relvalex']['valor']
 
-            equipeavaliacao = tarefa['campos']['equipeAvaliacaoIACM']['valor']
-            equipeiacm = []
-            if equipeavaliacao:
-                for i, equipe in enumerate(equipeavaliacao):
-                    equipeiacm.append(equipe['nomeExibicao'])
+            unidadeenvolvida = tarefa['campos']['unidEnvolvidas']['valor']
+            unidadesenvolvidas = []
+            if unidadeenvolvida:
+                for i, uni in enumerate(unidadeenvolvida):
+                    unidadesenvolvidas.append(
+                        uni['nomeExibicao'] + ' | ' + uni['localidade']['nomeExibicao'])
 
-                equipeiacm = join_data(equipeiacm)
+                unidadesenvolvidas = join_data(unidadesenvolvidas)
 
-            unidadeauditoriasuptec = tarefa['campos']['unidadeAuditoriaSupTec']['valor']
+            itemachado = tarefa['campos']['itensAchadoAuditoria']['valor']
+            itensachadosauditoria = []
+            if itemachado:
+                for i, item in enumerate(itemachado):
+                    itensachadosauditoria.append(item['nomeExibicao'])
+
+                itensachadosauditoria = join_data(itensachadosauditoria)
+
+            anexgerais = tarefa['campos']['anexosGerais']['valor']
+            anexosgerais = []
+            if anexgerais:
+                for i, file in enumerate(anexgerais):
+                    anexosgerais.append(file['nome'])
+
+                anexosgerais = join_data(anexosgerais)
+
+            relatoriocom = tarefa['campos']['RelatorioCom']['valor']['nome']
             tarefaprecedentes = tarefa['campos']['tarefasPrecedentes']['valor']
 
-            valorniveliacm = tarefa['campos']['nivelIACM']['valor']
+            observador = tarefa['campos']['observadores']['valor']
+            observadores = []
+            if observador:
+                for i, obs in enumerate(observador):
+                    observadores.append(obs['nomeExibicao'])
 
-            textohistorico = tarefa['campos']['textoDoHistorico']['valor']
+                observadores = join_data(observadores)
+
+            hiplegal = tarefa['campos']['hipoteseLegal']['valor']
+            hipoteselegal = []
+            if hiplegal:
+                for i, hip in enumerate(hiplegal):
+                    hipoteselegal.append(hip['nomeExibicao'])
+
+                hipoteselegal = join_data(hipoteselegal)
+
+            coordequipe = tarefa['campos']['CoordenadorEquipe']['valor']
+            coordenadorequipe = []
+            if coordequipe:
+                for i, coord in enumerate(coordequipe):
+                    coordenadorequipe.append(coord['nomeExibicao'])
+
+                coordenadorequipe = join_data(coordenadorequipe)
+
+            equipgeral = tarefa['campos']['EquipeGeral']['valor']
+            equipegeral = []
+            if equipgeral:
+                for i, equipe in enumerate(equipgeral):
+                    equipegeral.append(equipe['nomeExibicao'])
+
+                equipegeral = join_data(equipegeral)
+
+            supervisor = tarefa['campos']['supervisores']['valor']
+            supervisores = []
+            if supervisor:
+                for i, super in enumerate(supervisor):
+                    supervisores.append(super['nomeExibicao'])
+
+                supervisores = join_data(supervisores)
+
+            anexrelatorio = tarefa['campos']['anexosRelatorio']['valor']
+            anexosrelatorios = []
+            if anexrelatorio:
+                for i, file in enumerate(anexrelatorio):
+                    anexosrelatorios.append(file['nome'])
+
+                anexosrelatorios = join_data(anexosrelatorios)
+
+            mesconclusaorealizado = tarefa['mesConclusaoRealizado']
+            mesanoultimamodificacao = tarefa['mesAnoUltimaModificacao']
+
+            estadosituacao = tarefa['campos']['estadoSituacao']['valor']
+            arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
 
             descricaotag = tarefa['campos']['tags']['valor']
             tags = []
@@ -94,11 +154,6 @@ def tratamento_dados(data):
                     tags.append(tagdesc['descricao'])
 
                 tags = join_data(tags)
-
-            iacmplanoacao = tarefa['campos']['iacmPlanoDeAcao']['valor']
-            uniadesuperior = tarefa['campos']['unidadeSup']['valor']['nomeExibicao']
-            mesconclusaoprevisto = tarefa['mesConclusaoPrevisto']
-            textoajuda = tarefa['textoAjudaSituacao']
 
             pendencias = tarefa['pendencias']
             listapendencia = []
@@ -135,20 +190,22 @@ def tratamento_dados(data):
                 'idsituacao': idsituacao,
                 'dataultimamodificacao': dataultimamodificacao,
                 'autorultimamodificacao': autorultimamodificacao,
+                'unidadesenvolvidas': unidadesenvolvidas,
+                'itensachadosauditoria': itensachadosauditoria,
                 'anexosgerais': anexosgerais,
-                'equipevalidacaoexterna': equipevalidacaoexterna,
-                'unidadevalidadoras': unidadevalidadoras,
-                'relatoriovalidacao': relatoriovalidacao,
-                'equipeiacm': equipeiacm,
-                'unidadeauditoriasuptec': unidadeauditoriasuptec,
+                'relatoriocom': relatoriocom,
                 'tarefaprecedentes': tarefaprecedentes,
-                'niveliacm': valorniveliacm,
-                'textohistorico': textohistorico,
+                'observadores': observadores,
+                'hipoteselegal': hipoteselegal,
+                'coordenadorequipe': coordenadorequipe,
+                'equipegeral': equipegeral,
+                'supervisores': supervisores,
+                'anexosrelatorio': anexosrelatorios,
+                'mesconclusaorealizado': mesconclusaorealizado,
+                'mesanoultimamodificacao': mesanoultimamodificacao,
+                'arquivocomportamentoespecifico': arquivocomportamento,
+                'estadosituacao': estadosituacao,
                 'tags': tags,
-                'iacmplanoacao': iacmplanoacao,
-                'unidadesuperior': uniadesuperior,
-                'mesconclusaoprevisto': mesconclusaoprevisto,
-                'textoajuda': textoajuda,
                 'pendencias': listapendencia,
                 'abasatividade': listaabaatividades,
             })
@@ -187,20 +244,22 @@ def salvar_dados(resultado_array):
                  tarefa['idsituacao'],
                  tarefa['dataultimamodificacao'],
                  tarefa['autorultimamodificacao'],
+                 tarefa['unidadesenvolvidas'],
+                 tarefa['itensachadosauditoria'],
                  tarefa['anexosgerais'],
-                 tarefa['equipevalidacaoexterna'],
-                 tarefa['unidadevalidadoras'],
-                 tarefa['relatoriovalidacao'],
-                 tarefa['equipeiacm'],
-                 tarefa['unidadeauditoriasuptec'],
+                 tarefa['relatoriocom'],
                  tarefa['tarefaprecedentes'],
-                 tarefa['niveliacm'],
-                 tarefa['textohistorico'],
+                 tarefa['observadores'],
+                 tarefa['hipoteselegal'],
+                 tarefa['coordenadorequipe'],
+                 tarefa['equipegeral'],
+                 tarefa['supervisores'],
+                 tarefa['anexosrelatorio'],
+                 tarefa['mesconclusaorealizado'],
+                 tarefa['mesanoultimamodificacao'],
+                 tarefa['arquivocomportamentoespecifico'],
+                 tarefa['estadosituacao'],
                  tarefa['tags'],
-                 tarefa['iacmplanoacao'],
-                 tarefa['unidadesuperior'],
-                 tarefa['mesconclusaoprevisto'],
-                 tarefa['textoajuda'],
                  tarefa['pendencias'],
                  tarefa['abasatividade']
                  )]
@@ -208,10 +267,10 @@ def salvar_dados(resultado_array):
             insert_query = (f"""INSERT INTO achados_auditoria (id, situacao, estado, atividade, titulo,idtarefaassociada,dtrealizadafim
                                                 titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtRealizadaFim,
                                                 prioridade,assunto,idatividade,descricaoatividade,idsituacao,
-                                                dataultimamodificacao,autorultimamodificacao,anexosgerais,equipevalidacaoexterna,unidadevalidadoras,
-                                                arquivoComportamentoEspecifico,relatoriovalidacao,equipeiacm,unidadeauditoriasuptec,
-                                                tarefaprecedentes,niveliacm,textohistorico,tags,iacmplanoacao,unidadesuperior,
-                                                mesconclusaoprevisto,textoajuda,pendencias,abasatividade) VALUES {array_records}""")
+                                                dataultimamodificacao,autorultimamodificacao,unidadesenvolvidas,itensachadosauditoria,anexosgerais,
+                                                relatoriocom,tarefaprecedentes,observadores,hipoteselegal,coordenadorequipe,equipegeral,
+                                                equipegeral,anexosrelatorio,mesconclusaorealizado,mesanoultimamodificacao,arquivocomportamentoespecifico,estadosituacao,
+                                                tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
             get_log(f"{tipo_arquivo} salvo com sucesso")
