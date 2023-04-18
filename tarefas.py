@@ -56,6 +56,8 @@ def salvar_dados(resultado_array):
         banco = db.db_connection()
         cur = banco.cursor()
 
+        db.delete_datas(banco)
+
         resultado_array = db.current_datetime_query(resultado_array)
 
         for tarefa in resultado_array:
@@ -117,6 +119,3 @@ def get_tarefas_requisicao(offset):
     except requests.exceptions.RequestException as err:
         get_log(err)
         print(err)
-
-
-get_tarefas()

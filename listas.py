@@ -4,18 +4,20 @@ from db import get_idtarefas, db_connection
 
 def dicionario():
     # nome do campo: lista que deve ser criada
-    dict = {'Autoavaliação IA-CM': 'lista_ia_cm',
-            'CGE - Achados': 'lista_achados',
-            'CGE - Análise Preliminar': 'lista_analise_preliminar',
+    dict = {'CGE - Achados': 'lista_achados',
             'CGE - Análises da Auditoria': 'lista_analise_auditoria',
+            'CGE - Análise Preliminar': 'lista_analise_preliminar',
             'CGE - Apuração Preliminar': 'lista_apuracao_preliminar',
             'CGE - Atividade Continuada': 'lista_atividade_continuada',
             'CGE - Auditoria': 'lista_auditoria',
+            'Autoavaliação IA-CM': 'lista_ia_cm',
             'CGE - Comunicação de Auditoria': 'lista_comunicacao_auditoria',
             'CGE - Escopo da Auditoria': 'lista_escopo_auditoria',
             'CGE - Execução (Consultoria)': 'lista_execucao_consultoria',
+            'CGEMG - Item de Processo (Análise de TCE)': 'lista_item_processo',
             'CGE - Item de Trabalho (Atividade)': 'lista_item_trabalho_atividade',
             'CGE - Item de Trabalho (Projeto)': 'lista_item_trabalho_projeto',
+            'KPA IACM': 'lista_kpa_iacm',
             'CGE - Matriz de Planejamento': 'lista_matriz_planejamento',
             'CGE - Minuta de Posicionamento': 'lista_minuta_posicionamento',
             'CGE - Monitoramento': 'lista_monitoramento',
@@ -25,8 +27,8 @@ def dicionario():
             'CGE - Relatório Preliminar': 'lista_relatorio_preliminar',
             'CGE - Resultados (Consultoria)': 'lista_resultados_consultoria',
             'CGE - Termo de Compromisso (Consultoria)': 'lista_termo_compromisso_consultoria',
-            'CGEMG - Item de Processo (Análise de TCE)': 'lista_item_processo',
-            'KPA IACM': 'lista_kpa_iacm'}
+
+            }
 
     lista_titulo_atividade = list(dict.keys())
     dict_value = list(dict.values())
