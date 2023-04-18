@@ -261,7 +261,7 @@ def salvar_dados(resultado_array):
                  tarefa['listaabaatividades']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
-            insert_query = (f"""INSERT INTO achados_auditoria (id, situacao, estado, atividade, titulo, titulotarefaassociada,
+            insert_query = (f"""INSERT INTO resultados_consultoria (id, situacao, estado, atividade, titulo, titulotarefaassociada,
                                                 titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,unidadesenvolvidas,anexosgerais,observadores,hipoteselegal,

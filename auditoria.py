@@ -252,14 +252,12 @@ def tratamento_dados(data):
                 'responsavelauditoria': responsavelauditoria,
                 'anexorelatoripreliminar': anexorelpreliminar,
                 'resultadosesperados': objetivoestrategico,
-                'resultadosesperados': resultadosindicador,
-                'resultadosesperados': resultadosdescricao,
+                'resultadosindicador': resultadosindicador,
+                'resultadosdescricao': resultadosdescricao,
                 'origemdemanda': origem,
                 'pessoajuridica': pessoajuridica,
-                'supervisores': supervisor,
                 'tipoconsultoria': tipo,
                 'nundenuncia': numdenuncia,
-                'coordenadorequipe': coordenadorequipe,
                 'unidadesauditadas': nomeunidadeseauditadas,
                 'homemhoras': homemhoras,
                 'equipeauditoria': equipe,
@@ -272,7 +270,6 @@ def tratamento_dados(data):
                 'anexosauditoria': anexoauditoria,
                 'linhaacaoauditoria': linhaacao,
                 'relatoriofinal': relatorifinal,
-                'tarefasprecedentes': tarefasprecedentes,
                 'coordenadorequipe': coordenador,
                 'equipegeral': equipe,
                 'supervisores': supervisor,
@@ -355,7 +352,7 @@ def salvar_dados(resultado_array):
                  tarefa['listaabaatividades']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
-            insert_query = (f"""INSERT INTO achados_auditoria (id, situacao, estado, atividade, titulo, titulotarefaassociada,
+            insert_query = (f"""INSERT INTO auditorias (id, situacao, estado, atividade, titulo, titulotarefaassociada,
                                                 titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,objetosauditoria,processosassociados,dadosgerenciais,
