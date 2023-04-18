@@ -4,9 +4,11 @@ import geral as geral
 from log import get_log
 import db
 
+tipo_arquivo = 'get_tarefas'
+
 
 def get_tarefas():
-    response = geral.check_url_health()
+    response = geral.check_url_health('tarefa')
     get_log("Iniciado get_tarefas")
 
     if response != 200:
@@ -16,17 +18,28 @@ def get_tarefas():
 
     try:
         offset = 0
+        limite_offset = 50000
         lista_final = []
-        resultado_array = get_tarefas_requisicao(offset)
-        if resultado_array == None or resultado_array == [] or resultado_array == '':
-            get_log('Lista de tarefas vazia')
-            return print('Lista de tarefas vazia')
 
-        for i, lista_appended in enumerate(resultado_array):
-            lista_final.append({
-                'id': lista_appended['id'],
-                'atividade': lista_appended['atividade']
-            })
+        while offset < limite_offset:
+            resultado_array = get_tarefas_requisicao(offset)
+            '''if resultado_array == None or resultado_array == [] or resultado_array == '':
+                get_log('Lista de tarefas vazia')
+                return print('Lista de tarefas vazia')'''
+            if resultado_array:
+                for i, lista_appended in enumerate(resultado_array):
+                    lista_final.append({
+                        'id': lista_appended['id'],
+                        'atividade': lista_appended['atividade']
+                    })
+                print(f"{offset} atual")
+
+                offset += 100
+            else:
+                offset += limite_offset
+
+        get_log(
+            f"Esta requisicao {tipo_arquivo} contém {len(lista_final)} itens")
 
         salvar_dados(lista_final)
 
@@ -43,11 +56,13 @@ def salvar_dados(resultado_array):
         banco = db.db_connection()
         cur = banco.cursor()
 
+        resultado_array = db.current_datetime_query(resultado_array)
+
         for tarefa in resultado_array:
-            lista = {(
-                tarefa['id'],
-                tarefa['atividade']
-            )}
+            lista = [
+                (tarefa['id'],
+                 tarefa['atividade'])
+            ]
 
             array_records = ", ".join(["%s"] * len(lista))
             insert_query = (
@@ -102,3 +117,6 @@ def get_tarefas_requisicao(offset):
     except requests.exceptions.RequestException as err:
         get_log(err)
         print(err)
+
+
+get_tarefas()

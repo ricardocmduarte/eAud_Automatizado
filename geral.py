@@ -19,9 +19,10 @@ password = dados[5]
 print("Iniciando o programa...")
 
 
-def check_url_health():
+def check_url_health(link):
+    urlteste = url+f'{link}'
 
-    response = requests.get(url)
-    if response.status_code != 200:
-        return response.status_code
-    return response.status_code
+    resp = requests.get(urlteste, headers=header)
+    if resp.status_code != 200:
+        return resp.status_code
+    return resp.status_code
