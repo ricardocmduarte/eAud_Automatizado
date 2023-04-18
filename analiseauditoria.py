@@ -77,8 +77,7 @@ def tratamento_dados(data):
                 nomeunidadesenvolvidas = join_data(nomeunidadesenvolvidas)
 
             idanalise = tarefa['campos']['itensDaAnaliseAuditoria']['valor']['idAnaliseAuditoria']
-            conclusaodesc = tarefa['campos']['itensDaAnaliseAuditoria']['valor']['conclusao'[
-                'descricao']]
+            conclusaodesc = tarefa['campos']['itensDaAnaliseAuditoria']['valor']['conclusao']['descricao']
             descricoes = conclusaodesc['teste']
             descteste = descricoes['descTeste']
             desccriterio = descricoes['descCriterio']
