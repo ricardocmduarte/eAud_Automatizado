@@ -5,17 +5,30 @@ from log import get_log
 import json
 from join_function import join_data
 
+tipo_arquivo = 'get_acahdos'
 
-def get_achados(ids_achados):
-    lista_dados = []
-    lista_final = []
+
+def get_achados(ids):
+    response = geral.check_url_health('tarefa')
+    get_log(f"Iniciado {tipo_arquivo}")
+
+    if response != 200:
+        get_log(
+            f"Erro ao conectar com a url {tipo_arquivo}, código do erro HTTP:  {str(response)}".upper())
+        return print(f"Erro ao conectar com a url {tipo_arquivo}, código do erro HTTP:  {str(response)}")
+
     try:
-        if ids_achados:
-            for i, id in enumerate(ids_achados):
+        lista_dados = []
+        lista_final = []
+        if ids:
+            for i, id in enumerate(ids):
                 lista_dados.append(get_achados_requisicao(id))
                 if lista_dados == 200:
                     print(
                         f"Iteração get_achados {str(i)} registrada com sucesso")
+
+        get_log(
+            f"Esta requisicao {tipo_arquivo} contém {len(lista_final)} itens")
 
         # lista final passa por um tratamento de dados
         if lista_dados:
@@ -24,12 +37,12 @@ def get_achados(ids_achados):
         # comando para salvar os dados tratados
         if lista_final:
             salvar_dados(lista_final)
-        get_log("Lista de achados ok")
-        return print("Lista de achados ok")
+        get_log(f"Lista de {tipo_arquivo} ok")
+        return print(f"Lista de {tipo_arquivo} ok")
     except NameError as err:
-        get_log("Erro ao salvar os dados get_achados".upper())
+        get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
         get_log(err)
-        return print("Erro ao salvar os dados get_achados", err)
+        return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
 
 def tratamento_dados(data):
@@ -139,22 +152,22 @@ def tratamento_dados(data):
                 'pendencias': listapendencia,
                 'abasatividade': listaabaatividades,
             })
-        get_log("Lista achados_auditoria tratada com sucesso")
+        get_log(f"Lista {tipo_arquivo} tratada com sucesso")
         return lista_final
     except NameError as err:
-        get_log("Erro ao tratar os dados get_achados".upper())
+        get_log(f"Erro ao tratar os dados {tipo_arquivo}".upper())
         get_log(err)
-        return print("Erro ao tratar os dados get_achados", err)
+        return print(f"Erro ao tratar os dados {tipo_arquivo}", err)
 
 
-def salvar_dados(lista_achados):
+def salvar_dados(resultado_array):
     try:
         banco = db.db_connection
         cur = banco.cursor()
 
-        lista_achados = db.current_datetime_query(lista_achados)
+        resultado_array = db.current_datetime_query(resultado_array)
 
-        for tarefa in lista_achados:
+        for tarefa in resultado_array:
             lista = [
                 (tarefa['id'],
                  tarefa['situacao'],
@@ -201,13 +214,13 @@ def salvar_dados(lista_achados):
                                                 mesconclusaoprevisto,textoajuda,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
-            get_log("Auditorias salvo com sucesso")
+            get_log(f"{tipo_arquivo} salvo com sucesso")
         banco.commit()
         banco.close()
     except NameError as err:
-        get_log("Erro ao salvar os dados get_tarefas".upper())
+        get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
         get_log(err)
-        return print("Erro ao salvar os dados get_tarefas", err)
+        return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
 
 def get_achados_requisicao(id):
