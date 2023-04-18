@@ -9,18 +9,28 @@ from join_function import join_data
 tipo_arquivo = 'get_planejamento_consultoria'
 
 
-def get_planejamento_consultoria(ids_planejamento):
+def get_planejamento_consultoria(ids):
+    response = geral.check_url_health('tarefa')
+    get_log(f"Iniciado {tipo_arquivo}")
 
-    lista_dados = []
-    lista_final = []
+    if response != 200:
+        get_log(
+            f"Erro ao conectar com a url {tipo_arquivo}, código do erro HTTP:  {str(response)}".upper())
+        return print(f"Erro ao conectar com a url {tipo_arquivo}, código do erro HTTP:  {str(response)}")
+
     try:
-        if ids_planejamento:
-            for i, id in enumerate(ids_planejamento):
+        lista_dados = []
+        lista_final = []
+        if ids:
+            for i, id in enumerate(ids):
                 lista_dados.append(get_planejamento_requisicao(id))
                 if lista_dados == None:
                     break
                 print(
                     f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
+
+        get_log(
+            f"Esta requisicao {tipo_arquivo} contém {len(lista_final)} itens")
 
         # lista final passa por um tratamento de dados
         if lista_dados:
@@ -198,14 +208,14 @@ def tratamento_dados(data):
         return print(f"Erro ao tratar os dados {tipo_arquivo}", err)
 
 
-def salvar_dados(lista_consultoria):
+def salvar_dados(resultado_array):
     try:
         banco = db.db_connection
         cur = banco.cursor()
 
-        lista_consultoria = db.current_datetime_query(lista_consultoria)
+        resultado_array = db.current_datetime_query(resultado_array)
 
-        for tarefa in lista_consultoria:
+        for tarefa in resultado_array:
             lista = [
                 (tarefa['id'],
                  tarefa['situacao'],

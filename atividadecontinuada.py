@@ -5,18 +5,31 @@ from log import get_log
 import json
 from join_function import join_data
 
+tipo_arquivo = 'get_atividade_continuada'
 
-def get_atividade_continuada(ids_atividade_continuada):
-    lista_dados = []
-    lista_final = []
+
+def get_atividade_continuada(ids):
+    response = geral.check_url_health('tarefa')
+    get_log(f"Iniciado {tipo_arquivo}")
+
+    if response != 200:
+        get_log(
+            f"Erro ao conectar com a url {tipo_arquivo}, código do erro HTTP:  {str(response)}".upper())
+        return print(f"Erro ao conectar com a url {tipo_arquivo}, código do erro HTTP:  {str(response)}")
+
     try:
-        if ids_atividade_continuada:
-            for i, id in enumerate(ids_atividade_continuada):
+        lista_dados = []
+        lista_final = []
+        if ids:
+            for i, id in enumerate(ids):
                 lista_dados.append(get_atividade_continuada_requisicao(id))
                 if lista_dados == None:
                     break
                 print(
                     f"Iteração get_atividade_continuada {str(i)} registrada com sucesso")
+
+        get_log(
+            f"Esta requisicao {tipo_arquivo} contém {len(lista_final)} itens")
 
         # lista final passa por um tratamento de dados
         if lista_dados:
@@ -197,14 +210,14 @@ def tratamento_dados(data):
         return print("Erro ao tratar os dados get_atividade_continuada", err)
 
 
-def salvar_dados(lista_achados):
+def salvar_dados(resultado_array):
     try:
         banco = db.db_connection
         cur = banco.cursor()
 
-        lista_achados = db.current_datetime_query(lista_achados)
+        resultado_array = db.current_datetime_query(resultado_array)
 
-        for tarefa in lista_achados:
+        for tarefa in resultado_array:
             lista = [
                 (tarefa['id'],
                  tarefa['situacao'],

@@ -9,18 +9,28 @@ from join_function import join_data
 tipo_arquivo = 'get_projeto_geral'
 
 
-def get_projeto_geral(ids_projeto):
+def get_projeto_geral(ids):
+    response = geral.check_url_health('tarefa')
+    get_log(f"Iniciado {tipo_arquivo}")
 
-    lista_dados = []
-    lista_final = []
+    if response != 200:
+        get_log(
+            f"Erro ao conectar com a url {tipo_arquivo}, código do erro HTTP:  {str(response)}".upper())
+        return print(f"Erro ao conectar com a url {tipo_arquivo}, código do erro HTTP:  {str(response)}")
+
     try:
-        if ids_projeto:
-            for i, id in enumerate(ids_projeto):
+        lista_dados = []
+        lista_final = []
+        if ids:
+            for i, id in enumerate(ids):
                 lista_dados.append(get_projeto_requisicao(id))
                 if lista_dados == None:
                     break
                 print(
                     f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
+
+        get_log(
+            f"Esta requisicao {tipo_arquivo} contém {len(lista_final)} itens")
 
         # lista final passa por um tratamento de dados
         if lista_dados:
@@ -235,14 +245,14 @@ def tratamento_dados(data):
         return print(f"Erro ao tratar os dados {tipo_arquivo}", err)
 
 
-def salvar_dados(lista_projeto):
+def salvar_dados(resultado_array):
     try:
         banco = db.db_connection
         cur = banco.cursor()
 
-        lista_projeto = db.current_datetime_query(lista_projeto)
+        resultado_array = db.current_datetime_query(resultado_array)
 
-        for tarefa in lista_projeto:
+        for tarefa in resultado_array:
             lista = [
                 (tarefa['id'],
                  tarefa['situacao'],
@@ -287,8 +297,7 @@ def salvar_dados(lista_projeto):
                  tarefa['estadosituacao'],
                  tarefa['tags'],
                  tarefa['listapendencia'],
-                 tarefa['listaabaatividades'],
-                 tarefa['dataatualizacao'],
+                 tarefa['listaabaatividades']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
             insert_query = (f"""INSERT INTO achados_auditoria (id, situacao, estado, atividade, titulo, titulotarefaassociada,
@@ -298,7 +307,7 @@ def salvar_dados(lista_projeto):
                                                 responsavelplanotrabalho,origemdemanda,links,anexoplanotrabalho,processoplanotrabalho,
                                                 resultadosesperados,objetoscgemg,duracaomeses,recursofinanceiro,envolvidosplanotrabalho,homemhora,
                                                 gerentesplanotrabalho,equipegeral,supervisores,objetivoplanotrabalho,tipoplanotrabalho,arquivocomportamento, estadosituacao,
-                                                tags,listapendencia,listaabaatividades,dataatualizacao) VALUES {array_records}""",)
+                                                tags,listapendencia,listaabaatividades) VALUES {array_records}""",)
 
             cur.execute(insert_query, lista)
             get_log(f"{tipo_arquivo} salvo com sucesso")
