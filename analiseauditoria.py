@@ -119,6 +119,9 @@ def tratamento_dados(data):
 
                 supervisor = join_data(supervisor)
 
+            estadosituacao = tarefa['estadoSituacao']
+            arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
+
             descricaotag = tarefa['campos']['tags']['valor']
             tags = []
             if descricaotag:
@@ -142,9 +145,6 @@ def tratamento_dados(data):
                     listaabaatividades.append(abas['descricao'])
 
                 listaabaatividades = join_data(listaabaatividades)
-
-            estadosituacao = tarefa['estadoSituacao']
-            arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
 
             lista_final.append({
                 'id': id,

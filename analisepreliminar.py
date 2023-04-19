@@ -24,9 +24,9 @@ def get_analise_preliminar(ids):
         if ids:
             for i, id in enumerate(ids):
                 lista_dados.append(get_analise_preliminar_requisicao(id))
-                if lista_dados == None:
-                    break
-                print(f"Iteração get_achados {str(i)} registrada com sucesso")
+
+                print(
+                    f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
 
         get_log(
             f"Esta requisicao {tipo_arquivo} contém {len(lista_final)} itens")
@@ -98,14 +98,6 @@ def tratamento_dados(data):
             observadores = tarefa['campos']['observadores']['valor']
             hipoteselegal = tarefa['campos']['hipoteseLegal']['valor']
 
-            descricaotag = tarefa['campos']['tags']['valor']
-            tags = []
-            if descricaotag:
-                for i, tagdesc in enumerate(descricaotag):
-                    tags.append(tagdesc['descricao'])
-
-                tags = join_data(tags)
-
             universoauditavel = tarefa['campos']['universosAuditaveisAnalisePreliminar']['valor']
             objetosauditoria = tarefa['campos']['objetosAuditoriaAnalisePreliminar']['valor']
 
@@ -117,7 +109,9 @@ def tratamento_dados(data):
 
                 coordenador = join_data(coordenador)
 
-            matrizcontrole = tarefa['campos']['matrizRiscosControles']['valor']['nome']
+            matriz = tarefa['campos']['matrizRiscosControles']['valor']
+            if matriz:
+                matrizcontrole = matriz['nome']
 
             equipegeral = tarefa['campos']['EquipeGeral']['valor']
             equipe = []
@@ -136,6 +130,17 @@ def tratamento_dados(data):
                     supervisor.append(super['nomeExibicao'])
 
                 supervisor = join_data(supervisor)
+
+            estadosituacao = tarefa['estadoSituacao']
+            arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
+
+            descricaotag = tarefa['campos']['tags']['valor']
+            tags = []
+            if descricaotag:
+                for i, tagdesc in enumerate(descricaotag):
+                    tags.append(tagdesc['descricao'])
+
+                tags = join_data(tags)
 
             pendencias = tarefa['pendencias']
             listapendencia = []
@@ -184,6 +189,8 @@ def tratamento_dados(data):
             'equipegeral': equipe,
             'classificacaoacesso': classificacaoacesso,
             'supervisores': supervisor,
+            'arquivocomportamentoespecifico': arquivocomportamento,
+            'estadosituacao': estado,
             'tags': descricaotag,
             'pendencias': listapendencia,
             'abasatividade': listaabaatividades,
@@ -230,9 +237,11 @@ def salvar_dados(resultado_array):
                  tarefa['tarefasprecedentes'],
                  tarefa['observadores'],
                  tarefa['hipoteselegal'],
-                 tarefa['coordenador'],
-                 tarefa['equipe'],
+                 tarefa['coordenadorequipe'],
+                 tarefa['equipegeral'],
                  tarefa['supervisor'],
+                 tarefa['arquivocomportamentoespecifico'],
+                 tarefa['estadosituacao'],
                  tarefa['tags'],
                  tarefa['pendencias'],
                  tarefa['abasatividade']
@@ -242,9 +251,9 @@ def salvar_dados(resultado_array):
                                                 titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,nomeunidadesenvolvidas,universoauditavel,anexos,
-                                                arquivoComportamentoEspecifico,
-                                                objetosauditoria,matrizcontrole,tarefasprecedentes,observadores, hipoteselegal,
-                                                coordenador,equipe,supervisor, tags,pendencias,abasatividade) VALUES {array_records}""")
+                                                arquivoComportamentoEspecifico,objetosauditoria,matrizcontrole,tarefasprecedentes,
+                                                observadores, hipoteselegal,coordenadorequipe,equipegeral,supervisor, arquivocomportamentoespecifico,
+                                                estadosituacao,tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
             get_log("Analise_auditoria_preliminar salvo com sucesso")
