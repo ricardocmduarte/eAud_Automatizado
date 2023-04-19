@@ -155,6 +155,7 @@ def tratamento_dados(data):
                 anexosrelatorio = join_data(anexosrelatorio)
 
             estadosituacao = tarefa['estadoSituacao']
+            arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
 
             pendencias = tarefa['pendencias']
             listapendencia = []
@@ -199,7 +200,6 @@ def tratamento_dados(data):
                 'tarefasprecedentes': tarefasprecedentes,
                 'valorprejuizoestimado': valorprejuizoestimado,
                 'observadores': observadores,
-                'tags': tags,
                 'unidadegestora': unidadegestora,
                 'fundamentos': fundamentos,
                 'ultimoposicionamento': tipoultimoposicionamento,
@@ -207,6 +207,8 @@ def tratamento_dados(data):
                 'textoultimamanifestacao': textoultimopamanifestacao,
                 'anexorelatorio': anexosrelatorio,
                 'estadosituacao': estadosituacao,
+                'arquivocomportamentoespecifico': arquivocomportamento,
+                'tags': tags,
                 'pendencias': listapendencia,
                 'abasatividade': listaabaatividades,
             })
@@ -259,7 +261,7 @@ def salvar_dados(resultado_array):
                  tarefa['textoultimoposicionamento'],
                  tarefa['textoultimamanifestacao'],
                  tarefa['anexorelatorio'],
-                 tarefa['arquivocomportamento'],
+                 tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
                  tarefa['listapendencia'],
@@ -272,7 +274,7 @@ def salvar_dados(resultado_array):
                                                 dataultimamodificacao,autorultimamodificacao,detalhesmonitoramento,providencia,unidadesauditoria, 
                                                 unidadesenvolvidas, categoriasmonitoramento,tarefasprecedentes,valorprejuizoestimado, observadores,
                                                 unidadegestora, fundamentos,ultimoposicionamento,textoultimoposicionamento,textoultimamanifestacao,
-                                                anexorelatorio,arquivocomportamento, estadosituacao,
+                                                anexorelatorio,arquivocomportamentoespecifico, estadosituacao,
                                                 tags,listapendencia,listaabaatividades) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)

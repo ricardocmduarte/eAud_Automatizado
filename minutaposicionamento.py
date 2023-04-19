@@ -95,14 +95,6 @@ def tratamento_dados(data):
             acaoposicionamento = tarefa['campos']['acaoPosicionamento']['valor']
             refmonitoramento = tarefa['campos']['refMonitoramento']['valor']['nomeExibicao']
 
-            descricaotag = tarefa['campos']['tags']['valor']
-            tags = []
-            if descricaotag:
-                for i, tagdesc in enumerate(descricaotag):
-                    tags.append(tagdesc['descricao'])
-
-                tags = join_data(tags)
-
             unidadeauditoria = tarefa['campos']['unidadesAuditoriaMinuta']['valor']
             unidadesauditoriaminuta = []
             if unidadeauditoria:
@@ -123,6 +115,17 @@ def tratamento_dados(data):
 
             recomendacaominuta = tarefa['campos']['RecMinutas']['valor']
             detalhamentomonitoramento = tarefa['campos']['detalhesMonitoramentoMinuta']['valor']
+
+            estadosituacao = tarefa['estadoSituacao']
+            arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
+
+            descricaotag = tarefa['campos']['tags']['valor']
+            tags = []
+            if descricaotag:
+                for i, tagdesc in enumerate(descricaotag):
+                    tags.append(tagdesc['descricao'])
+
+                tags = join_data(tags)
 
             pendencias = tarefa['pendencias']
             listapendencia = []
@@ -166,12 +169,14 @@ def tratamento_dados(data):
                 'textohistorico': textodohistorico,
                 'acaoposicionamento': acaoposicionamento,
                 'referenciarecomendacao': refmonitoramento,
-                'tags': tags,
                 'unidadesauditorias': unidadesauditoriaminuta,
                 'tipoposicionamento': tipoposicionamentominuta,
                 'unidademonitorada': unidademonitorada,
                 'recomendacaominuta': recomendacaominuta,
                 'detalhamentomonitoramento': detalhamentomonitoramento,
+                'arquivocomportamentoespecifico': arquivocomportamento,
+                'estadosituacao': estadosituacao,
+                'tags': tags,
                 'pendencias': listapendencia,
                 'abasatividade': listaabaatividades,
             })
@@ -220,7 +225,7 @@ def salvar_dados(resultado_array):
                  tarefa['tipoposicionamento'],
                  tarefa['recomendacaominuta'],
                  tarefa['detalhamentomonitoramento'],
-                 tarefa['arquivocomportamento'],
+                 tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
                  tarefa['listapendencia'],
@@ -232,7 +237,7 @@ def salvar_dados(resultado_array):
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,providenciaminuta,anexosgerais,destinatariousuariounidade, 
                                                 tarefasprecedentes, textohistorico,acaoposicionamento,unidadesauditorias, tipoposicionamento,
-                                                recomendacaominuta, detalhamentomonitoramento,arquivocomportamento, estadosituacao,
+                                                recomendacaominuta, detalhamentomonitoramento,arquivocomportamentoespecifico, estadosituacao,
                                                 tags,listapendencia,listaabaatividades) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)

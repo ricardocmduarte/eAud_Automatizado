@@ -196,6 +196,9 @@ def tratamento_dados(data):
 
             relatorifinal = tarefa['campos']['relFinalAud']['valor']
 
+            estadosituacao = tarefa['estadoSituacao']
+            arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
+
             descricaotag = tarefa['campos']['tags']['valor']
             tags = []
             if descricaotag:
@@ -273,6 +276,8 @@ def tratamento_dados(data):
                 'coordenadorequipe': coordenador,
                 'equipegeral': equipe,
                 'supervisores': supervisor,
+                'arquivocomportamentoespecifico': arquivocomportamento,
+                'estadosituacao': estadosituacao,
                 'tags': descricaotag,
                 'pendencias': listapendencia,
                 'abasatividade': listaabaatividades,
@@ -343,10 +348,12 @@ def salvar_dados(resultado_array):
                  tarefa['anexoauditoria'],
                  tarefa['relatorifinal'],
                  tarefa['recursofinanceiro'],
-                 tarefa['coordenador'],
-                 tarefa['equipe'],
+                 tarefa['coordenadorequipe'],
+                 tarefa['equipegeral'],
                  tarefa['gerente'],
-                 tarefa['supervisor'],
+                 tarefa['supervisores'],
+                 tarefa['arquivocomportamentoespecifico'],
+                 tarefa['estadosituacao'],
                  tarefa['tags'],
                  tarefa['listapendencia'],
                  tarefa['listaabaatividades']
@@ -360,7 +367,8 @@ def salvar_dados(resultado_array):
                                                 responsavelauditoria,anexorelpreliminar, objetivoestrategico,resultadosindicador,resultadosdescricao,
                                                 origem,pessoajuridica,supervisor,tipo,numdenuncia,coordenadorequipe,nomeunidadeseauditadas,homemhoras,
                                                 equipe,anexorel,arearequerida,objetivoauditoria,tarefasprecedentes,envolauditoria,processotrabalhoauditoria,
-                                                anexoauditoria,linhaacao,relatorifinal,tarefasprecedentes,coordenador,equipe,supervisor,tags,listapendencia,listaabaatividades) VALUES {array_records}""")
+                                                anexoauditoria,linhaacao,relatorifinal,tarefasprecedentes,coordenadorequipe,equipegeral,supervisores,
+                                                estadosituacao, arquivocomportamentoespecifico,tags,listapendencia,listaabaatividades) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
             get_log(f"{tipo_arquivo} salvo com sucesso")

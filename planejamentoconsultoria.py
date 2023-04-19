@@ -111,14 +111,6 @@ def tratamento_dados(data):
 
                 hipoteselegal = join_data(hipoteselegal)
 
-            descricaotag = tarefa['campos']['tags']['valor']
-            tags = []
-            if descricaotag:
-                for i, tagdesc in enumerate(descricaotag):
-                    tags.append(tagdesc['descricao'])
-
-                tags = join_data(tags)
-
             fileplanejamento = tarefa['campos']['docPlanejamento']['valor']
             docplanejamento = []
             if fileplanejamento:
@@ -150,6 +142,17 @@ def tratamento_dados(data):
                     supervisores.append(super['nomeExibicao'])
 
                 supervisores = join_data(supervisores)
+
+            estadosituacao = tarefa['estadoSituacao']
+            arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
+
+            descricaotag = tarefa['campos']['tags']['valor']
+            tags = []
+            if descricaotag:
+                for i, tagdesc in enumerate(descricaotag):
+                    tags.append(tagdesc['descricao'])
+
+                tags = join_data(tags)
 
             pendencias = tarefa['pendencias']
             listapendencia = []
@@ -191,11 +194,13 @@ def tratamento_dados(data):
                 'anexosgerais': anexosgerais,
                 'observadores': observadores,
                 'hipoteselegal': hipoteselegal,
-                'tags': tags,
                 'docplanejamento': docplanejamento,
                 'coordenadorequipe': coordenadorequipe,
                 'equipegeral': equipegeral,
                 'supervisores': supervisores,
+                'estadosituacao': estadosituacao,
+                'arquivocomportamentoespecifico': arquivocomportamento,
+                'tags': tags,
                 'pendencias': listapendencia,
                 'abasatividade': listaabaatividades,
             })
@@ -243,7 +248,7 @@ def salvar_dados(resultado_array):
                  tarefa['coordenadorequipe'],
                  tarefa['equipegeral'],
                  tarefa['supervisores'],
-                 tarefa['arquivocomportamento'],
+                 tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
                  tarefa['listapendencia'],
@@ -255,7 +260,7 @@ def salvar_dados(resultado_array):
                                                 titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao, analisepreliminar,unidadesenvolvidas,anexosgerais
-                                                observadores,hipoteselegal,docplanejamento,coordenadorequipe,equipegeral,supervisores,arquivocomportamento, estadosituacao,
+                                                observadores,hipoteselegal,docplanejamento,coordenadorequipe,equipegeral,supervisores,arquivocomportamentoespecifico, estadosituacao,
                                                 tags,listapendencia,listaabaatividades,dataatualizacao) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)

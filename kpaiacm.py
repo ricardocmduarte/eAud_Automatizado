@@ -199,7 +199,7 @@ def tratamento_dados(data):
                 'praticakpa': praticakpa,
                 'links': links,
                 'uaigs': uaig,
-                'arquivocomportamento': arquivocomportamento,
+                'arquivocomportamentoespecifico': arquivocomportamento,
                 'estadosituacao': estadosituacao,
                 'tags': tags,
                 'pendencias': listapendencia,
@@ -256,7 +256,7 @@ def salvar_dados(resultado_array):
                  tarefa['praticakpa'],
                  tarefa['links'],
                  tarefa['uaigs'],
-                 tarefa['arquivocomportamento'],
+                 tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
                  tarefa['listapendencia'],
@@ -269,7 +269,7 @@ def salvar_dados(resultado_array):
                                                 dataultimamodificacao,autorultimamodificacao,conclusaokpa,anexosgerais,estadosituacao,
                                                 objetivokpa,equipevalidacaoexternaiacm, atividaeskpa,titulokpamodelo, datarealizadamodelokpa, 
                                                 datafimmodelokpa, assundomodelokpa,unidadesvalidadoras, produtokpa, resultadoskpa, 
-                                                praticakpa, links,uaigs, arquivocomportamento,estadosituacao
+                                                praticakpa, links,uaigs, arquivocomportamentoespecifico,estadosituacao
                                                 tags,listapendencia,listaabaatividades) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)

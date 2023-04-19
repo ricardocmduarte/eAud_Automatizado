@@ -230,7 +230,7 @@ def tratamento_dados(data):
                 'supervisores': supervisores,
                 'objetivoplanotrabalho': objetivoplanotrabalho,
                 'tipoplanotrabalho': tipoplanotrablho,
-                'arquivocomportamento': arquivocomportamento,
+                'arquivocomportamentoespecifico': arquivocomportamento,
                 'estadosituacao': estadosituacao,
                 'tags': tags,
                 'pendencias': listapendencia,
@@ -293,7 +293,7 @@ def salvar_dados(resultado_array):
                  tarefa['supervisores'],
                  tarefa['objetivoplanotrabalho'],
                  tarefa['tipoplanotrabalho'],
-                 tarefa['arquivocomportamento'],
+                 tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
                  tarefa['listapendencia'],
@@ -306,7 +306,7 @@ def salvar_dados(resultado_array):
                                                 dataultimamodificacao,autorultimamodificacao,numdenuncia,detalhamento,etapaplanotrabalho, processt,
                                                 responsavelplanotrabalho,origemdemanda,links,anexoplanotrabalho,processoplanotrabalho,
                                                 resultadosesperados,objetoscgemg,duracaomeses,recursofinanceiro,envolvidosplanotrabalho,homemhora,
-                                                gerentesplanotrabalho,equipegeral,supervisores,objetivoplanotrabalho,tipoplanotrabalho,arquivocomportamento, estadosituacao,
+                                                gerentesplanotrabalho,equipegeral,supervisores,objetivoplanotrabalho,tipoplanotrabalho,arquivocomportamentoespecifico, estadosituacao,
                                                 tags,listapendencia,listaabaatividades) VALUES {array_records}""",)
 
             cur.execute(insert_query, lista)

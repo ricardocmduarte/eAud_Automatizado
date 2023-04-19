@@ -111,14 +111,6 @@ def tratamento_dados(data):
 
                 listamatriz = join_data(listamatriz)
 
-            descricaotag = tarefa['campos']['tags']['valor']
-            tags = []
-            if descricaotag:
-                for i, tagdesc in enumerate(descricaotag):
-                    tags.append(tagdesc['descricao'])
-
-                tags = join_data(tags)
-
             coordenador = tarefa['campos']['CoordenadorEquipe']['valor']
             coordenadorequipe = []
             if coordenador:
@@ -142,6 +134,17 @@ def tratamento_dados(data):
                     supervisores.append(super['nomeExibicao'])
 
                 supervisores = join_data(supervisores)
+
+            estadosituacao = tarefa['estadoSituacao']
+            arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
+
+            descricaotag = tarefa['campos']['tags']['valor']
+            tags = []
+            if descricaotag:
+                for i, tagdesc in enumerate(descricaotag):
+                    tags.append(tagdesc['descricao'])
+
+                tags = join_data(tags)
 
             pendencias = tarefa['pendencias']
             listapendencia = []
@@ -185,6 +188,8 @@ def tratamento_dados(data):
                 'matriz': matriz,
                 'coordenador': coordenadorequipe,
                 'equipe': equipegeral,
+                'arquivocomportamentoespecifico': arquivocomportamento,
+                'estadosituacao': estadosituacao,
                 'tags': tags,
                 'pendencias': listapendencia,
                 'abasatividade': listaabaatividades,
@@ -231,7 +236,7 @@ def salvar_dados(resultado_array):
                  tarefa['matriz'],
                  tarefa['coordenador'],
                  tarefa['equipe'],
-                 tarefa['arquivocomportamento'],
+                 tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
                  tarefa['listapendencia'],
@@ -242,7 +247,7 @@ def salvar_dados(resultado_array):
                                                 titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,unidadesenvolvidas,tarefasprecedentes,observadores,
-                                                hipoteselegal,matriz, coordenador,equipe, arquivocomportamento,estadosituacao
+                                                hipoteselegal,matriz, coordenador,equipe, arquivocomportamentoespecifico,estadosituacao
                                                 tags,listapendencia,listaabaatividades) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)

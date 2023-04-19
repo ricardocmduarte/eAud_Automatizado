@@ -127,6 +127,9 @@ def tratamento_dados(data):
 
                 supervisor = join_data(supervisor)
 
+            estadosituacao = tarefa['estadoSituacao']
+            arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
+
             pendencias = tarefa['pendencias']
             listapendencia = []
             if pendencias:
@@ -173,6 +176,8 @@ def tratamento_dados(data):
                 'coordenadorequipe': coordenador,
                 'equipegeral': equipe,
                 'supervisores': supervisor,
+                'arquivocomportamentoespecifico': arquivocomportamento,
+                'estadosituacao': estadosituacao,
                 'tags': descricaotag,
                 'pendencias': listapendencia,
                 'abasatividade': listaabaatividades,
@@ -220,9 +225,11 @@ def salvar_dados(resultado_array):
                  tarefa['hiposetelegal'],
                  tarefa['tarefasprecedentes'],
                  tarefa['unidadesenvol'],
-                 tarefa['coordenador'],
-                 tarefa['equipe'],
-                 tarefa['supervisor'],
+                 tarefa['coordenadorequipe'],
+                 tarefa['equipegeral'],
+                 tarefa['supervisores'],
+                 tarefa['arquivocomportamentoespecifico'],
+                 tarefa['estadosituacao'],
                  tarefa['tags'],
                  tarefa['listapendencia'],
                  tarefa['listaabaatividades']
@@ -232,8 +239,8 @@ def salvar_dados(resultado_array):
                                                 titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,escopodescricao,escopovalortotal,escopovalorauditado,
-                                                macroprocessoescopo,observadores,hiposetelegal,tarefasprecedentes,unidadesenvol,coordenador,
-                                                equipe,supervisor,tags,listapendencia,listaabaatividades) VALUES {array_records}""")
+                                                macroprocessoescopo,observadores,hiposetelegal,tarefasprecedentes,unidadesenvol,coordenadorequipe,
+                                                equipegeral,supervisores,arquivocomportamentoespecifico,estadosituacao,tags,listapendencia,listaabaatividades) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
             get_log(f"{tipo_arquivo} salvo com sucesso")

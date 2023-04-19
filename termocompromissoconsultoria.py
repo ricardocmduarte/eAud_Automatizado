@@ -196,9 +196,9 @@ def tratamento_dados(data):
                 'docsolicitacao': docsolicitacao,
                 'coordenadorequipe': coordenadorequipe,
                 'equipegeral': equipegeral,
-                'supervisor': supervisores,
+                'supervisores': supervisores,
                 'termocompromisso': termocompromisso,
-                'arquivocomportamento': arquivocomportamento,
+                'arquivocomportamentoespecifico': arquivocomportamento,
                 'estadosituacao': estadosituacao,
                 'tags': tags,
                 'pendencias': listapendencia,
@@ -246,9 +246,9 @@ def salvar_dados(resultado_array):
                  tarefa['docsolicitacao'],
                  tarefa['coordenadorequipe'],
                  tarefa['equipegeral'],
-                 tarefa['supervisor'],
+                 tarefa['supervisores'],
                  tarefa['termocompromisso'],
-                 tarefa['arquivocomportamento'],
+                 tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
                  tarefa['listapendencia'],
@@ -259,7 +259,7 @@ def salvar_dados(resultado_array):
                                                 titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,unidadesenvolvidas,anexosgerais,observadores,hipoteselegal,
-                                                docsolicitacao,coordenadorequipe,equipegeral,supervisor,termocompromisso,arquivocomportamento, estadosituacao,
+                                                docsolicitacao,coordenadorequipe,equipegeral,supervisor,termocompromisso,arquivocomportamentoespecifico, estadosituacao,
                                                 tags,listapendencia,listaabaatividades) VALUES {array_records}""",)
 
             cur.execute(insert_query, lista)

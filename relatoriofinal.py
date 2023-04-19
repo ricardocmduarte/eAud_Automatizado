@@ -205,7 +205,7 @@ def tratamento_dados(data):
                 'hipoteselegal': hipoteselegal,
                 'relatoriofinal': relatoriofinal,
                 'coordenadorequipe': coordenadorequipe,
-                'supervisor': supervisores,
+                'supervisores': supervisores,
                 'parecer': pareceres,
                 'anexorelatorio': anexorel,
                 'relatorioword': relatorioword,
@@ -259,7 +259,7 @@ def salvar_dados(resultado_array):
                  tarefa['hipoteselegal'],
                  tarefa['relatoriofinal'],
                  tarefa['coordenadorequipe'],
-                 tarefa['supervisor'],
+                 tarefa['supervisores'],
                  tarefa['parecer'],
                  tarefa['anexorelatorio'],
                  tarefa['relatorioword'],
@@ -268,7 +268,7 @@ def salvar_dados(resultado_array):
                  tarefa['observadores'],
                  tarefa['certificados'],
                  tarefa['equipegeral'],
-                 tarefa['arquivocomportamento'],
+                 tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
                  tarefa['listapendencia'],
@@ -278,9 +278,9 @@ def salvar_dados(resultado_array):
             insert_query = (f"""INSERT INTO relatorio_final (id, situacao, estado, atividade, titulo, titulotarefaassociada,
                                                 titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
-                                                dataultimamodificacao,autorultimamodificacao,relatoriopreliminar,hipoteselegal,coordenadorequipe,supervisor,
+                                                dataultimamodificacao,autorultimamodificacao,relatoriopreliminar,hipoteselegal,coordenadorequipe,supervisores,
                                                 parecer,anexorelatorio,relatorioword,unidadesenvolvidas,relatoriocom,observadores,certificados,
-                                                equipegeral,arquivocomportamento, estadosituacao,
+                                                equipegeral,arquivocomportamentoespecifico, estadosituacao,
                                                 tags,listapendencia,listaabaatividades) VALUES {array_records}""",)
 
             cur.execute(insert_query, lista)

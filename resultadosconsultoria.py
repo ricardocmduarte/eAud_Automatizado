@@ -201,8 +201,8 @@ def tratamento_dados(data):
                 'atividadeplanotrabalho': atividadeplanotrabalho,
                 'assuntoatividadeplanotrabalho': assuntoatividadeplanotrabalho,
                 'equipegeral': equipegeral,
-                'supervisor': supervisores,
-                'arquivocomportamento': arquivocomportamento,
+                'supervisores': supervisores,
+                'arquivocomportamentoespecifico': arquivocomportamento,
                 'estadosituacao': estadosituacao,
                 'pendencias': listapendencia,
                 'abasatividade': listaabaatividades,
@@ -247,6 +247,7 @@ def salvar_dados(resultado_array):
                  tarefa['observadores'],
                  tarefa['hipoteselegal'],
                  tarefa['coordenadorequipe'],
+                 tarefa['supervisores'],
                  tarefa['resultados'],
                  tarefa['idplanotrabalho'],
                  tarefa['tituloplanotrabalho'],
@@ -254,7 +255,7 @@ def salvar_dados(resultado_array):
                  tarefa['atividadeplanotrabalho'],
                  tarefa['assuntoatividadeplanotrabalho'],
                  tarefa['equipegeral'],
-                 tarefa['arquivocomportamento'],
+                 tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
                  tarefa['listapendencia'],
@@ -265,8 +266,8 @@ def salvar_dados(resultado_array):
                                                 titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,unidadesenvolvidas,anexosgerais,observadores,hipoteselegal,
-                                                coordenadorequipe,coordenadorequipe,resultados,idplanotrabalho,tituloplanotrabalho,idatividadeplanotrabalho,
-                                                atividadeplanotrabalho,assuntoatividadeplanotrabalho,equipegeral,arquivocomportamento, estadosituacao,
+                                                coordenadorequipe,supervisores,resultados,idplanotrabalho,tituloplanotrabalho,idatividadeplanotrabalho,
+                                                atividadeplanotrabalho,assuntoatividadeplanotrabalho,equipegeral,arquivocomportamentoespecifico, estadosituacao,
                                                 tags,listapendencia,listaabaatividades) VALUES {array_records}""",)
 
             cur.execute(insert_query, lista)

@@ -291,7 +291,7 @@ def salvar_dados(resultado_array):
                  tarefa['cpf'],
                  tarefa['cnpjs'],
                  tarefa['valoratualizado'],
-                 tarefa['arquivocomportamento'],
+                 tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
                  tarefa['listapendencia'],
@@ -304,7 +304,7 @@ def salvar_dados(resultado_array):
                                                 dataultimamodificacao,autorultimamodificacao,unidadeexecutora,fatosobapuracao,anexosgerais,
                                                 processosassociados,tceorigem,produtouaig,numprocessotribunal,localidadesinteracao,numresolucaoportaria,
                                                 dataencaminhado,fatoapuracao,links,datainstauracao,unidadesenvolvidas,procedvaloratualizado,enciatce,destinatariousuariounidade,
-                                                executores,valorprejuizoestimado,gerentesubprojeto,tipopessoa,cpf,cnpjs,arquivocomportamento,estadosituacao,
+                                                executores,valorprejuizoestimado,gerentesubprojeto,tipopessoa,cpf,cnpjs,arquivocomportamentoespecifico,estadosituacao,
                                                 tags,listapendencia,listaabaatividades) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)

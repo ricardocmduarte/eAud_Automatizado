@@ -35,6 +35,8 @@ CREATE TABLE IF NOT EXISTS public.auto_avaliacao_iacm
     unidadesuperior character varying(5000) COLLATE pg_catalog."default",
     mesconclusaoprevisto character varying(5000) COLLATE pg_catalog."default",
     textoajuda character varying(5000) COLLATE pg_catalog."default",
+    arquivocomportamentoespecifico character varying(5000) COLLATE pg_catalog."default",
+    estadosituacao character varying(5000) COLLATE pg_catalog."default",
     tags character varying(5000) COLLATE pg_catalog."default",
     pendencias character varying(5000) COLLATE pg_catalog."default",
     abasatividade character varying(5000) COLLATE pg_catalog."default",

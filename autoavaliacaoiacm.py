@@ -91,6 +91,14 @@ def tratamento_dados(data):
 
             textohistorico = tarefa['campos']['textoDoHistorico']['valor']
 
+            iacmplanoacao = tarefa['campos']['iacmPlanoDeAcao']['valor']
+            nomeexibicaosup = tarefa['campos']['unidadeSup']['valor']['nomeExibicao']
+            mesconclusaoprevisto = tarefa['mesConclusaoPrevisto']
+            textoajuda = tarefa['textoAjudaSituacao']
+
+            estadosituacao = tarefa['estadoSituacao']
+            arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
+
             descricaotag = tarefa['campos']['tags']['valor']
             tags = []
             if descricaotag:
@@ -98,11 +106,6 @@ def tratamento_dados(data):
                     descricaotag.append(tagdesc['descricao'])
 
                 tags = join_data(tags)
-
-            iacmplanoacao = tarefa['campos']['iacmPlanoDeAcao']['valor']
-            nomeexibicaosup = tarefa['campos']['unidadeSup']['valor']['nomeExibicao']
-            mesconclusaoprevisto = tarefa['mesConclusaoPrevisto']
-            textoajuda = tarefa['textoAjudaSituacao']
 
             pendencias = tarefa['pendencias']
             listapendencia = []
@@ -148,11 +151,13 @@ def tratamento_dados(data):
                 'tarefaprecedentes': tarefaprecedentes,
                 'niveliacm': valorniveliacm,
                 'textohistorico': textohistorico,
-                'tags': tags,
                 'iacmplanoacao': iacmplanoacao,
                 'unidadesuperior': nomeexibicaosup,
                 'mesconclusaoprevisto': mesconclusaoprevisto,
                 'textoajuda': textoajuda,
+                'arquivocomportamentoespecifico': arquivocomportamento,
+                'estadosituacao': estadosituacao,
+                'tags': tags,
                 'pendencias': listapendencia,
                 'abasatividade': listaabaatividades,
             })
@@ -169,7 +174,7 @@ def salvar_dados(resultado_array):
         banco = db.db_connection
         cur = banco.cursor()
 
-        requests = db.current_datetime_query(resultado_array)
+        resultado_array = db.current_datetime_query(resultado_array)
 
         for tarefa in resultado_array:
             lista = [
@@ -203,6 +208,8 @@ def salvar_dados(resultado_array):
                  tarefa['nomeexibicaosup'],
                  tarefa['mesconclusaoprevisto'],
                  tarefa['textoajuda'],
+                 tarefa['estadosituacao'],
+                 tarefa['arquivocomportamento'],
                  tarefa['tags'],
                  tarefa['listapendencia'],
                  tarefa['listaabaatividades']
@@ -212,8 +219,8 @@ def salvar_dados(resultado_array):
                                                 titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,anexosgerais,equipevalidacaoexterna,unidadevalidadoras,
-                                                relatoriovalidacao,equipeiacm,unidadeauditoriasuptec,tarefaprecedentes,
-                                                valorniveliacm,textohistorico,iacmplanoacao,nomeexibicaosup,mesconclusaoprevisto,
+                                                relatoriovalidacao,equipeiacm,unidadeauditoriasuptec,tarefaprecedentes,estadosituacao,
+                                                valorniveliacm,textohistorico,iacmplanoacao,nomeexibicaosup,mesconclusaoprevisto,arquivocomportamento,
                                                 textoajuda,tags,listapendencia,listaabaatividades) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)

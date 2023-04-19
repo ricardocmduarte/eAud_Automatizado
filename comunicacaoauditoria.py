@@ -121,14 +121,6 @@ def tratamento_dados(data):
             dataenviocomunicacao = tarefa['campos']['dataEnvioComunicacao']['valor']
             dataciencia = tarefa['campos']['dataCiencia']['valor']
 
-            descricaotag = tarefa['campos']['tags']['valor']
-            tags = []
-            if descricaotag:
-                for i, tagdesc in enumerate(descricaotag):
-                    tags.append(tagdesc['descricao'])
-
-                tags = join_data(tags)
-
             equipegeral = tarefa['campos']['EquipeGeral']['valor']
             equipe = []
             if equipegeral:
@@ -138,6 +130,16 @@ def tratamento_dados(data):
                 equipe = join_data(equipe)
 
             indminutaremente = tarefa['campos']['indMinutaRemetente']['valor']
+            estadosituacao = tarefa['estadoSituacao']
+            arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
+
+            descricaotag = tarefa['campos']['tags']['valor']
+            tags = []
+            if descricaotag:
+                for i, tagdesc in enumerate(descricaotag):
+                    tags.append(tagdesc['descricao'])
+
+                tags = join_data(tags)
 
             pendencias = tarefa['pendencias']
             listapendencia = []
@@ -188,6 +190,8 @@ def tratamento_dados(data):
                 'coordenadorequipe': coordenador,
                 'equipegeral': equipe,
                 'supervisores': supervisor,
+                'arquivocomportamentoespecifico': arquivocomportamento,
+                'estadosituacao': estadosituacao,
                 'tags': tags,
                 'pendencias': listapendencia,
                 'abasatividade': listaabaatividades,
@@ -238,9 +242,11 @@ def salvar_dados(resultado_array):
                  tarefa['indminutaremente'],
                  tarefa['tarefasprecedentes'],
                  tarefa['unidadesenvol'],
-                 tarefa['coordenador'],
-                 tarefa['equipe'],
-                 tarefa['supervisor'],
+                 tarefa['coordenadorequipe'],
+                 tarefa['equipegeral'],
+                 tarefa['supervisores'],
+                 tarefa['arquivocomportamentoespecifico'],
+                 tarefa['estadosituacao'],
                  tarefa['tags'],
                  tarefa['listapendencia'],
                  tarefa['listaabaatividades']
@@ -251,7 +257,8 @@ def salvar_dados(resultado_array):
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,indminutadestinatario,detalhamento,anexgerais,
                                                 destinatario,copiacomunicacao,prazo,dataenviocomunicacao,dataciencia,indminutaremente,
-                                                tarefasprecedentes,unidadesenvol,coordenador,equipe,supervisor,tags,listapendencia,listaabaatividades) VALUES {array_records}""")
+                                                tarefasprecedentes,unidadesenvol,coordenadorequipe,equipegeral,supervisores,
+                                                estadosituacao, arquivocomportamentoespecifico,tags,listapendencia,listaabaatividades) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
             get_log(f"{tipo_arquivo} salvo com sucesso")

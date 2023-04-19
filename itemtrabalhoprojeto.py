@@ -152,6 +152,7 @@ def tratamento_dados(data):
                 tags = join_data(tags)
 
             estadosituacao = tarefa['estadoSituacao']
+            arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
 
             pendencias = tarefa['pendencias']
             listapendencia = []
@@ -202,6 +203,7 @@ def tratamento_dados(data):
                 'executor': executores,
                 'tags': tags,
                 'estadosituacao': estadosituacao,
+                'arquivocomportamentoespecifico': arquivocomportamento,
                 'pendencias': listapendencia,
                 'abasatividade': listaabaatividades,
             })
@@ -252,6 +254,8 @@ def salvar_dados(resultado_array):
                  tarefa['destinatariousuariounidade'],
                  tarefa['tarefasprecedentes'],
                  tarefa['executores'],
+                 tarefa['estadosituacao'],
+                 tarefa['arquivocomportamentoespecifico'],
                  tarefa['tags'],
                  tarefa['listapendencia'],
                  tarefa['listaabaatividades']
@@ -262,7 +266,7 @@ def salvar_dados(resultado_array):
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,unidadesexecutoras,detalhamento,anexos,
                                                 anexosgerais,processoassociado,produtouaig,supervisores,links,homemhora,unidadesenvolvidas,
-                                                destinatariousuariounidade,tarefasprecedentes,executores,,estadosituacao,
+                                                destinatariousuariounidade,tarefasprecedentes,executores,arquivocomportamentoespecifico,estadosituacao,
                                                 tags,listapendencia,listaabaatividades) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
