@@ -23,8 +23,7 @@ def get_apuracao_preliminar(ids):
         if ids:
             for i, id in enumerate(ids):
                 lista_dados.append(get_apuracao_preliminar_requisicao(id))
-                if lista_dados == None:
-                    break
+
                 print(
                     f"Iteração get_apuracao_preliminar {str(i)} registrada com sucesso")
 
@@ -41,9 +40,9 @@ def get_apuracao_preliminar(ids):
         get_log("Lista de achados ok")
         return print("Lista de achados ok")
     except NameError as err:
-        get_log("Erro ao salvar os dados get_apuracao_preliminar".upper())
+        get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
         get_log(err)
-        return print("Erro ao salvar os dados get_apuracao_preliminar", err)
+        return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
 
 def tratamento_dados(data):
@@ -77,16 +76,9 @@ def tratamento_dados(data):
             observadores = tarefa['campos']['observadores']['valor']
             hipoteselegal = tarefa['campos']['hipoteseLegal']['valor']
 
-            descricaotag = tarefa['campos']['tags']['valor']
-            tags = []
-            if descricaotag:
-                for i, tagdesc in enumerate(descricaotag):
-                    tags.append(tagdesc['descricao'])
-
-                tags = join_data(tags)
-
             matrizriscos = tarefa['campos']['matrizRiscosControles']['valor']
-            matriz = matrizriscos
+            if matrizriscos:
+                matriz = matrizriscos['nome']
 
             coordenadorequipe = tarefa['campos']['CoordenadorEquipe']['valor']
             coordenador = []
@@ -111,6 +103,17 @@ def tratamento_dados(data):
                     supervisor.append(super['nomeExibicao'])
 
                 supervisor = join_data(supervisor)
+
+            estadosituacao = tarefa['estadoSituacao']
+            arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
+
+            descricaotag = tarefa['campos']['tags']['valor']
+            tags = []
+            if descricaotag:
+                for i, tagdesc in enumerate(descricaotag):
+                    tags.append(tagdesc['descricao'])
+
+                tags = join_data(tags)
 
             pendencias = tarefa['pendencias']
             listapendencia = []
@@ -156,16 +159,18 @@ def tratamento_dados(data):
                 'coordenadorequipe': coordenador,
                 'equipegeral': equipe,
                 'supervisores': supervisor,
+                'arquivocomportamentoespecifico': arquivocomportamento,
+                'estadosituacao': estadosituacao,
                 'tags': tags,
                 'pendencias': listapendencia,
                 'abasatividade': listaabaatividades,
             })
-        get_log("Lista apuracao_preliminar tratada com sucesso")
+        get_log(f"Lista {tipo_arquivo} tratada com sucesso")
         return lista_final
     except NameError as err:
-        get_log("Erro ao tratar os dados apuracao_preliminar".upper())
+        get_log(f"Erro ao tratar os dados {tipo_arquivo}".upper())
         get_log(err)
-        return print("Erro ao tratar os dados apuracao_preliminar", err)
+        return print(f"Erro ao tratar os dados {tipo_arquivo}", err)
 
 
 def salvar_dados(resultado_array):
@@ -200,9 +205,11 @@ def salvar_dados(resultado_array):
                  tarefa['tarefasprecedentes'],
                  tarefa['observadores'],
                  tarefa['hipoteselegal'],
-                 tarefa['coordenador'],
-                 tarefa['equipe'],
-                 tarefa['supervisor'],
+                 tarefa['coordenadorequipe'],
+                 tarefa['equipegeral'],
+                 tarefa['supervisores'],
+                 tarefa['arquivocomportamentoespecifico'],
+                 tarefa['estadosituacao'],
                  tarefa['tags'],
                  tarefa['pendencias'],
                  tarefa['abasatividade']
@@ -211,18 +218,18 @@ def salvar_dados(resultado_array):
             insert_query = (f"""INSERT INTO apuracao_preliminar (id, situacao, estado, atividade, titulo, titulotarefaassociada,
                                                 titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
-                                                dataultimamodificacao,autorultimamodificacao,anexosgerais,linkanalise,matriz,
+                                                dataultimamodificacao,autorultimamodificacao,anexosgerais,linkanalise,
                                                 arquivoComportamentoEspecifico,matriz,tarefasprecedentes,observadores, hipoteselegal,
-                                                coordenador,equipe,supervisor, tags,pendencias,abasatividade) VALUES {array_records}""")
+                                                coordenadorequipe,equipegeral,supervisores,estadosituacao, tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
-            get_log("Apuracao_preliminar salvo com sucesso")
+            get_log(f"{tipo_arquivo} salvo com sucesso")
         banco.commit()
         banco.close()
     except NameError as err:
-        get_log("Erro ao salvar os dados get_apuracao_preliminar".upper())
+        get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
         get_log(err)
-        return print("Erro ao salvar os dados get_apuracao_preliminar", err)
+        return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
 
 def get_apuracao_preliminar_requisicao(id):

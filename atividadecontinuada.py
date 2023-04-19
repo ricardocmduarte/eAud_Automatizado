@@ -23,10 +23,9 @@ def get_atividade_continuada(ids):
         if ids:
             for i, id in enumerate(ids):
                 lista_dados.append(get_atividade_continuada_requisicao(id))
-                if lista_dados == None:
-                    break
+
                 print(
-                    f"Iteração get_atividade_continuada {str(i)} registrada com sucesso")
+                    f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
 
         get_log(
             f"Esta requisicao {tipo_arquivo} contém {len(lista_final)} itens")
@@ -38,12 +37,12 @@ def get_atividade_continuada(ids):
         # comando para salvar os dados tratados
         if lista_final:
             salvar_dados(lista_final)
-        get_log("Lista de atividade continuada ok")
-        return print("Lista de atividade continuada ok")
+        get_log(f"Lista de {tipo_arquivo} ok")
+        return print(f"Lista de {tipo_arquivo} ok")
     except NameError as err:
-        get_log("Erro ao salvar os dados get_atividade_continuada".upper())
+        get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
         get_log(err)
-        return print("Erro ao salvar os dados get_atividade_continuada", err)
+        return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
 
 def tratamento_dados(data):
@@ -122,14 +121,6 @@ def tratamento_dados(data):
 
             homemhora = tarefa['campos']['homemHorasPlanoTrabalho']['valor']
 
-            descricaotag = tarefa['campos']['tags']['valor']
-            tags = []
-            if descricaotag:
-                for i, tagdesc in enumerate(descricaotag):
-                    tags.append(tagdesc['descricao'])
-
-                tags = join_data(tags)
-
             gerentes = tarefa['campos']['gerentesPlanoTrabalho']['valor']
             gerente = []
             if gerentes:
@@ -147,6 +138,17 @@ def tratamento_dados(data):
                 supervisorplano = join_data(supervisorplano)
 
             tipoplano = tarefa['campos']['tipoPlanoTrabalho']['valor']['valor']
+
+            estadosituacao = tarefa['estadoSituacao']
+            arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
+
+            descricaotag = tarefa['campos']['tags']['valor']
+            tags = []
+            if descricaotag:
+                for i, tagdesc in enumerate(descricaotag):
+                    tags.append(tagdesc['descricao'])
+
+                tags = join_data(tags)
 
             pendencias = tarefa['pendencias']
             listapendencia = []
@@ -198,6 +200,8 @@ def tratamento_dados(data):
             'gerentes': gerente,
             'supervisorplanotrabalho': supervisorplano,
             'tipoplano': tipoplano,
+            'arquivocomportamentoespecifico': arquivocomportamento,
+            'estadosituacao': estadosituacao,
             'tags': tags,
             'pendencias': listapendencia,
             'abasatividade': listaabaatividades,
@@ -205,9 +209,9 @@ def tratamento_dados(data):
         get_log("Lista get_atividade_continuada tratada com sucesso")
         return lista_final
     except NameError as err:
-        get_log("Erro ao tratar os dados get_atividade_continuada".upper())
+        get_log(f"Erro ao tratar os dados {tipo_arquivo}".upper())
         get_log(err)
-        return print("Erro ao tratar os dados get_atividade_continuada", err)
+        return print(f"Erro ao tratar os dados {tipo_arquivo}", err)
 
 
 def salvar_dados(resultado_array):
@@ -251,6 +255,8 @@ def salvar_dados(resultado_array):
                  tarefa['gerente'],
                  tarefa['supervisorplano'],
                  tarefa['tipoplano'],
+                 tarefa['arquivocomportamentoespecifico'],
+                 tarefa['estadosituacao'],
                  tarefa['tags'],
                  tarefa['listapendencia'],
                  tarefa['listaabaatividades'],
@@ -261,16 +267,16 @@ def salvar_dados(resultado_array):
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,detalhamento,proponenteplanotrabalho,etapaplanotrabalho,
                                                 localtrabalho,linktarefa,resultados,recursofinanceiro,envolvidos,homemhora,gerente,supervisorplano,
-                                                tipoplano,arquivoComportamentoEspecifico, tags,pendencias,abasatividade) VALUES {array_records}""")
+                                                tipoplano,arquivoComportamentoEspecifico,estadosituacao, tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
-            get_log("Atividade_continuada salvo com sucesso")
+            get_log(f"{tipo_arquivo} salvo com sucesso")
         banco.commit()
         banco.close()
     except NameError as err:
-        get_log("Erro ao salvar os dados get_atividade_continuada".upper())
+        get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
         get_log(err)
-        return print("Erro ao salvar os dados get_atividade_continuada", err)
+        return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
 
 def get_atividade_continuada_requisicao(id):

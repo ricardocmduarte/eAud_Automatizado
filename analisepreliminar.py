@@ -190,7 +190,7 @@ def tratamento_dados(data):
             'classificacaoacesso': classificacaoacesso,
             'supervisores': supervisor,
             'arquivocomportamentoespecifico': arquivocomportamento,
-            'estadosituacao': estado,
+            'estadosituacao': estadosituacao,
             'tags': descricaotag,
             'pendencias': listapendencia,
             'abasatividade': listaabaatividades,
@@ -239,7 +239,7 @@ def salvar_dados(resultado_array):
                  tarefa['hipoteselegal'],
                  tarefa['coordenadorequipe'],
                  tarefa['equipegeral'],
-                 tarefa['supervisor'],
+                 tarefa['supervisores'],
                  tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
@@ -252,17 +252,17 @@ def salvar_dados(resultado_array):
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,nomeunidadesenvolvidas,universoauditavel,anexos,
                                                 arquivoComportamentoEspecifico,objetosauditoria,matrizcontrole,tarefasprecedentes,
-                                                observadores, hipoteselegal,coordenadorequipe,equipegeral,supervisor, arquivocomportamentoespecifico,
+                                                observadores, hipoteselegal,coordenadorequipe,equipegeral,supervisores, arquivocomportamentoespecifico,
                                                 estadosituacao,tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
-            get_log("Analise_auditoria_preliminar salvo com sucesso")
+            get_log(f"{tipo_arquivo} salvo com sucesso")
         banco.commit()
         banco.close()
     except NameError as err:
-        get_log("Erro ao salvar os dados get_analise_preliminar".upper())
+        get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
         get_log(err)
-        return print("Erro ao salvar os dados get_analise_preliminar", err)
+        return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
 
 def get_analise_preliminar_requisicao(id):
