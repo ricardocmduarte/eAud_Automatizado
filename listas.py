@@ -168,14 +168,14 @@ def listar():
             return ("Erro ao salvar os dados")
 
     # def achados auditoria
-    importacoes.achadosauditoria.get_achados(lista_achados)
+    '''importacoes.achadosauditoria.get_achados(lista_achados)
     # def analise auditoria
-    importacoes.analiseauditoria.get_analise_auditoria(lista_analise_auditoria)
+    importacoes.analiseauditoria.get_analise_auditoria(lista_analise_auditoria)'''
     # def analise preliminar
     importacoes.analisepreliminar.get_analise_preliminar(
         lista_analise_preliminar)
     # def apuração preliminar
-    importacoes.apuracaopreliminar.get_apuracao_preliminar(
+    '''importacoes.apuracaopreliminar.get_apuracao_preliminar(
         lista_apuracao_preliminar)
     # def atividade continuada
     importacoes.atividadecontinuada.get_atividade_continuada(
@@ -226,4 +226,4 @@ def listar():
         lista_resultados_consultoria)
     # def termo compromisso consultoria
     importacoes.termocompromissoconsultoria.get_termo_compromisso_consultoria(
-        lista_termo_compromisso_consultoria)
+        lista_termo_compromisso_consultoria)'''

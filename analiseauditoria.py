@@ -23,8 +23,7 @@ def get_analise_auditoria(ids):
         if ids:
             for i, id in enumerate(ids):
                 lista_dados.append(get_analise_auditoria_requisicao(id))
-                if lista_dados == None:
-                    break
+
                 print(f"Iteração get_achados {str(i)} registrada com sucesso")
 
         get_log(
@@ -76,43 +75,25 @@ def tratamento_dados(data):
                     nomeunidadesenvolvidas.append(envolvidasunidades['nome'])
                 nomeunidadesenvolvidas = join_data(nomeunidadesenvolvidas)
 
-            idanalise = tarefa['campos']['itensDaAnaliseAuditoria']['valor']['idAnaliseAuditoria']
-            conclusaodesc = tarefa['campos']['itensDaAnaliseAuditoria']['valor']['conclusao']['descricao']
-            descricoes = conclusaodesc['teste']
-            descteste = descricoes['descTeste']
-            desccriterio = descricoes['descCriterio']
-            descinformacao = descricoes['descInformacao']
-            descfonte = descricoes['descFonte']
-            desclimitacao = descricoes['descLimitacao']
-            descachado = descricoes['descAchado']
-
-            '''for i, itens in enumerate(itemanaliseauditoria):
-                idanalise = itens['idAnaliseAuditoria']
-
-                conclusaodesc = itens['conclusao']['descricao']
-
-                descricoes = itens['teste']
-                descteste = descricoes['descTeste']
-                desccriterio = descricoes['descCriterio']
-                descinformacao = descricoes['descInformacao']
-                descfonte = descricoes['descFonte']
-                desclimitacao = descricoes['descLimitacao']
-                descachado = descricoes['descAchado']'''
+            itemanaliseauditoria = tarefa['campos']['itensDaAnaliseAuditoria']['valor']
+            for i, itens in enumerate(itemanaliseauditoria):
+                idanaliseauditoria = itens['idAnaliseAuditoria']
+                descteste = itens['teste']['descTeste']
+                desccriterio = itens['teste']['descCriterio']
+                descinformacao = itens['teste']['descInformacao']
+                descfonte = itens['teste']['descFonte']
+                desclimitacao = itens['teste']['descLimitacao']
+                descachado = itens['teste']['descAchado']
+                observacoes = itens['observacao']
 
             tarefasprecedentes = tarefa['campos']['tarefasPrecedentes']['valor']
             observadores = tarefa['campos']['observadores']['valor']
             hipoteselegal = tarefa['campos']['hipoteseLegal']['valor']
 
-            descricaotag = tarefa['campos']['tags']['valor']
-            tags = []
-            if descricaotag:
-                for i, tagdesc in enumerate(descricaotag):
-                    tags.append(tagdesc['descricao'])
-
-                tags = join_data(tags)
-
             matrizachados = tarefa['campos']['matrizAchados']['valor']
-            matriz = matrizachados['nome']
+            matriz = []
+            if matrizachados:
+                matriz = matrizachados['nome']
 
             coordenadorequipe = tarefa['campos']['CoordenadorEquipe']['valor']
             coordenador = []
@@ -138,6 +119,14 @@ def tratamento_dados(data):
 
                 supervisor = join_data(supervisor)
 
+            descricaotag = tarefa['campos']['tags']['valor']
+            tags = []
+            if descricaotag:
+                for i, tagdesc in enumerate(descricaotag):
+                    tags.append(tagdesc['descricao'])
+
+                tags = join_data(tags)
+
             pendencias = tarefa['pendencias']
             listapendencia = []
             if pendencias:
@@ -153,6 +142,9 @@ def tratamento_dados(data):
                     listaabaatividades.append(abas['descricao'])
 
                 listaabaatividades = join_data(listaabaatividades)
+
+            estadosituacao = tarefa['estadoSituacao']
+            arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
 
             lista_final.append({
                 'id': id,
@@ -174,14 +166,14 @@ def tratamento_dados(data):
                 'dataultimamodificacao': dataultimamodificacao,
                 'autorultimamodificacao': autorultimamodificacao,
                 'unidadesenvolvidas': nomeunidadesenvolvidas,
-                'idanalise': idanalise,
-                'conclusaodesc': conclusaodesc,
+                'idanaliseauditoria': idanaliseauditoria,
                 'descteste': descteste,
                 'desccriterio': desccriterio,
                 'descinformacao': descinformacao,
                 'descfonte': descfonte,
                 'desclimitacao': desclimitacao,
                 'descachado': descachado,
+                'observacoes': observacoes,
                 'matrizachados': matriz,
                 'tarefasprecedentes': tarefasprecedentes,
                 'observadores': observadores,
@@ -189,7 +181,9 @@ def tratamento_dados(data):
                 'coordenadorequipe': coordenador,
                 'equipegeral': equipe,
                 'supervisores': supervisor,
-                'tags': descricaotag,
+                'arquivocomportamentoespecifico': arquivocomportamento,
+                'estadosituacao': estadosituacao,
+                'tags': tags,
                 'pendencias': listapendencia,
                 'abasatividade': listaabaatividades,
             })
@@ -203,7 +197,7 @@ def tratamento_dados(data):
 
 def salvar_dados(resultado_array):
     try:
-        banco = db.db_connection
+        banco = db.db_connection()
         cur = banco.cursor()
 
         resultado_array = db.current_datetime_query(resultado_array)
@@ -227,34 +221,37 @@ def salvar_dados(resultado_array):
                  tarefa['idsituacao'],
                  tarefa['dataultimamodificacao'],
                  tarefa['autorultimamodificacao'],
-                 tarefa['idanalise'],
-                 tarefa['conclusaodesc'],
+                 tarefa['unidadesenvolvidas'],
+                 tarefa['idanaliseauditoria'],
                  tarefa['descteste'],
                  tarefa['desccriterio'],
                  tarefa['descinformacao'],
                  tarefa['descfonte'],
                  tarefa['desclimitacao'],
                  tarefa['descachado'],
-                 tarefa['matriz'],
+                 tarefa['observacoes'],
+                 tarefa['matrizachados'],
                  tarefa['tarefasprecedentes'],
                  tarefa['observadores'],
                  tarefa['hipoteselegal'],
-                 tarefa['coordenador'],
-                 tarefa['equipe'],
-                 tarefa['supervisor'],
+                 tarefa['coordenadorequipe'],
+                 tarefa['equipegeral'],
+                 tarefa['supervisores'],
+                 tarefa['arquivocomportamentoespecifico'],
+                 tarefa['estadosituacao'],
                  tarefa['tags'],
                  tarefa['pendencias'],
                  tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
             insert_query = (f"""INSERT INTO analise_auditoria (id, situacao, estado, atividade, titulo, titulotarefaassociada,
-                                                titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
+                                                dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
-                                                dataultimamodificacao,autorultimamodificacao,idanalise
-                                                nomeunidadesenvolvidas,universoauditavel,anexos,conclusaodesc,descteste,desccriterio,
-                                                descinformacao,descfonte,desclimitacao,descachado,arquivoComportamentoEspecifico,
-                                                matriz,tarefasprecedentes,observadores, hipoteselegal,
-                                                coordenador,equipe,supervisor, tags,pendencias,abasatividade) VALUES {array_records}""")
+                                                dataultimamodificacao,autorultimamodificacao,unidadesenvolvidas,
+                                                idanaliseauditoria,descteste,desccriterio,
+                                                descinformacao,descfonte,desclimitacao,descachado,observacoes,arquivoComportamentoEspecifico,
+                                                matrizachados,tarefasprecedentes,observadores, hipoteselegal, estadosituacao,
+                                                coordenadorequipe,equipegeral,supervisores, tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
             get_log("Analise_auditoria salvo com sucesso")
