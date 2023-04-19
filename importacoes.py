@@ -1,24 +1,24 @@
-import achadosauditoria as achadosauditoria
-import analiseauditoria as analiseauditoria
-import analisepreliminar as analisepreliminar
-import apuracaopreliminar as apuracaopreliminar
-import atividadecontinuada as atividadecontinuada
-import auditoria as auditoria
-import autoavaliacaoiacm as autoavaliacaoiacm
-import comunicacaoauditoria as comunicacaoauditoria
-import escopoauditoria as escopoauditoria
-import execucaoconsultoria as execucaoconsultoria
-import itemprocessoanalisetce as itemprocessoanalisetce
-import itemtrabalhoatividade as itemtrabalhoatividade
-import itemtrabalhoprojeto as itemtrabalhoprojeto
-import kpaiacm as kpaiacm
-import matrizplanejamento as matrizplanejamento
-import minutaposicionamento as minutaposicionamento
-import monitoramento as monitoramento
-import planejamentoconsultoria as planejamentoconsultoria
-import projetogeral as projetogeral
-import relatoriofinal as relatoriofinal
-import relatoriopreliminar as relatoriopreliminar
-import resultadosconsultoria as resultadosconsultoria
-import tarefas as tarefas
-import termocompromissoconsultoria as termocompromissoconsultoria
+import achadosauditoria
+import analiseauditoria
+import analisepreliminar
+import apuracaopreliminar
+import atividadecontinuada
+import auditoria
+import autoavaliacaoiacm
+import comunicacaoauditoria
+import escopoauditoria
+import execucaoconsultoria
+import itemprocessoanalisetce
+import itemtrabalhoatividade
+import itemtrabalhoprojeto
+import kpaiacm
+import matrizplanejamento
+import minutaposicionamento
+import monitoramento
+import planejamentoconsultoria
+import projetogeral
+import relatoriofinal
+import relatoriopreliminar
+import resultadosconsultoria
+import tarefas
+import termocompromissoconsultoria

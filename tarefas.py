@@ -23,9 +23,6 @@ def get_tarefas():
 
         while offset < limite_offset:
             resultado_array = get_tarefas_requisicao(offset)
-            '''if resultado_array == None or resultado_array == [] or resultado_array == '':
-                get_log('Lista de tarefas vazia')
-                return print('Lista de tarefas vazia')'''
             if resultado_array:
                 for i, lista_appended in enumerate(resultado_array):
                     lista_final.append({
