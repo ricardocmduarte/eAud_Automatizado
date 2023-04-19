@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS public.projeto_geral
     supervisores character varying(5000) COLLATE pg_catalog."default",
     objetivoplanotrabalho character varying(5000) COLLATE pg_catalog."default",
     tipoplanotrabalho character varying(5000) COLLATE pg_catalog."default",
-    arquivocomportamento character varying(5000) COLLATE pg_catalog."default",
+    arquivocomportamentoespecifico character varying(5000) COLLATE pg_catalog."default",
     estadosituacao character varying(5000) COLLATE pg_catalog."default",
     tags character varying(5000) COLLATE pg_catalog."default",
     pendencias character varying(5000) COLLATE pg_catalog."default",

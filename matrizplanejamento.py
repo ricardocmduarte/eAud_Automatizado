@@ -234,8 +234,8 @@ def salvar_dados(resultado_array):
                  tarefa['observadores'],
                  tarefa['hipoteselegal'],
                  tarefa['matriz'],
-                 tarefa['coordenador'],
-                 tarefa['equipe'],
+                 tarefa['coordenadorequipe'],
+                 tarefa['equipegeral'],
                  tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
@@ -247,7 +247,7 @@ def salvar_dados(resultado_array):
                                                 titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,unidadesenvolvidas,tarefasprecedentes,observadores,
-                                                hipoteselegal,matriz, coordenador,equipe, arquivocomportamentoespecifico,estadosituacao
+                                                hipoteselegal,matriz, coordenadorequipe,equipegeral, arquivocomportamentoespecifico,estadosituacao
                                                 tags,listapendencia,listaabaatividades) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)

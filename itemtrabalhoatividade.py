@@ -194,7 +194,7 @@ def tratamento_dados(data):
                 'unidadesenvolvidas': unidadesenvolvidas,
                 'destinatariousuariounidade': destinatariousuariounidade,
                 'tarefasprecedentes': tarefasprecedentes,
-                'executor': executores,
+                'executores': executores,
                 'tags': tags,
                 'estadosituacao': estadosituacao,
                 'arquivocomportamentoespecifico': arquivocomportamento,
@@ -260,7 +260,7 @@ def salvar_dados(resultado_array):
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,unidadeexecutoras,detalhamento,anexos,
                                                 processosassociados,processt,origemdemanda,links,homemhora,unidadesenvolvidas,destinatariousuariounidade,
-                                                tarefasprecedentes,executores,,estadosituacao,arquivocomportamentoespecifico,
+                                                tarefasprecedentes,executores,estadosituacao,arquivocomportamentoespecifico,
                                                 tags,listapendencia,listaabaatividades) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)

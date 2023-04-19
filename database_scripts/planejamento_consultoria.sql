@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS public.planejamento_consultoria
     coordenadorequipe character varying(5000) COLLATE pg_catalog."default",
     equipegeral character varying(5000) COLLATE pg_catalog."default",
     supervisores character varying(5000) COLLATE pg_catalog."default",
-    arquivocomportamento character varying(5000) COLLATE pg_catalog."default",
+    arquivocomportamentoespecifico character varying(5000) COLLATE pg_catalog."default",
     estadosituacao character varying(5000) COLLATE pg_catalog."default",
     tags character varying(5000) COLLATE pg_catalog."default",
     pendencias character varying(5000) COLLATE pg_catalog."default",

@@ -200,7 +200,7 @@ def tratamento_dados(data):
                 'unidadesenvolvidas': unidadesenvolvidas,
                 'destinatariousuariounidade': destinatariousuariounidade,
                 'tarefasprecedentes': tarefasprecedentes,
-                'executor': executores,
+                'executores': executores,
                 'tags': tags,
                 'estadosituacao': estadosituacao,
                 'arquivocomportamentoespecifico': arquivocomportamento,

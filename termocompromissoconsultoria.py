@@ -259,7 +259,7 @@ def salvar_dados(resultado_array):
                                                 titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,unidadesenvolvidas,anexosgerais,observadores,hipoteselegal,
-                                                docsolicitacao,coordenadorequipe,equipegeral,supervisor,termocompromisso,arquivocomportamentoespecifico, estadosituacao,
+                                                docsolicitacao,coordenadorequipe,equipegeral,supervisores,termocompromisso,arquivocomportamentoespecifico, estadosituacao,
                                                 tags,listapendencia,listaabaatividades) VALUES {array_records}""",)
 
             cur.execute(insert_query, lista)

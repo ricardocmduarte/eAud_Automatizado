@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS public.monitoramento
     textoultimoposicionamento character varying(5000) COLLATE pg_catalog."default",
     textoultimamanifestacao character varying(5000) COLLATE pg_catalog."default",
     anexorelatorio character varying(5000) COLLATE pg_catalog."default",
-    arquivocomportamento character varying(5000) COLLATE pg_catalog."default",
+    arquivocomportamentoespecifico character varying(5000) COLLATE pg_catalog."default",
     estadosituacao character varying(5000) COLLATE pg_catalog."default",
     tags character varying(5000) COLLATE pg_catalog."default",
     pendencias character varying(5000) COLLATE pg_catalog."default",
