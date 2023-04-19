@@ -76,15 +76,60 @@ def tratamento_dados(data):
                 nomeunidadesenvolvidas = join_data(nomeunidadesenvolvidas)
 
             itemanaliseauditoria = tarefa['campos']['itensDaAnaliseAuditoria']['valor']
+            idanaliseauditoria = []
+            descteste = []
+            desccriterio = []
+            descinformacao = []
+            descfonte = []
+            desclimitacao = []
+            descachado = []
+            observacoes = []
+            descricaoescopo = []
+            valortotalescopo = []
+            valorauditadoescopo = []
+            anexoescopo = []
+            responsavelitem = []
+            anexoevidencia = []
+            autoranexoevidencia = []
             for i, itens in enumerate(itemanaliseauditoria):
-                idanaliseauditoria = itens['idAnaliseAuditoria']
-                descteste = itens['teste']['descTeste']
-                desccriterio = itens['teste']['descCriterio']
-                descinformacao = itens['teste']['descInformacao']
-                descfonte = itens['teste']['descFonte']
-                desclimitacao = itens['teste']['descLimitacao']
-                descachado = itens['teste']['descAchado']
-                observacoes = itens['observacao']
+                idanaliseauditoria.append(itens['idAnaliseAuditoria'])
+                descteste.append(itens['teste']['descTeste'])
+                desccriterio.append(itens['teste']['descCriterio'])
+                descinformacao.append(itens['teste']['descInformacao'])
+                descfonte.append(itens['teste']['descFonte'])
+                desclimitacao.append(itens['teste']['descLimitacao'])
+                descachado.append(itens['teste']['descAchado'])
+                observacoes.append(itens['observacao'])
+
+            descescopo = itens['escopos']
+            descricaoescopo = []
+            for i, esc in enumerate(descescopo):
+                descricaoescopo.append(esc['descricao'])
+                valortotalescopo.append(esc['valorTotal'])
+                valorauditadoescopo.append(esc['valorAuditado'])
+                anexoescopo.append(esc['anexo'])
+
+                responsaveisitem = itens['responsaveis']
+                for i, resp in enumerate(responsaveisitem):
+                    responsavelitem.append(resp['nomeExibicao'])
+
+                evidenciasitem = itens['evidencias']
+                for i, evi in enumerate(evidenciasitem):
+                    anexoevidencia.append(evi['anexo']['nome'])
+                    autoranexoevidencia.append(evi['autor']['nome'])
+
+            descteste = join_data(descteste)
+            desccriterio = join_data(desccriterio)
+            descinformacao = join_data(descinformacao)
+            descfonte = join_data(descfonte)
+            desclimitacao = join_data(desclimitacao)
+            descachado = join_data(descachado)
+            observacoes = join_data(observacoes)
+            descricaoescopo = join_data(descricaoescopo)
+            responsavelitem = join_data(responsavelitem)
+            anexoescopo = join_data(anexoescopo)
+            anexoevidencia = join_data(anexoevidencia)
+            autoranexoevidencia = join_data(autoranexoevidencia)
 
             tarefasprecedentes = tarefa['campos']['tarefasPrecedentes']['valor']
             observadores = tarefa['campos']['observadores']['valor']
@@ -166,7 +211,6 @@ def tratamento_dados(data):
                 'dataultimamodificacao': dataultimamodificacao,
                 'autorultimamodificacao': autorultimamodificacao,
                 'unidadesenvolvidas': nomeunidadesenvolvidas,
-                'idanaliseauditoria': idanaliseauditoria,
                 'descteste': descteste,
                 'desccriterio': desccriterio,
                 'descinformacao': descinformacao,
@@ -174,6 +218,11 @@ def tratamento_dados(data):
                 'desclimitacao': desclimitacao,
                 'descachado': descachado,
                 'observacoes': observacoes,
+                'descricaoescopo': descricaoescopo,
+                'responsavelitem': responsavelitem,
+                'anexoescopo': anexoescopo,
+                'anexoevidencia': anexoevidencia,
+                'autoranexoevidencia': autoranexoevidencia,
                 'matrizachados': matriz,
                 'tarefasprecedentes': tarefasprecedentes,
                 'observadores': observadores,
@@ -222,7 +271,6 @@ def salvar_dados(resultado_array):
                  tarefa['dataultimamodificacao'],
                  tarefa['autorultimamodificacao'],
                  tarefa['unidadesenvolvidas'],
-                 tarefa['idanaliseauditoria'],
                  tarefa['descteste'],
                  tarefa['desccriterio'],
                  tarefa['descinformacao'],
@@ -230,6 +278,11 @@ def salvar_dados(resultado_array):
                  tarefa['desclimitacao'],
                  tarefa['descachado'],
                  tarefa['observacoes'],
+                 tarefa['descricaoescopo'],
+                 tarefa['responsavelitem'],
+                 tarefa['anexoescopo'],
+                 tarefa['anexoevidencia'],
+                 tarefa['autoranexoevidencia'],
                  tarefa['matrizachados'],
                  tarefa['tarefasprecedentes'],
                  tarefa['observadores'],
@@ -248,7 +301,7 @@ def salvar_dados(resultado_array):
                                                 dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,unidadesenvolvidas,
-                                                idanaliseauditoria,descteste,desccriterio,
+                                                descteste,desccriterio,descricaoescopo,responsavelitem,anexoescopo,anexoevidencia,autoranexoevidencia,
                                                 descinformacao,descfonte,desclimitacao,descachado,observacoes,arquivoComportamentoEspecifico,
                                                 matrizachados,tarefasprecedentes,observadores, hipoteselegal, estadosituacao,
                                                 coordenadorequipe,equipegeral,supervisores, tags,pendencias,abasatividade) VALUES {array_records}""")
