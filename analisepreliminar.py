@@ -38,12 +38,12 @@ def get_analise_preliminar(ids):
         # comando para salvar os dados tratados
         if lista_final:
             salvar_dados(lista_final)
-        get_log("Lista de achados ok")
-        return print("Lista de achados ok")
+        get_log(f"Lista de {tipo_arquivo} ok")
+        return print(f"Lista de {tipo_arquivo} ok")
     except NameError as err:
-        get_log("Erro ao salvar os dados get_analise_preliminar".upper())
+        get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
         get_log(err)
-        return print("Erro ao salvar os dados get_analise_preliminar", err)
+        return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
 
 def tratamento_dados(data):
@@ -195,12 +195,12 @@ def tratamento_dados(data):
             'pendencias': listapendencia,
             'abasatividade': listaabaatividades,
         })
-        get_log("Lista analise_preliminar tratada com sucesso")
+        get_log(f"Lista {tipo_arquivo} tratada com sucesso")
         return lista_final
     except NameError as err:
-        get_log("Erro ao tratar os dados get_analise_preliminar".upper())
+        get_log(f"Erro ao tratar os dados {tipo_arquivo}".upper())
         get_log(err)
-        return print("Erro ao tratar os dados get_analise_preliminar", err)
+        return print(f"Erro ao tratar os dados {tipo_arquivo}", err)
 
 
 def salvar_dados(resultado_array):
@@ -256,7 +256,7 @@ def salvar_dados(resultado_array):
                                                 estadosituacao,tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
-            get_log(f"{tipo_arquivo} salvo com sucesso")
+        get_log(f"{tipo_arquivo} salvo com sucesso")
         banco.commit()
         banco.close()
     except NameError as err:

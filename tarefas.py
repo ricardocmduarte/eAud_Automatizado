@@ -9,12 +9,12 @@ tipo_arquivo = 'get_tarefas'
 
 def get_tarefas():
     response = geral.check_url_health('tarefa')
-    get_log("Iniciado get_tarefas")
+    get_log(f"Iniciado {tipo_arquivo}")
 
     if response != 200:
         get_log(
-            f"Erro ao conectar com a url Tarefas, código do erro HTTP:  {str(response)}".upper())
-        return print(f"Erro ao conectar com a url, código do erro HTTP:  {str(response)}")
+            f"Erro ao conectar com a url {tipo_arquivo}, código do erro HTTP:  {str(response)}".upper())
+        return print(f"Erro ao conectar com a url {tipo_arquivo}, código do erro HTTP:  {str(response)}")
 
     try:
         offset = 0
@@ -43,9 +43,9 @@ def get_tarefas():
         return print("Ok")
 
     except NameError as err:
-        get_log("Erro get_tarefas".upper())
+        get_log(f"Erro {tipo_arquivo}".upper())
         get_log(err)
-        return print("Erro get_tarefas")
+        return print(f"Erro {tipo_arquivo}")
 
 
 def salvar_dados(resultado_array):
@@ -70,7 +70,7 @@ def salvar_dados(resultado_array):
                 f"""INSERT INTO tarefas (id, atividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
-        get_log("Tarefas salvo com sucesso")
+        get_log(f"{tipo_arquivo} salvo com sucesso")
 
         banco.commit()
         print("Fechando conexão com o banco")
@@ -81,9 +81,9 @@ def salvar_dados(resultado_array):
         return print("Conexão encerrada")
 
     except NameError as err:
-        get_log("Erro ao salvar os dados get_tarefas".upper())
+        get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
         get_log(err)
-        return print("Erro ao salvar os dados get_tarefas", err)
+        return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
 
 def get_tarefas_requisicao(offset):

@@ -206,7 +206,7 @@ def tratamento_dados(data):
             'pendencias': listapendencia,
             'abasatividade': listaabaatividades,
         })
-        get_log("Lista get_atividade_continuada tratada com sucesso")
+        get_log(f"Lista {tipo_arquivo} tratada com sucesso")
         return lista_final
     except NameError as err:
         get_log(f"Erro ao tratar os dados {tipo_arquivo}".upper())
@@ -270,7 +270,7 @@ def salvar_dados(resultado_array):
                                                 tipoplano,arquivoComportamentoEspecifico,estadosituacao, tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
-            get_log(f"{tipo_arquivo} salvo com sucesso")
+        get_log(f"{tipo_arquivo} salvo com sucesso")
         banco.commit()
         banco.close()
     except NameError as err:

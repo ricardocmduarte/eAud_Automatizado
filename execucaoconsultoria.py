@@ -262,7 +262,7 @@ def salvar_dados(resultado_array):
                                                 arquivocomportamentoespecifico,tags,listapendencia,listaabaatividades) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
-            get_log(f"{tipo_arquivo} salvo com sucesso")
+        get_log(f"{tipo_arquivo} salvo com sucesso")
         banco.commit()
         banco.close()
     except NameError as err:

@@ -25,7 +25,7 @@ def get_apuracao_preliminar(ids):
                 lista_dados.append(get_apuracao_preliminar_requisicao(id))
 
                 print(
-                    f"Iteração get_apuracao_preliminar {str(i)} registrada com sucesso")
+                    f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
 
         get_log(
             f"Esta requisicao {tipo_arquivo} contém {len(lista_final)} itens")
@@ -37,8 +37,8 @@ def get_apuracao_preliminar(ids):
         # comando para salvar os dados tratados
         if lista_final:
             salvar_dados(lista_final)
-        get_log("Lista de achados ok")
-        return print("Lista de achados ok")
+        get_log(f"Lista de {tipo_arquivo} ok")
+        return print(f"Lista de {tipo_arquivo} ok")
     except NameError as err:
         get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
         get_log(err)
@@ -223,7 +223,7 @@ def salvar_dados(resultado_array):
                                                 coordenadorequipe,equipegeral,supervisores,estadosituacao, tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
-            get_log(f"{tipo_arquivo} salvo com sucesso")
+        get_log(f"{tipo_arquivo} salvo com sucesso")
         banco.commit()
         banco.close()
     except NameError as err:

@@ -18,6 +18,8 @@ def get_achados(ids):
         return print(f"Erro ao conectar com a url {tipo_arquivo}, código do erro HTTP:  {str(response)}")
 
     try:
+        '''banco = db.db_connection()
+        db.delete_datas(banco)'''
         lista_dados = []
         lista_final = []
         if ids:
@@ -277,7 +279,7 @@ def salvar_dados(resultado_array):
                                                 tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
-            get_log(f"{tipo_arquivo} salvo com sucesso")
+        get_log(f"{tipo_arquivo} salvo com sucesso")
         banco.commit()
         banco.close()
     except NameError as err:
