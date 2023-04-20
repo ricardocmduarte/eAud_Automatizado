@@ -1,5 +1,5 @@
-import dadosreader as dadosreader
 import requests
+import dadosreader
 
 dados = dadosreader.read_ini_file()
 
