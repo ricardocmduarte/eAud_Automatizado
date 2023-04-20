@@ -108,7 +108,9 @@ def tratamento_dados(data):
                 descricaoescopo.append(esc['descricao'])
                 valortotalescopo.append(esc['valorTotal'])
                 valorauditadoescopo.append(esc['valorAuditado'])
-                anexoescopo.append(esc['anexo'])
+                anexo = esc['anexo']
+                if anexo:
+                    anexoescopo.append(anexo['nome'])
 
                 responsaveisitem = itens['responsaveis']
                 for i, resp in enumerate(responsaveisitem):
