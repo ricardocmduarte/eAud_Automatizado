@@ -193,7 +193,7 @@ def tratamento_dados(data):
 
 def salvar_dados(resultado_array):
     try:
-        banco = db.db_connection
+        banco = db.db_connection()
         cur = banco.cursor()
 
         resultado_array = db.current_datetime_query(resultado_array)
