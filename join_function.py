@@ -1,11 +1,12 @@
 def join_data(lista):
     lista_join = []
-    full_data = []
 
-    for i, teste in enumerate(lista):
-        if teste != None or teste != '':
-            full_data.append(teste)
+    for i, texto in enumerate(lista):
+        if texto is None or texto == '':
+            pass
+        else:
+            lista_join.append(texto)
 
-    lista_join = '; '.join(full_data)
+    lista_join = '; '.join(lista_join)
 
     return lista_join
