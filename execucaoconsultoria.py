@@ -24,8 +24,7 @@ def get_execucao_consultoria(ids):
         if ids:
             for i, id in enumerate(ids):
                 lista_dados.append(get_execucao_requisicao(id))
-                if lista_dados == None:
-                    break
+
                 print(
                     f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
 

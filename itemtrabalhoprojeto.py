@@ -24,8 +24,7 @@ def get_item_trabalho_projeto(ids):
         if ids:
             for i, id in enumerate(ids):
                 lista_dados.append(get_item_projeto_requisicao(id))
-                if lista_dados == None:
-                    break
+
                 print(
                     f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
 

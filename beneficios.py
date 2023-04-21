@@ -4,12 +4,13 @@ import geral
 from log import get_log
 import json
 from join_function import join_data
+import db
 
 
-tipo_arquivo = 'get_monitoramento'
+tipo_arquivo = 'get_beneficios'
 
 
-def get_monitoramento(ids):
+def get_beneficios():
     response = geral.check_url_health('tarefa')
     get_log(f"Iniciado {tipo_arquivo}")
 
@@ -21,9 +22,11 @@ def get_monitoramento(ids):
     lista_dados = []
     lista_final = []
     try:
+        banco = db.db_connection()
+        ids = db.get_idbeneficios('beneficios', banco)
         if ids:
             for i, id in enumerate(ids):
-                lista_dados.append(get_monitoramento_requisicao(id))
+                lista_dados.append(get_beneficios_requisicao(id))
 
                 print(
                     f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
@@ -266,7 +269,7 @@ def salvar_dados(resultado_array):
                  tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
-            insert_query = (f"""INSERT INTO monitoramento (id, situacao, estado, atividade, titulo, titulotarefaassociada,
+            insert_query = (f"""INSERT INTO beneficios (id, situacao, estado, atividade, titulo, titulotarefaassociada,
                                                 dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,detalhesmonitoramento,providencia,unidadesauditoria, 
@@ -285,7 +288,7 @@ def salvar_dados(resultado_array):
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
 
-def get_monitoramento_requisicao(id):
+def get_beneficios_requisicao(id):
     try:
         url = geral.url + \
             f"tarefa/{id}/dto/json"

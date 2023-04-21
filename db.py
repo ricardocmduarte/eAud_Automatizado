@@ -66,6 +66,22 @@ def get_idtarefas(tabela, banco):
         print("Erro get idtarefas", err)
 
 
+def get_idbeneficios(tabela, banco):
+    try:
+        lista_retorno = []
+        cur = banco.cursor()
+        cur.execute(f"""SELECT * FROM {tabela}""")
+        for ids in cur.fetchall():
+            lista_retorno.append({'id': ids[0],
+                                  'atividade': ids[1]})
+
+        return lista_retorno
+    except NameError as err:
+        get_log("ERRO GET ID TAREFAS")
+        get_log(err)
+        print("Erro get idtarefas", err)
+
+
 def delete_datas(banco):
     lista_tabelas = ['achados_auditoria',  'analise_auditoria', 'analise_preliminar',  'apuracao_preliminar',
                      'atividade_continuada', 'auditorias', 'auto_avaliacao_iacm', 'comunicacao_auditoria',

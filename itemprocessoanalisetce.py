@@ -24,8 +24,7 @@ def get_item_processo_analise_tce(ids):
         if ids:
             for i, id in enumerate(ids):
                 lista_dados.append(get_item_tce_requisicao(id))
-                if lista_dados == None:
-                    break
+
                 print(
                     f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
 
