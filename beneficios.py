@@ -73,7 +73,7 @@ def tratamento_dados(data):
             dataultimamodificacao = tarefa['dataUltimaModificacao']
             autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-            benavulso = tarefa['campos']['benAvulso']['valor']
+            beneficioavulso = tarefa['campos']['benAvulso']['valor']
 
             descricaobeneficio = tarefa['campos']['descricaoBenf']['valor']
 
@@ -226,20 +226,33 @@ def tratamento_dados(data):
                 'idsituacao': idsituacao,
                 'dataultimamodificacao': dataultimamodificacao,
                 'autorultimamodificacao': autorultimamodificacao,
-                'detalhesmonitoramento': detalhesmonitoramento,
-                'providencia': providencia,
-                'unidadesauditoria': unidadesauditoria,
+                'beneficioavulso': beneficioavulso,
+                'descricaobeneficio': descricaobeneficio,
+                'valorbruto': valorbruto,
+                'descricaocusto': descricaocusto,
+                'dimensaorepercussao': dimensaoerepercussao,
+                'valorcusto': valorcusto,
                 'unidadesenvolvidas': unidadesenvolvidas,
-                'categoriasmonitoramento': categoriasmonitoramento,
+                'unidadegestora': unidadegestora,
+                'anexosbeneficio': anexosbeneficio,
+                'providenciabeneficio': providenciabeneficio,
+                'dimenssaobeneficio': dimensaomebeneficio,
+                'parcelasbeneficio': parcelasbeneficio,
+                'titulofundamento': titulofundamento,
+                'textofundamentobeneficio': textofundamentobeneficio,
+                'valorliquido': valorliquido,
+                'classebeneficio': classebeneficio,
+                'tipobeneficio': tipobeneficio,
                 'tarefasprecedentes': tarefasprecedentes,
                 'valorprejuizoestimado': valorprejuizoestimado,
-                'observadores': observadores,
-                'unidadegestora': unidadegestora,
-                'fundamentos': fundamentos,
-                'ultimoposicionamento': tipoultimoposicionamento,
-                'textoultimoposicionamento': textoultimoposicionamento,
-                'textoultimamanifestacao': textoultimopamanifestacao,
-                'anexorelatorio': anexosrelatorio,
+                'unidadeproponente': unidadeproponente,
+                'anofatogeradorbeneficio': anofatogeradorbeneficio,
+                'situacaoanateriorbeneficio': situacaoanteriorbeneficio,
+                'anoimplementacaobeneficio': anoimplementacaobeneficio,
+                'repercussaobeneficio': repercussaobeneficio,
+                'classebf': classebf,
+                'nivelbeneficio': nivelbeneficio,
+                'classebnf': classebnf,
                 'estadosituacao': estadosituacao,
                 'arquivocomportamentoespecifico': arquivocomportamento,
                 'tags': tags,
