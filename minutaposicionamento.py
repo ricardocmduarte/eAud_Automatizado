@@ -71,7 +71,10 @@ def tratamento_dados(data):
             dataultimamodificacao = tarefa['dataUltimaModificacao']
             autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-            providenciaminuta = tarefa['campos']['providenciaMinuta']['valor']['valor']
+            provminuta = tarefa['campos']['providenciaMinuta']['valor']
+            providenciaminuta = ''
+            if provminuta:
+                providenciaminuta = provminuta['valor']
 
             anexosgeral = tarefa['campos']['anexosGerais']['valor']
             anexosgerais = []
@@ -81,7 +84,10 @@ def tratamento_dados(data):
 
                 anexosgerais = join_data(anexosgerais)
 
-            destinatariousuariounidade = tarefa['campos']['destinatarioUsuarioUnidade']['valor']['nomeExibicao']
+            destiny = tarefa['campos']['destinatarioUsuarioUnidade']['valor']
+            destinatariousuariounidade = ''
+            if destiny:
+                destinatariousuariounidade = destiny['nomeExibicao']
 
             tarefasprec = tarefa['campos']['tarefasPrecedentes']['valor']
             tarefasprecedentes = []

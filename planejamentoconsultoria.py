@@ -114,10 +114,7 @@ def tratamento_dados(data):
             fileplanejamento = tarefa['campos']['docPlanejamento']['valor']
             docplanejamento = []
             if fileplanejamento:
-                for i, file in enumerate(fileplanejamento):
-                    docplanejamento.append(file['nomeExibicao'])
-
-                docplanejamento = join_data(docplanejamento)
+                docplanejamento = fileplanejamento['nomeExibicao']
 
             coordequipe = tarefa['campos']['CoordenadorEquipe']['valor']
             coordenadorequipe = []
@@ -258,7 +255,7 @@ def salvar_dados(resultado_array):
             insert_query = (f"""INSERT INTO planejamento_consultoria (id, situacao, estado, atividade, titulo, titulotarefaassociada,
                                                 dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
-                                                dataultimamodificacao,autorultimamodificacao, analisepreliminar,unidadesenvolvidas,anexosgerais
+                                                dataultimamodificacao,autorultimamodificacao, analisepreliminar,unidadesenvolvidas,anexosgerais,
                                                 observadores,hipoteselegal,docplanejamento,coordenadorequipe,equipegeral,supervisores,arquivocomportamentoespecifico, estadosituacao,
                                                 tags,pendencias,abasatividade) VALUES {array_records}""")
 

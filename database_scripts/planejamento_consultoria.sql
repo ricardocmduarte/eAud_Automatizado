@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS public.planejamento_consultoria
     autorultimamodificacao character varying(500) COLLATE pg_catalog."default",
     analisepreliminar character varying(5000) COLLATE pg_catalog."default",
     unidadesenvolvidas character varying(5000) COLLATE pg_catalog."default",
-    anexosgerais character varying(5000) COLLATE pg_catalog."default",
+    anexosgerais character varying(10485760) COLLATE pg_catalog."default",
     observadores character varying(5000) COLLATE pg_catalog."default",
     hipoteselegal character varying(5000) COLLATE pg_catalog."default",
     docplanejamento character varying(5000) COLLATE pg_catalog."default",

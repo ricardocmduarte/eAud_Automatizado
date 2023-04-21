@@ -260,7 +260,7 @@ def salvar_dados(resultado_array):
             insert_query = (f"""INSERT INTO item_trabalho_projeto (id, situacao, estado, atividade, titulo, titulotarefaassociada,
                                                 dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
-                                                dataultimamodificacao,autorultimamodificacao,unidadesexecutoras,detalhamento,anexos,
+                                                dataultimamodificacao,autorultimamodificacao,unidadesexecutoras,detalhamento,
                                                 anexosgerais,processoassociado,produtouaig,supervisores,links,homemhora,unidadesenvolvidas,
                                                 destinatariousuariounidade,tarefasprecedentes,executores,arquivocomportamentoespecifico,estadosituacao,
                                                 tags,pendencias,abasatividade) VALUES {array_records}""")

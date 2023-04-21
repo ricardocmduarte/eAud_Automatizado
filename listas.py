@@ -199,21 +199,21 @@ def listar():
     importacoes.itemtrabalhoatividade.get_item_trabalho_atividade(
         lista_item_trabalho_atividade)'''
     # def item trabalho projeto #
-    importacoes.itemtrabalhoprojeto.get_item_trabalho_projeto(
-        lista_item_trabalho_projeto)
+    '''importacoes.itemtrabalhoprojeto.get_item_trabalho_projeto(
+        lista_item_trabalho_projeto)'''
     # def kpa iacm
     '''importacoes.kpaiacm.get_kpa_iacm(lista_kpa_iacm)
     # def matriz planejamento
     importacoes.matrizplanejamento.get_matriz_planejamento(
         lista_matriz_planejamento)'''
     # def minuta posicionamento #
-    importacoes.minutaposicionamento.get_minuta_posicionamento(
-        lista_minuta_posicionamento)
+    '''importacoes.minutaposicionamento.get_minuta_posicionamento(
+        lista_minuta_posicionamento)'''
     # def monitoramento #
     importacoes.monitoramento.get_monitoramento(lista_monitoramento)
     # def planejamento consultoria #
-    importacoes.planejamentoconsultoria.get_planejamento_consultoria(
-        lista_planejamento_consultoria)
+    '''importacoes.planejamentoconsultoria.get_planejamento_consultoria(
+        lista_planejamento_consultoria)'''
     # def projeto geral #
     '''importacoes.projetogeral.get_projeto_geral(lista_projeto_geral)
     # def relatorio final

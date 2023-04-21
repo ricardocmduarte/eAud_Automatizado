@@ -21,7 +21,7 @@ def get_monitoramento(ids):
     lista_dados = []
     lista_final = []
     try:
-        if id:
+        if ids:
             for i, id in enumerate(ids):
                 lista_dados.append(get_monitoramento_requisicao(id))
                 if lista_dados == None:
@@ -130,8 +130,7 @@ def tratamento_dados(data):
             fundamentos = []
             if fundamento:
                 for i, fund in enumerate(fundamento):
-                    fundamentos.append(fund['descricao'] +
-                                       ' | ' + fund['anexo']['nome'])
+                    fundamentos.append(fund['descricao'])
 
                 fundamentos = join_data(fundamentos)
 

@@ -7,7 +7,7 @@ import db
 tipo_arquivo = 'get_beneficios_id'
 
 
-def get_tarefas():
+def get_beneficios_id():
     response = geral.check_url_health('tarefa')
     get_log(f"Iniciado {tipo_arquivo}")
 
@@ -22,7 +22,7 @@ def get_tarefas():
         lista_final = []
 
         while offset < limite_offset:
-            resultado_array = get_tarefas_requisicao(offset)
+            resultado_array = get_beneficios_id_requisicao(offset)
             if resultado_array:
                 for i, lista_appended in enumerate(resultado_array):
                     lista_final.append({
@@ -86,11 +86,13 @@ def salvar_dados(resultado_array):
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
 
-def get_tarefas_requisicao(offset):
+def get_beneficios_id_requisicao(offset):
     try:
         url = geral.url + \
-            f"monitoramento/beneficio?tamanhoPagina=100&offset={offset}&apenasAtrasadas=false&apenasFinalizadas=false&apenasModificadasNosUltimos30Dias=false&apenasExcluidas=false \
-                &apenasAbertas=false&periodoInicialDataInicio=2021-01-01&colunasSelecionadas=id&colunasSelecionadas=atividade"
+            f"monitoramento/beneficio?tamanhoPagina=100&offset={offset}&apenasAbertas=false&apenasModificadasNosUltimos30Dias=false&colunasSelecionadas=id&colunasSelecionadas=atividade"
+
+        '''f"monitoramento/beneficio?tamanhoPagina=100&offset={offset}&apenasAtrasadas=false&apenasFinalizadas=false&apenasModificadasNosUltimos30Dias=false&apenasExcluidas=false \
+                &apenasAbertas=false&periodoInicialDataInicio=2021-01-01&colunasSelecionadas=id&colunasSelecionadas=atividade"'''
         resp = requests.get(url, headers=geral.header)
 
         if resp.status_code != 200:
