@@ -23,10 +23,10 @@ def get_beneficios():
     lista_final = []
     try:
         banco = db.db_connection()
-        ids = db.get_idbeneficios('beneficios', banco)
+        ids = db.get_idbeneficios('beneficios_id', banco)
         if ids:
             for i, id in enumerate(ids):
-                lista_dados.append(get_beneficios_requisicao(id))
+                lista_dados.append(get_beneficios_requisicao(id['id']))
 
                 print(
                     f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
@@ -73,19 +73,21 @@ def tratamento_dados(data):
             dataultimamodificacao = tarefa['dataUltimaModificacao']
             autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-            detalhesmonitoramento = tarefa['campos']['detalhesMonitoramento']['valor']
+            benavulso = tarefa['campos']['benAvulso']['valor']
 
-            providencia = tarefa['campos']['providencia']['valor']['valor']
+            descricaobeneficio = tarefa['campos']['descricaoBenf']['valor']
 
-            unidadeauditoria = tarefa['campos']['unidadesAuditoria']['valor']
-            unidadesauditoria = []
-            if unidadeauditoria:
-                for i, aud in enumerate(unidadeauditoria):
-                    unidadesauditoria.append(aud['nomeExibicao'])
+            valorbruto = tarefa['campos']['valorBruto']['valor']
+            descricaocusto = tarefa['campos']['descricaoCusto']['valor']
 
-                unidadesauditoria = join_data(unidadesauditoria)
+            drben = tarefa['campos']['drben']['valor']
+            dimensaoerepercussao = []
+            if drben:
+                dimensaoerepercussao = drben['valor']
 
-            unidadeenvolvida = tarefa['campos']['unidEnvolvidas']['valor']
+            valorcusto = tarefa['campos']['valorCusto']['valor']
+
+            unidadeenvolvida = tarefa['campos']['unidadesEnvolvidas']['valor']
             unidadesenvolvidas = []
             if unidadeenvolvida:
                 for i, envol in enumerate(unidadeenvolvida):
@@ -93,13 +95,49 @@ def tratamento_dados(data):
 
                 unidadesenvolvidas = join_data(unidadesenvolvidas)
 
-            categoriamonitoramento = tarefa['campos']['categoriasMonitoramento']['valor']
-            categoriasmonitoramento = []
-            if categoriamonitoramento:
-                for i, cat in enumerate(categoriamonitoramento):
-                    categoriasmonitoramento.append(cat['nomeExibicao'])
+            unidgestora = tarefa['campos']['unidadeGestoraBeneficio']['valor']
+            unidadegestora = []
+            if unidgestora:
+                unidadegestora = unidgestora['nomeExibicao']
 
-                categoriasmonitoramento = join_data(categoriasmonitoramento)
+            anexoben = tarefa['campos']['anexosBeneficio']['valor']
+            anexosbeneficio = []
+            if anexoben:
+                for i, file in enumerate(anexoben):
+                    anexosbeneficio.append(file['nome'])
+
+                anexosbeneficio = join_data(anexosbeneficio)
+
+            providenciabeneficio = tarefa['campos']['providenciaBenef']['valor']
+
+            dimensaoben = tarefa['campos']['dimensaoMEBeneficio']['valor']
+            dimensaomebeneficio = []
+            if dimensaoben:
+                dimensaoerepercussao = dimensaoben['valor']
+
+            parcelasbeneficio = tarefa['campos']['parcelasBeneficio']['valor']
+
+            fundbeneficio = tarefa['campos']['fundamentoBenef']['valor']
+            titulofundamento = ''
+            if fundbeneficio:
+                titulofundamento = fundbeneficio['nomeExibicao']
+
+            textofundamentobeneficio = tarefa['campos']['textoFundamentoBenef']['valor']
+            valorliquido = tarefa['campos']['valorLiquido']['valor']
+
+            classben = tarefa['campos']['classeBenef']['valor']
+            classebeneficio = []
+            if classben:
+                for i, benclass in enumerate(classben):
+                    classebeneficio.append(benclass['valor'])
+                classebeneficio = join_data(classebeneficio)
+
+            bentipo = tarefa['campos']['tipoBeneficio']['valor']
+            tipobeneficio = []
+            if bentipo:
+                for i, tipo in enumerate(bentipo):
+                    tipobeneficio.append(tipo['valor'])
+                tipobeneficio = join_data(tipobeneficio)
 
             tarefasprec = tarefa['campos']['tarefasPrecedentes']['valor']
             tarefasprecedentes = []
@@ -110,13 +148,12 @@ def tratamento_dados(data):
 
             valorprejuizoestimado = tarefa['campos']['valorPrejuizoEstimado']['valor']
 
-            observador = tarefa['campos']['observadores']['valor']
-            observadores = []
-            if observador:
-                for i, obs in enumerate(observador):
-                    observadores.append(obs['nomeExibicao'])
+            unidproponente = tarefa['campos']['unidadeProponente']['valor']
+            unidadeproponente = ''
+            if unidproponente:
+                unidadeproponente = unidproponente['nomeExibicao']
 
-                observadores = join_data(observadores)
+            anofatogeradorbeneficio = tarefa['campos']['anoFatoGeradorBeneficio']['valor']
 
             descricaotag = tarefa['campos']['tags']['valor']
             tags = []
@@ -126,34 +163,30 @@ def tratamento_dados(data):
 
                 tags = join_data(tags)
 
-            unidadegestora = tarefa['campos']['unidadeGestora']['valor']['nomeExibicao']
+            situacaoanteriorbeneficio = tarefa['campos']['situacaoanteriorbeneficio']['valor']
+            anoimplementacaobeneficio = tarefa['campos']['anoImplementacaoBeneficio']['valor']
 
-            fundamento = tarefa['campos']['fundamentos']['valor']
-            fundamentos = []
-            if fundamento:
-                for i, fund in enumerate(fundamento):
-                    fundamentos.append(fund['descricao'])
+            benrepercussao = tarefa['campos']['repercussaoDoBeneficio']['valor']
+            repercussaobeneficio = []
+            if benrepercussao:
+                for i, rep in enumerate(benrepercussao):
+                    repercussaobeneficio.append(rep['valor'])
 
-                fundamentos = join_data(fundamentos)
+                repercussaobeneficio = join_data(repercussaobeneficio)
 
-            ultimoposicionamento = tarefa['campos']['tipoUltimoPosicionamento']['valor']
-            tipoultimoposicionamento = []
-            if ultimoposicionamento:
-                for i, pos in enumerate(ultimoposicionamento):
-                    tipoultimoposicionamento.append(pos['valor'])
+            classbf = tarefa['campos']['classeBF']['valor']
+            classebf = []
+            if classbf:
+                for i, bf in enumerate(classbf):
+                    classebf.append(bf['valor'])
+                classebf = join_data(classebf)
 
-                tipoultimoposicionamento = join_data(tipoultimoposicionamento)
-
-            textoultimoposicionamento = tarefa['campos']['textoUltimoPosicionamento']['valor']
-            textoultimopamanifestacao = tarefa['campos']['textoUltimaManifestacao']['valor']
-
-            anexorel = tarefa['campos']['anexosRelatorio']['valor']
-            anexosrelatorio = []
-            if anexorel:
-                for i, file in enumerate(anexorel):
-                    anexosrelatorio.append(file['nome'])
-
-                anexosrelatorio = join_data(anexosrelatorio)
+            nivelbeneficio = tarefa['campos']['nivelBeneficio']['valor']
+            classbnf = tarefa['campos']['classebnf']['valor']
+            classebnf = []
+            if classbnf:
+                for i, bnf in enumerate(classbnf):
+                    classebnf.append(bnf['valor'])
 
             estadosituacao = tarefa['estadoSituacao']
             arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
@@ -321,3 +354,6 @@ def get_beneficios_requisicao(id):
     except requests.exceptions.RequestException as err:
         get_log(err)
         print(err)
+
+
+get_beneficios()

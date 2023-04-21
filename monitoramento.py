@@ -72,7 +72,10 @@ def tratamento_dados(data):
 
             detalhesmonitoramento = tarefa['campos']['detalhesMonitoramento']['valor']
 
-            providencia = tarefa['campos']['providencia']['valor']['valor']
+            prov = tarefa['campos']['providencia']['valor']
+            providencia = ''
+            if prov:
+                providencia = prov['valor']
 
             unidadeauditoria = tarefa['campos']['unidadesAuditoria']['valor']
             unidadesauditoria = []
