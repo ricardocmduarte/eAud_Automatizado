@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS public.escopo_auditoria
     idsituacao integer,
     dataultimamodificacao character varying(50) COLLATE pg_catalog."default",
     autorultimamodificacao character varying(500) COLLATE pg_catalog."default",
-    escopodescricao character varying(5000) COLLATE pg_catalog."default",
+    escopodescricao character varying(10485760) COLLATE pg_catalog."default",
     escopovalortotal character varying(5000) COLLATE pg_catalog."default",
     escopovalorauditado character varying(5000) COLLATE pg_catalog."default",
     macroprocessoescopo character varying(5000) COLLATE pg_catalog."default",

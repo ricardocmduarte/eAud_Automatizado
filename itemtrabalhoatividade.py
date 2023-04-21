@@ -92,13 +92,16 @@ def tratamento_dados(data):
             processosassociados = tarefa['campos']['processosAssociados']['valor']
             processt = tarefa['campos']['processT']['valor']['valor']
 
-            origemdemanda = tarefa['campos']['origemDemanda']['valor']['valor']
+            origindemanda = tarefa['campos']['origemDemanda']['valor']
+            origemdemanda = []
+            if origindemanda:
+                origemdemanda = origindemanda['valor']
 
             link = tarefa['campos']['tarefasPrecedentes']['valor']
             links = []
             if link:
                 for i, lin in enumerate(link):
-                    links.append(lin['nomeExibicao'])
+                    links.append(lin['descricao'] + '|' + lin['url'])
 
                 links = join_data(links)
 
@@ -115,11 +118,7 @@ def tratamento_dados(data):
             destusuariounidade = tarefa['campos']['destinatarioUsuarioUnidade']['valor']
             destinatariousuariounidade = []
             if destusuariounidade:
-                for i, unidade in enumerate(destusuariounidade):
-                    destinatariousuariounidade.append(unidade['nomeExibicao'])
-
-                destinatariousuariounidade = join_data(
-                    destinatariousuariounidade)
+                destinatariousuariounidade = unidade['nomeExibicao']
 
             tarefasprec = tarefa['campos']['tarefasPrecedentes']['valor']
             tarefasprecedentes = []
@@ -236,10 +235,10 @@ def salvar_dados(resultado_array):
                  tarefa['idsituacao'],
                  tarefa['dataultimamodificacao'],
                  tarefa['autorultimamodificacao'],
-                 tarefa['unidadeexecutoras'],
+                 tarefa['unidadesexecutoras'],
                  tarefa['detalhamento'],
-                 tarefa['anexos'],
-                 tarefa['processosassociados'],
+                 tarefa['anexosgerais'],
+                 tarefa['processoassociado'],
                  tarefa['processt'],
                  tarefa['origemdemanda'],
                  tarefa['links'],
@@ -251,17 +250,17 @@ def salvar_dados(resultado_array):
                  tarefa['estadosituacao'],
                  tarefa['arquivocomportamentoespecifico'],
                  tarefa['tags'],
-                 tarefa['listapendencia'],
-                 tarefa['listaabaatividades']
+                 tarefa['pendencias'],
+                 tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
             insert_query = (f"""INSERT INTO item_trabalho_atividade (id, situacao, estado, atividade, titulo, titulotarefaassociada,
-                                                titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
+                                                dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
-                                                dataultimamodificacao,autorultimamodificacao,unidadeexecutoras,detalhamento,anexos,
-                                                processosassociados,processt,origemdemanda,links,homemhora,unidadesenvolvidas,destinatariousuariounidade,
+                                                dataultimamodificacao,autorultimamodificacao,unidadesexecutoras,detalhamento,anexosgerais,
+                                                processoassociado,processt,origemdemanda,links,homemhora,unidadesenvolvidas,destinatariousuariounidade,
                                                 tarefasprecedentes,executores,estadosituacao,arquivocomportamentoespecifico,
-                                                tags,listapendencia,listaabaatividades) VALUES {array_records}""")
+                                                tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso")

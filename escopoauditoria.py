@@ -79,8 +79,12 @@ def tratamento_dados(data):
 
                 for i, esco in enumerate(escopo):
                     escopodescricao.append(esco['descricao'])
-                    escopovalortotal.append(esco['valorTotal'])
-                    escopovalorauditado.append(esco['valorAuditado'])
+                    escopovalortotal.append(str(esco['valorTotal']))
+                    escopovalorauditado.append(str(esco['valorAuditado']))
+
+                escopodescricao = join_data(escopodescricao)
+                escopovalortotal = join_data(escopovalortotal)
+                escopovalorauditado = join_data(escopovalorauditado)
 
             unidadesenvolvidas = tarefa['campos']['unidEnvolvidas']['valor']
             unidadesenvol = []
@@ -178,7 +182,7 @@ def tratamento_dados(data):
                 'supervisores': supervisor,
                 'arquivocomportamentoespecifico': arquivocomportamento,
                 'estadosituacao': estadosituacao,
-                'tags': descricaotag,
+                'tags': tags,
                 'pendencias': listapendencia,
                 'abasatividade': listaabaatividades,
             })
@@ -224,23 +228,23 @@ def salvar_dados(resultado_array):
                  tarefa['observadores'],
                  tarefa['hiposetelegal'],
                  tarefa['tarefasprecedentes'],
-                 tarefa['unidadesenvol'],
+                 tarefa['unidadesenvolvidas'],
                  tarefa['coordenadorequipe'],
                  tarefa['equipegeral'],
                  tarefa['supervisores'],
                  tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
-                 tarefa['listapendencia'],
-                 tarefa['listaabaatividades']
+                 tarefa['pendencias'],
+                 tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
             insert_query = (f"""INSERT INTO escopo_auditoria (id, situacao, estado, atividade, titulo, titulotarefaassociada,
-                                                titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
+                                                dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,escopodescricao,escopovalortotal,escopovalorauditado,
-                                                macroprocessoescopo,observadores,hiposetelegal,tarefasprecedentes,unidadesenvol,coordenadorequipe,
-                                                equipegeral,supervisores,arquivocomportamentoespecifico,estadosituacao,tags,listapendencia,listaabaatividades) VALUES {array_records}""")
+                                                macroprocessoescopo,observadores,hiposetelegal,tarefasprecedentes,unidadesenvolvidas,coordenadorequipe,
+                                                equipegeral,supervisores,arquivocomportamentoespecifico,estadosituacao,tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso")

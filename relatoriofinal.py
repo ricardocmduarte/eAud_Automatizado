@@ -72,12 +72,10 @@ def tratamento_dados(data):
             autorultimamodificacao = tarefa['autorUltimaModificacao']
 
             relprelimintar = tarefa['campos']['relatorioPreliminar']['valor']
-            relatoriopreliminar = []
+            relatoriopreliminar = ''
             if relprelimintar:
-                for i, file in enumerate(relprelimintar):
-                    relatoriopreliminar.append(file['nome'])
+                relatoriopreliminar = file['nome']
 
-                relatoriopreliminar = join_data(relatoriopreliminar)
             hipotese = tarefa['campos']['hipoteseLegal']['valor']
             hipoteselegal = []
             if hipotese:
@@ -85,7 +83,14 @@ def tratamento_dados(data):
                     hipoteselegal.append(hip['nomeExibicao'])
 
                 hipoteselegal = join_data(hipoteselegal)
-            relatoriofinal = tarefa['campos']['relatorioFinal']['valor']['nome']
+
+            else:
+                hipoteselegal = ''
+
+            finalrel = tarefa['campos']['relatorioFinal']['valor']
+            relatoriofinal = '[]'
+            if finalrel:
+                relatoriofinal = finalrel['nome']
 
             coordequipe = tarefa['campos']['CoordenadorEquipe']['valor']
             coordenadorequipe = []
@@ -110,6 +115,8 @@ def tratamento_dados(data):
                     pareceres.append(file['nome'])
 
                 pareceres = join_data(pareceres)
+            else:
+                pareceres = ''
 
             anexrel = tarefa['campos']['anexRel']['valor']
             anexorel = []
@@ -118,8 +125,13 @@ def tratamento_dados(data):
                     anexorel.append(file['nome'])
 
                 anexorel = join_data(anexorel)
+            else:
+                anexorel = ''
 
-            relatorioword = tarefa['campos']['relatorioWord']['valor']['nome']
+            relword = tarefa['campos']['relatorioWord']['valor']
+            relatorioword = ''
+            if relword:
+                relatorioword = relword['nome']
 
             unidenvolvidas = tarefa['campos']['unidEnvolvidas']['valor']
             unidadesenvolvidas = []
@@ -136,8 +148,18 @@ def tratamento_dados(data):
                     relatoriocom.append(file['nome'])
 
                 relatoriocom = join_data(relatoriocom)
+            else:
+                relatoriocom = ''
 
-            observadores = tarefa['campos']['observadores']['valor']
+            obser = tarefa['campos']['observadores']['valor']
+            observadores = []
+            if obser:
+                for i, obs in enumerate(obser):
+                    observadores.append(obs['nomeExibicao'])
+
+                observadores = join_data(observadores)
+            else:
+                observadores = ''
 
             certificado = tarefa['campos']['certificado']['valor']
             certificados = []
@@ -146,6 +168,8 @@ def tratamento_dados(data):
                     certificados.append(file['nome'])
 
                 certificados = join_data(certificados)
+            else:
+                certificados = ''
 
             tag = tarefa['campos']['tags']['valor']
             tags = []
@@ -173,6 +197,8 @@ def tratamento_dados(data):
                     listapendencia.append(pendencia['nomeUsuarioUnidade'])
 
                 listapendencia = join_data(listapendencia)
+            else:
+                listapendencia = ''
 
             abasatividade = tarefa['abasAtividade']
             listaabaatividades = []
@@ -215,7 +241,7 @@ def tratamento_dados(data):
                 'certificados': certificados,
                 'tags': tags,
                 'equipegeral': equipegeral,
-                'arquivocomportamento': arquivocomportamento,
+                'arquivocomportamentoespecifico': arquivocomportamento,
                 'estadosituacao': estadosituacao,
                 'pendencias': listapendencia,
                 'abasatividade': listaabaatividades,
@@ -271,17 +297,17 @@ def salvar_dados(resultado_array):
                  tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
-                 tarefa['listapendencia'],
-                 tarefa['listaabaatividades']
+                 tarefa['pendencias'],
+                 tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
             insert_query = (f"""INSERT INTO relatorio_final (id, situacao, estado, atividade, titulo, titulotarefaassociada,
-                                                titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
+                                                dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
-                                                dataultimamodificacao,autorultimamodificacao,relatoriopreliminar,hipoteselegal,coordenadorequipe,supervisores,
+                                                dataultimamodificacao,autorultimamodificacao,relatoriofinal,relatoriopreliminar,hipoteselegal,coordenadorequipe,supervisores,
                                                 parecer,anexorelatorio,relatorioword,unidadesenvolvidas,relatoriocom,observadores,certificados,
                                                 equipegeral,arquivocomportamentoespecifico, estadosituacao,
-                                                tags,listapendencia,listaabaatividades) VALUES {array_records}""",)
+                                                tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso")

@@ -22,10 +22,8 @@ def get_auditoria(ids):
         lista_dados = []
         lista_final = []
         if ids:
-            for i, id in enumerate(id):
+            for i, id in enumerate(ids):
                 lista_dados.append(get_auditoria_requisicao(id))
-                if lista_dados == None:
-                    break
                 print(
                     f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
 
@@ -51,237 +49,273 @@ def tratamento_dados(data):
     try:
         lista_final = []
         for i, tarefa in enumerate(data):
+            if tarefa:
 
-            id = tarefa['id']
-            situacao = tarefa['situacao']
-            estado = tarefa['estado']
-            atividade = tarefa['atividade']
-            titulo = tarefa['titulo']
-            idtarefaassociada = tarefa['idTarefaAssociada']
-            titulotarefaassociada = tarefa['tituloTarefaAssociada']
-            dtprevisaoinicio = tarefa['dtPrevisaoInicio']
-            dtprevisaofim = tarefa['dtPrevisaoFim']
-            dtrealizadainicio = tarefa['dtRealizadaInicio']
-            dtrealizadafim = tarefa['dtRealizadaFim']
-            prioridade = tarefa['prioridade']
-            assunto = tarefa['assunto']
-            idatividade = tarefa['idAtividade']
-            descricaoatividade = tarefa['descricaoAtividade']
-            idsituacao = tarefa['idSituacao']
-            dataultimamodificacao = tarefa['dataUltimaModificacao']
-            autorultimamodificacao = tarefa['autorUltimaModificacao']
+                id = tarefa['id']
+                situacao = tarefa['situacao']
+                estado = tarefa['estado']
+                atividade = tarefa['atividade']
+                titulo = tarefa['titulo']
+                idtarefaassociada = tarefa['idTarefaAssociada']
+                titulotarefaassociada = tarefa['tituloTarefaAssociada']
+                dtprevisaoinicio = tarefa['dtPrevisaoInicio']
+                dtprevisaofim = tarefa['dtPrevisaoFim']
+                dtrealizadainicio = tarefa['dtRealizadaInicio']
+                dtrealizadafim = tarefa['dtRealizadaFim']
+                prioridade = tarefa['prioridade']
+                assunto = tarefa['assunto']
+                idatividade = tarefa['idAtividade']
+                descricaoatividade = tarefa['descricaoAtividade']
+                idsituacao = tarefa['idSituacao']
+                dataultimamodificacao = tarefa['dataUltimaModificacao']
+                autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-            objetosauditoria = tarefa['campos']['objetosAuditoriaAuditoria']['valor']
-            processosassociados = tarefa['campos']['processosAssociados']['valor']
-            dadosgerenciais = tarefa['campos']['dadosGerenciaisAuditoria']['valor']
+                objetosauditoria = tarefa['campos']['objetosAuditoriaAuditoria']['valor']
+                processosassociados = tarefa['campos']['processosAssociados']['valor']
+                dadosgerenciais = tarefa['campos']['dadosGerenciaisAuditoria']['valor']
 
-            gerentesauditoria = tarefa['campos']['gerentesAuditoria']['valor']
-            gerenteauditoria = []
-            if gerentesauditoria:
-                for i, ger in enumerate(gerentesauditoria):
-                    gerenteauditoria.append(ger['nomeExibicao'])
+                gerentesauditoria = tarefa['campos']['gerentesAuditoria']['valor']
+                gerenteauditoria = []
+                if gerentesauditoria:
+                    for i, ger in enumerate(gerentesauditoria):
+                        gerenteauditoria.append(ger['nomeExibicao'])
 
-                gerenteauditoria = join_data(gerenteauditoria)
+                    gerenteauditoria = join_data(gerenteauditoria)
 
-            relatoriopreliminar = tarefa['campos']['relPreliminarAud']['valor']
-            proponenteauditoria = tarefa['campos']['proponenteAuditoria']['valor']
-            duracaomeses = tarefa['campos']['duracaoMesesAuditoria']['valor']
-            recursofinanceiro = tarefa['campos']['recursoFinanceiroAuditoria']['valor']
+                rrelpreli = tarefa['campos']['relPreliminarAud']['valor']
+                relatoriopreliminar = []
+                if rrelpreli:
+                    relatoriopreliminar = rrelpreli['nome']
 
-            conhecimentostecnicos = tarefa['campos']['conhecimentosTecnicosRequeridosAuditoria']['valor']
-            conhecimentostec = []
-            if conhecimentostecnicos:
-                for i, conhecimento in enumerate(conhecimentostecnicos):
-                    conhecimentostec.append(conhecimento['nomeExibicao'])
+                proponenteauditoria = tarefa['campos']['proponenteAuditoria']['valor']
+                duracaomeses = tarefa['campos']['duracaoMesesAuditoria']['valor']
+                recursofinanceiro = tarefa['campos']['recursoFinanceiroAuditoria']['valor']
 
-                conhecimentostec = join_data(conhecimentostec)
+                conhecimentostecnicos = tarefa['campos']['conhecimentosTecnicosRequeridosAuditoria']['valor']
+                conhecimentostec = []
+                if conhecimentostecnicos:
+                    for i, conhecimento in enumerate(conhecimentostecnicos):
+                        conhecimentostec.append(conhecimento['nomeExibicao'])
 
-            localidadeauditoria = tarefa['campos']['localidadesAuditoria']['valor']
-            locaisauditoria = []
-            if localidadeauditoria:
-                for i, local in enumerate(localidadeauditoria):
-                    locaisauditoria.append(local['nomeExibicao'])
+                    conhecimentostec = join_data(conhecimentostec)
 
-                locaisauditoria = join_data(locaisauditoria)
+                localidadeauditoria = tarefa['campos']['localidadesAuditoria']['valor']
+                locaisauditoria = []
+                if localidadeauditoria:
+                    for i, local in enumerate(localidadeauditoria):
+                        locaisauditoria.append(local['nomeExibicao'])
 
-            responsavelauditoria = tarefa['campos']['responsavelAuditoria']['valor']
-            anexorelpreliminar = tarefa['campos']['AnexRelpre']['valor']
+                    locaisauditoria = join_data(locaisauditoria)
 
-            objetivoestrategico = tarefa['campos']['resultadosEsperadosAuditoria']['valor']['objetivoEstrategico']['nome']
-            resultadosindicador = tarefa['campos']['resultadosEsperadosAuditoria']['valor']['indicador']['nome']
-            resultadosdescricao = tarefa['campos']['resultadosEsperadosAuditoria']['valor']['indicador']['descricao']
+                responsavelauditoria = tarefa['campos']['responsavelAuditoria']['valor']
+                anexrel = tarefa['campos']['AnexRelpre']['valor']
+                anexorelpreliminar = []
+                if anexrel:
+                    for i, file in enumerate(anexrel):
+                        anexorelpreliminar.append(file['nome'])
 
-            origemdemanda = tarefa['campos']['origemDemandaAuditoria']['valor']
-            origem = origemdemanda['nomeExibicao']
+                    anexorelpreliminar = join_data(anexorelpreliminar)
 
-            pessoajuridica = tarefa['campos']['pessoaJuridicaExaminadaAuditoria']['valor']
+                objestrategico = tarefa['campos']['resultadosEsperadosAuditoria']['valor']
+                objetivoestrategico = []
+                resultadosindicador = []
+                resultadosdescricao = []
+                if objestrategico:
+                    for i, obj in enumerate(objestrategico):
+                        objetivoestrategico.append(
+                            obj['objetivoEstrategico']['nome'])
 
-            supervisores = tarefa['campos']['supervisoresAuditoria']['valor']
-            supervisor = []
-            if supervisores:
-                for i, super in enumerate(supervisores):
-                    supervisor.append(super['nomeExibicao'])
+                        if obj['indicador'] is None:
+                            pass
+                        else:
+                            resultadosindicador.append(
+                                obj['indicador']['nome'])
+                            resultadosdescricao.append(
+                                obj['indicador']['descricao'])
 
-                supervisor = join_data(supervisor)
+                    objetivoestrategico = join_data(objetivoestrategico)
+                    resultadosindicador = join_data(resultadosindicador)
+                    resultadosdescricao = join_data(resultadosdescricao)
 
-            tipoconsultoria = tarefa['campos']['tipoConsultoria']['valor']
-            tipo = []
-            if tipoconsultoria:
-                for i, tip in enumerate(tipoconsultoria):
-                    tipo.append(tip['valor'])
+                origemdemanda = tarefa['campos']['origemDemandaAuditoria']['valor']
+                origem = origemdemanda['nomeExibicao']
 
-                tipo = join_data(tipo)
+                pessoajuridica = tarefa['campos']['pessoaJuridicaExaminadaAuditoria']['valor']
 
-            numdenuncia = tarefa['campos']['numDenuncia']['valor']
+                supervisores = tarefa['campos']['supervisoresAuditoria']['valor']
+                supervisor = []
+                if supervisores:
+                    for i, super in enumerate(supervisores):
+                        supervisor.append(super['nomeExibicao'])
 
-            coordenadorequipe = tarefa['campos']['coordenadorEquipeAuditoria']['valor']
-            coordenador = []
-            if coordenadorequipe:
-                for i, coordequipe in enumerate(coordenadorequipe):
-                    coordenador.append(coordequipe['nomeExibicao'])
+                    supervisor = join_data(supervisor)
 
-                coordenador = join_data(coordenador)
+                tipoconsultoria = tarefa['campos']['tipoConsultoria']['valor']
+                tipo = []
+                if tipoconsultoria:
+                    for i, tip in enumerate(tipoconsultoria):
+                        tipo.append(tip['valor'])
 
-            unidadesauditadas = tarefa['campos']['unidadesAuditadasAuditoria']['valor']
-            nomeunidadeseauditadas = []
-            if unidadesauditadas:
-                for i, unidades in enumerate(unidadesauditadas):
-                    nomeunidadeseauditadas.append(unidades['nome'])
+                    tipo = join_data(tipo)
 
-                nomeunidadeseauditadas = join_data(nomeunidadeseauditadas)
+                numdenuncia = tarefa['campos']['numDenuncia']['valor']
 
-            homemhoras = tarefa['campos']['homemHorasAuditoria']['valor']
+                coordenadorequipe = tarefa['campos']['coordenadorEquipeAuditoria']['valor']
+                coordenador = []
+                if coordenadorequipe:
+                    for i, coordequipe in enumerate(coordenadorequipe):
+                        coordenador.append(coordequipe['nomeExibicao'])
 
-            equipeauditoria = tarefa['campos']['equipeAuditoria']['valor']
-            equipe = []
-            if equipeauditoria:
-                for i, geralequipe in enumerate(equipeauditoria):
-                    equipe.append(geralequipe['nomeExibicao'])
+                    coordenador = join_data(coordenador)
 
-                equipe = join_data(equipe)
+                unidadesauditadas = tarefa['campos']['unidadesAuditadasAuditoria']['valor']
+                nomeunidadesauditadas = []
+                if unidadesauditadas:
+                    for i, unidades in enumerate(unidadesauditadas):
+                        nomeunidadesauditadas.append(unidades['nome'])
 
-            anexorel = tarefa['campos']['anexRel']['valor']
+                    nomeunidadesauditadas = join_data(nomeunidadesauditadas)
 
-            areasrequeridas = tarefa['campos']['areasRequeridasAuditoria']['valor']
-            arearequerida = []
-            if areasrequeridas:
-                for i, area in enumerate(areasrequeridas):
-                    arearequerida.append(area['nomeExibicao'])
+                homemhoras = tarefa['campos']['homemHorasAuditoria']['valor']
 
-                arearequerida = join_data(arearequerida)
+                equipeauditoria = tarefa['campos']['equipeAuditoria']['valor']
+                equipe = []
+                if equipeauditoria:
+                    for i, geralequipe in enumerate(equipeauditoria):
+                        equipe.append(geralequipe['nomeExibicao'])
 
-            objetivoauditoria = tarefa['campos']['objetivoAuditoria']['valor']
+                    equipe = join_data(equipe)
 
-            tarefasprecedentes = tarefa['campos']['tarefasPrecedentes']['valor']
+                aanexrel = tarefa['campos']['anexRel']['valor']
+                anexorel = []
+                if aanexrel:
+                    for i, file in enumerate(aanexrel):
+                        anexorel.append(file['nome'])
 
-            envolvidosauditoria = tarefa['campos']['envolvidosAuditoria']['valor']
-            envolauditoria = []
-            if envolvidosauditoria:
-                for i, envolvido in enumerate(envolvidosauditoria):
-                    envolauditoria.append(envolvido['nomeExibicao'])
+                    anexorel = join_data(anexorel)
 
-                envolauditoria = join_data(envolauditoria)
+                areasrequeridas = tarefa['campos']['areasRequeridasAuditoria']['valor']
+                arearequerida = []
+                if areasrequeridas:
+                    for i, area in enumerate(areasrequeridas):
+                        arearequerida.append(area['nomeExibicao'])
 
-            processotrabalhoauditoria = tarefa['campos']['processoTrabalhoAuditoria']['valor']
+                    arearequerida = join_data(arearequerida)
 
-            anexosauditoria = tarefa['campos']['anexosAuditoria']['valor']
-            anexoauditoria = []
-            if anexosauditoria:
-                for i, anex in enumerate(anexosauditoria):
-                    anexoauditoria.append(anex['nome'])
+                objetivoauditoria = tarefa['campos']['objetivoAuditoria']['valor']
 
-                anexoauditoria = join_data(anexoauditoria)
+                tarefasprecedentes = tarefa['campos']['tarefasPrecedentes']['valor']
 
-            linhaacao = tarefa['campos']['linhaAcaoAuditoria']['valor']['valor']
+                envolvidosauditoria = tarefa['campos']['envolvidosAuditoria']['valor']
+                envolauditoria = []
+                if envolvidosauditoria:
+                    for i, envolvido in enumerate(envolvidosauditoria):
+                        envolauditoria.append(envolvido['nomeExibicao'])
 
-            relatorifinal = tarefa['campos']['relFinalAud']['valor']
+                    envolauditoria = join_data(envolauditoria)
 
-            estadosituacao = tarefa['estadoSituacao']
-            arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
+                processotrabalhoauditoria = tarefa['campos']['processoTrabalhoAuditoria']['valor']
 
-            descricaotag = tarefa['campos']['tags']['valor']
-            tags = []
-            if descricaotag:
-                for i, tagdesc in enumerate(descricaotag):
-                    tags.append(tagdesc['descricao'])
+                anexosauditoria = tarefa['campos']['anexosAuditoria']['valor']
+                anexoauditoria = []
+                if anexosauditoria:
+                    for i, anex in enumerate(anexosauditoria):
+                        anexoauditoria.append(anex['nome'])
 
-                tags = join_data(tags)
+                    anexoauditoria = join_data(anexoauditoria)
 
-            pendencias = tarefa['pendencias']
-            listapendencia = []
-            if pendencias:
-                for i, pendencia in enumerate(pendencias):
-                    listapendencia.append(pendencia['nomeUsuarioUnidade'])
+                linhaacao = tarefa['campos']['linhaAcaoAuditoria']['valor']['valor']
 
-                listapendencia = join_data(listapendencia)
+                relfinal = tarefa['campos']['relFinalAud']['valor']
+                relatorifinal = []
+                if relfinal:
+                    relatorifinal = relfinal['nome']
 
-            abasatividade = tarefa['abasAtividade']
-            listaabaatividades = []
-            if abasatividade:
-                for i, abas in enumerate(abasatividade):
-                    listaabaatividades.append(abas['descricao'])
+                estadosituacao = tarefa['estadoSituacao']
+                arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
 
-                listaabaatividades = join_data(listaabaatividades)
+                descricaotag = tarefa['campos']['tags']['valor']
+                tags = []
+                if descricaotag:
+                    for i, tagdesc in enumerate(descricaotag):
+                        tags.append(tagdesc['descricao'])
 
-            lista_final.append({
-                'id': id,
-                'situacao': situacao,
-                'estado': estado,
-                'atividade': atividade,
-                'titulo': titulo,
-                'idtarefaassociada': idtarefaassociada,
-                'titulotarefaassociada': titulotarefaassociada,
-                'dtprevisaoinicio': dtprevisaoinicio,
-                'dtprevisaofim': dtprevisaofim,
-                'dtrealizadainicio': dtrealizadainicio,
-                'dtrealizadafim': dtrealizadafim,
-                'prioridade': prioridade,
-                'assunto': assunto,
-                'idatividade': idatividade,
-                'descricaoatividade': descricaoatividade,
-                'idsituacao': idsituacao,
-                'dataultimamodificacao': dataultimamodificacao,
-                'autorultimamodificacao': autorultimamodificacao,
-                'objetosauditoria': objetosauditoria,
-                'processosassociados': processosassociados,
-                'dadosgerenciais': dadosgerenciais,
-                'gerentesauditoria': gerenteauditoria,
-                'relatoriopreliminar': relatoriopreliminar,
-                'proponenteauditoria': proponenteauditoria,
-                'duracaomeses': duracaomeses,
-                'recursofinanceiro': recursofinanceiro,
-                'conhecimentostecnicos': conhecimentostec,
-                'localidadesauditoria': locaisauditoria,
-                'responsavelauditoria': responsavelauditoria,
-                'anexorelatoripreliminar': anexorelpreliminar,
-                'resultadosesperados': objetivoestrategico,
-                'resultadosindicador': resultadosindicador,
-                'resultadosdescricao': resultadosdescricao,
-                'origemdemanda': origem,
-                'pessoajuridica': pessoajuridica,
-                'tipoconsultoria': tipo,
-                'nundenuncia': numdenuncia,
-                'unidadesauditadas': nomeunidadeseauditadas,
-                'homemhoras': homemhoras,
-                'equipeauditoria': equipe,
-                'anexorel': anexorel,
-                'areasrequeridas': arearequerida,
-                'objetivoauditoria': objetivoauditoria,
-                'tarefasprecedentes': tarefasprecedentes,
-                'envolvidosauditoria': envolauditoria,
-                'processotrabalhoauditoria': processotrabalhoauditoria,
-                'anexosauditoria': anexoauditoria,
-                'linhaacaoauditoria': linhaacao,
-                'relatoriofinal': relatorifinal,
-                'coordenadorequipe': coordenador,
-                'equipegeral': equipe,
-                'supervisores': supervisor,
-                'arquivocomportamentoespecifico': arquivocomportamento,
-                'estadosituacao': estadosituacao,
-                'tags': descricaotag,
-                'pendencias': listapendencia,
-                'abasatividade': listaabaatividades,
-            })
+                    tags = join_data(tags)
+
+                pendencias = tarefa['pendencias']
+                listapendencia = []
+                if pendencias:
+                    for i, pendencia in enumerate(pendencias):
+                        listapendencia.append(pendencia['nomeUsuarioUnidade'])
+
+                    listapendencia = join_data(listapendencia)
+
+                abasatividade = tarefa['abasAtividade']
+                listaabaatividades = []
+                if abasatividade:
+                    for i, abas in enumerate(abasatividade):
+                        listaabaatividades.append(abas['descricao'])
+
+                    listaabaatividades = join_data(listaabaatividades)
+
+                lista_final.append({
+                    'id': id,
+                    'situacao': situacao,
+                    'estado': estado,
+                    'atividade': atividade,
+                    'titulo': titulo,
+                    'idtarefaassociada': idtarefaassociada,
+                    'titulotarefaassociada': titulotarefaassociada,
+                    'dtprevisaoinicio': dtprevisaoinicio,
+                    'dtprevisaofim': dtprevisaofim,
+                    'dtrealizadainicio': dtrealizadainicio,
+                    'dtrealizadafim': dtrealizadafim,
+                    'prioridade': prioridade,
+                    'assunto': assunto,
+                    'idatividade': idatividade,
+                    'descricaoatividade': descricaoatividade,
+                    'idsituacao': idsituacao,
+                    'dataultimamodificacao': dataultimamodificacao,
+                    'autorultimamodificacao': autorultimamodificacao,
+                    'objetosauditoria': objetosauditoria,
+                    'processosassociados': processosassociados,
+                    'dadosgerenciais': dadosgerenciais,
+                    'gerentesauditoria': gerenteauditoria,
+                    'relatoriopreliminar': relatoriopreliminar,
+                    'proponenteauditoria': proponenteauditoria,
+                    'duracaomeses': duracaomeses,
+                    'recursofinanceiro': recursofinanceiro,
+                    'conhecimentostecnicos': conhecimentostec,
+                    'localidadesauditoria': locaisauditoria,
+                    'responsavelauditoria': responsavelauditoria,
+                    'anexorelatoriopreliminar': anexorelpreliminar,
+                    'objetivosestrategicos': objetivoestrategico,
+                    'resultadosindicador': resultadosindicador,
+                    'resultadosdescricao': resultadosdescricao,
+                    'origemdemanda': origem,
+                    'pessoajuridica': pessoajuridica,
+                    'tipoconsultoria': tipo,
+                    'numdenuncia': numdenuncia,
+                    'unidadesauditadas': nomeunidadesauditadas,
+                    'homemhoras': homemhoras,
+                    'equipeauditoria': equipe,
+                    'anexorel': anexorel,
+                    'areasrequeridas': arearequerida,
+                    'objetivoauditoria': objetivoauditoria,
+                    'tarefasprecedentes': tarefasprecedentes,
+                    'envolvidosauditoria': envolauditoria,
+                    'processotrabalhoauditoria': processotrabalhoauditoria,
+                    'anexosauditoria': anexoauditoria,
+                    'linhaacaoauditoria': linhaacao,
+                    'relatoriofinal': relatorifinal,
+                    'coordenadorequipe': coordenador,
+                    'supervisores': supervisor,
+                    'arquivocomportamentoespecifico': arquivocomportamento,
+                    'estadosituacao': estadosituacao,
+                    'tags': tags,
+                    'pendencias': listapendencia,
+                    'abasatividade': listaabaatividades,
+                })
         get_log(f"Lista {tipo_arquivo} tratada com sucesso")
         return lista_final
     except NameError as err:
@@ -319,56 +353,53 @@ def salvar_dados(resultado_array):
                  tarefa['objetosauditoria'],
                  tarefa['processosassociados'],
                  tarefa['dadosgerenciais'],
-                 tarefa['gerenteauditoria'],
+                 tarefa['gerentesauditoria'],
                  tarefa['relatoriopreliminar'],
                  tarefa['proponenteauditoria'],
+                 tarefa['duracaomeses'],
                  tarefa['recursofinanceiro'],
-                 tarefa['conhecimentostec'],
-                 tarefa['locaisauditoria'],
+                 tarefa['conhecimentostecnicos'],
+                 tarefa['localidadesauditoria'],
                  tarefa['responsavelauditoria'],
-                 tarefa['anexorelpreliminar'],
-                 tarefa['objetivoestrategico'],
+                 tarefa['anexorelatoriopreliminar'],
+                 tarefa['objetivosestrategicos'],
                  tarefa['resultadosindicador'],
                  tarefa['resultadosdescricao'],
-                 tarefa['proponenteplanotrabalho'],
-                 tarefa['origem'],
+                 tarefa['origemdemanda'],
                  tarefa['pessoajuridica'],
-                 tarefa['supervisor'],
-                 tarefa['tipo'],
+                 tarefa['tipoconsultoria'],
                  tarefa['numdenuncia'],
-                 tarefa['coordenadorequipe'],
-                 tarefa['nomeunidadeseauditadas'],
+                 tarefa['unidadesauditadas'],
                  tarefa['homemhoras'],
-                 tarefa['equipe'],
+                 tarefa['equipeauditoria'],
                  tarefa['anexorel'],
-                 tarefa['arearequerida'],
+                 tarefa['areasrequeridas'],
                  tarefa['objetivoauditoria'],
                  tarefa['tarefasprecedentes'],
-                 tarefa['envolauditoria'],
-                 tarefa['anexoauditoria'],
-                 tarefa['relatorifinal'],
-                 tarefa['recursofinanceiro'],
+                 tarefa['envolvidosauditoria'],
+                 tarefa['processotrabalhoauditoria'],
+                 tarefa['linhaacaoauditoria'],
+                 tarefa['anexosauditoria'],
+                 tarefa['relatoriofinal'],
                  tarefa['coordenadorequipe'],
-                 tarefa['equipegeral'],
-                 tarefa['gerente'],
                  tarefa['supervisores'],
                  tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
-                 tarefa['listapendencia'],
-                 tarefa['listaabaatividades']
+                 tarefa['pendencias'],
+                 tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
             insert_query = (f"""INSERT INTO auditorias (id, situacao, estado, atividade, titulo, titulotarefaassociada,
-                                                titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
+                                                dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,objetosauditoria,processosassociados,dadosgerenciais,
-                                                gerenteauditoria,relatoriopreliminar,proponenteauditoria,duracaomeses,recursofinanceiro,conhecimentostec,locaisauditoria,
-                                                responsavelauditoria,anexorelpreliminar, objetivoestrategico,resultadosindicador,resultadosdescricao,
-                                                origem,pessoajuridica,supervisor,tipo,numdenuncia,coordenadorequipe,nomeunidadeseauditadas,homemhoras,
-                                                equipe,anexorel,arearequerida,objetivoauditoria,tarefasprecedentes,envolauditoria,processotrabalhoauditoria,
-                                                anexoauditoria,linhaacao,relatorifinal,tarefasprecedentes,coordenadorequipe,equipegeral,supervisores,
-                                                estadosituacao, arquivocomportamentoespecifico,tags,listapendencia,listaabaatividades) VALUES {array_records}""")
+                                                gerentesauditoria,relatoriopreliminar,proponenteauditoria,duracaomeses,recursofinanceiro,conhecimentostecnicos,localidadesauditoria,
+                                                responsavelauditoria,anexorelatoriopreliminar, objetivosestrategicos,resultadosindicador,resultadosdescricao,
+                                                origemdemanda,pessoajuridica,tipoconsultoria,numdenuncia,unidadesauditadas,homemhoras,
+                                                equipeauditoria,anexorel,areasrequeridas,objetivoauditoria,tarefasprecedentes,envolvidosauditoria,processotrabalhoauditoria,
+                                                anexosauditoria,linhaacaoauditoria,relatoriofinal,coordenadorequipe,supervisores,
+                                                estadosituacao, arquivocomportamentoespecifico,tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso")

@@ -1,6 +1,6 @@
 -- Table: public.auto_avaliacao_iacm
 
--- DROP TABLE IF EXISTS public.auto_avaliacao_iacm;
+ DROP TABLE IF EXISTS public.auto_avaliacao_iacm;
 
 CREATE TABLE IF NOT EXISTS public.auto_avaliacao_iacm
 (
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS public.auto_avaliacao_iacm
     prioridade character varying(255) COLLATE pg_catalog."default",
     assunto character varying(5000) COLLATE pg_catalog."default",
     idatividade integer,
-    descricaoatividade character varying(5000) COLLATE pg_catalog."default",
+    descricaoatividade character varying(10485760) COLLATE pg_catalog."default",
     idsituacao integer,
     dataultimamodificacao character varying(50) COLLATE pg_catalog."default",
     autorultimamodificacao character varying(500) COLLATE pg_catalog."default",
@@ -30,11 +30,11 @@ CREATE TABLE IF NOT EXISTS public.auto_avaliacao_iacm
     unidadeauditoriasuptec character varying(5000) COLLATE pg_catalog."default",
     tarefaprecedentes character varying(5000) COLLATE pg_catalog."default",
     niveliacm integer,
-    textohistorico character varying(5000) COLLATE pg_catalog."default",
-    iacmplanoacao character varying(5000) COLLATE pg_catalog."default",
+    textohistorico character varying(10485760) COLLATE pg_catalog."default",
+    iacmplanoacao character varying(10485760) COLLATE pg_catalog."default",
     unidadesuperior character varying(5000) COLLATE pg_catalog."default",
     mesconclusaoprevisto character varying(5000) COLLATE pg_catalog."default",
-    textoajuda character varying(5000) COLLATE pg_catalog."default",
+    textoajuda character varying(10485760) COLLATE pg_catalog."default",
     arquivocomportamentoespecifico character varying(5000) COLLATE pg_catalog."default",
     estadosituacao character varying(5000) COLLATE pg_catalog."default",
     tags character varying(5000) COLLATE pg_catalog."default",

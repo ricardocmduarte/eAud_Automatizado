@@ -251,17 +251,16 @@ def salvar_dados(resultado_array):
                  tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
-                 tarefa['listapendencia'],
-                 tarefa['listaabaatividades'],
-                 tarefa['dataatualizacao'],
+                 tarefa['pendencias'],
+                 tarefa['abasatividade'],
                  )]
             array_records = ", ".join(["%s"] * len(lista))
             insert_query = (f"""INSERT INTO planejamento_consultoria (id, situacao, estado, atividade, titulo, titulotarefaassociada,
-                                                titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
+                                                dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao, analisepreliminar,unidadesenvolvidas,anexosgerais
                                                 observadores,hipoteselegal,docplanejamento,coordenadorequipe,equipegeral,supervisores,arquivocomportamentoespecifico, estadosituacao,
-                                                tags,listapendencia,listaabaatividades,dataatualizacao) VALUES {array_records}""")
+                                                tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso")

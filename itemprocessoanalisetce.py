@@ -103,7 +103,7 @@ def tratamento_dados(data):
             links = []
             if link:
                 for i, lin in enumerate(link):
-                    links.append(lin['valor'])
+                    links.append(lin['descricao'] + '|' + lin['url'])
 
                 links = join_data(links)
 
@@ -155,7 +155,14 @@ def tratamento_dados(data):
                 gerentesubprojeto = join_data(gerentesubprojeto)
 
             tipopessoa = tarefa['campos']['tpjpf']['valor']['valor']
-            cpf = tarefa['campos']['CPF']['valor']
+
+            cp = tarefa['campos']['CPF']['valor']
+            cpf = []
+            if cp:
+                for i, c in enumerate(cp):
+                    cpf.append(c['nomeExibicao'])
+
+                cpf = join_data(cpf)
 
             cnpj = tarefa['campos']['CNPJs']['valor']
             cnpjs = []
@@ -228,7 +235,7 @@ def tratamento_dados(data):
                 'cpf': cpf,
                 'cnpjs': cnpjs,
                 'valoratualizado': valoratualizado,
-                'arquivocomportamento': arquivocomportamento,
+                'arquivocomportamentoespecifico': arquivocomportamento,
                 'estadosituacao': estadosituacao,
                 'pendencias': listapendencia,
                 'abasatividade': listaabaatividades,
@@ -294,18 +301,18 @@ def salvar_dados(resultado_array):
                  tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
-                 tarefa['listapendencia'],
-                 tarefa['listaabaatividades']
+                 tarefa['pendencias'],
+                 tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
             insert_query = (f"""INSERT INTO item_analise_tce (id, situacao, estado, atividade, titulo, titulotarefaassociada,
-                                                titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
+                                                dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,unidadeexecutora,fatosobapuracao,anexosgerais,
                                                 processosassociados,tceorigem,produtouaig,numprocessotribunal,localidadesinteracao,numresolucaoportaria,
-                                                dataencaminhado,fatoapuracao,links,datainstauracao,unidadesenvolvidas,procedvaloratualizado,enciatce,destinatariousuariounidade,
+                                                dataencaminhado,fatoapuracao,links,datainstauracao,unidadesenvolvidas,valoratualizado,procedenciatce,destinatariousuariounidade,
                                                 executores,valorprejuizoestimado,gerentesubprojeto,tipopessoa,cpf,cnpjs,arquivocomportamentoespecifico,estadosituacao,
-                                                tags,listapendencia,listaabaatividades) VALUES {array_records}""")
+                                                tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso")

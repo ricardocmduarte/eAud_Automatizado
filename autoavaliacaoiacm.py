@@ -71,9 +71,28 @@ def tratamento_dados(data):
             dataultimamodificacao = tarefa['dataUltimaModificacao']
             autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-            anexosgerais = tarefa['campos']['anexosGerais']['valor']
-            equipevalidacaoexterna = tarefa['campos']['equipeValidacaoExternaIACM']['valor']
-            unidadevalidadoras = tarefa['campos']['unidadesValidadorasIACM']['valor']
+            filegeral = tarefa['campos']['anexosGerais']['valor']
+            anexosgerais = []
+            if filegeral:
+                for i, file in enumerate(filegeral):
+                    anexosgerais.append(file['nome'])
+
+                anexosgerais = join_data(anexosgerais)
+
+            teamexterno = tarefa['campos']['equipeValidacaoExternaIACM']['valor']
+            equipevalidacaoexterna = []
+            if teamexterno:
+                for i, team in enumerate(teamexterno):
+                    equipevalidacaoexterna.append(team['nomeExibicao'])
+                equipevalidacaoexterna = join_data(equipevalidacaoexterna)
+
+            unidval = tarefa['campos']['unidadesValidadorasIACM']['valor']
+            unidadevalidadoras = []
+            if unidval:
+                for i, uni in enumerate(unidval):
+                    unidadevalidadoras.append(uni['nomeExibicao'])
+                unidadevalidadoras = join_data(unidadevalidadoras)
+
             relatoriovalidacao = tarefa['campos']['relvalex']['valor']
 
             equipeavaliacao = tarefa['campos']['equipeAvaliacaoIACM']['valor']
@@ -87,7 +106,11 @@ def tratamento_dados(data):
             unidadeauditoriasuptec = tarefa['campos']['unidadeAuditoriaSupTec']['valor']
             tarefaprecedentes = tarefa['campos']['tarefasPrecedentes']['valor']
 
-            valorniveliacm = tarefa['campos']['nivelIACM']['valor']
+            nivel = tarefa['campos']['nivelIACM']['valor']
+            valorniveliacm = 0
+            if nivel:
+                for i, level in enumerate(nivel):
+                    valorniveliacm = level['valor']
 
             textohistorico = tarefa['campos']['textoDoHistorico']['valor']
 
@@ -101,11 +124,11 @@ def tratamento_dados(data):
 
             descricaotag = tarefa['campos']['tags']['valor']
             tags = []
-            if descricaotag:
+            '''if descricaotag:
                 for i, tagdesc in enumerate(descricaotag):
                     descricaotag.append(tagdesc['descricao'])
 
-                tags = join_data(tags)
+                tags = join_data(tags)'''
 
             pendencias = tarefa['pendencias']
             listapendencia = []
@@ -202,26 +225,26 @@ def salvar_dados(resultado_array):
                  tarefa['equipeiacm'],
                  tarefa['unidadeauditoriasuptec'],
                  tarefa['tarefaprecedentes'],
-                 tarefa['valorniveliacm'],
+                 tarefa['niveliacm'],
                  tarefa['textohistorico'],
                  tarefa['iacmplanoacao'],
-                 tarefa['nomeexibicaosup'],
+                 tarefa['unidadesuperior'],
                  tarefa['mesconclusaoprevisto'],
                  tarefa['textoajuda'],
                  tarefa['estadosituacao'],
-                 tarefa['arquivocomportamento'],
+                 tarefa['arquivocomportamentoespecifico'],
                  tarefa['tags'],
-                 tarefa['listapendencia'],
-                 tarefa['listaabaatividades']
+                 tarefa['pendencias'],
+                 tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
             insert_query = (f"""INSERT INTO auto_avaliacao_iacm (id, situacao, estado, atividade, titulo, titulotarefaassociada,
-                                                titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
+                                                dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,anexosgerais,equipevalidacaoexterna,unidadevalidadoras,
                                                 relatoriovalidacao,equipeiacm,unidadeauditoriasuptec,tarefaprecedentes,estadosituacao,
-                                                valorniveliacm,textohistorico,iacmplanoacao,nomeexibicaosup,mesconclusaoprevisto,arquivocomportamento,
-                                                textoajuda,tags,listapendencia,listaabaatividades) VALUES {array_records}""")
+                                                niveliacm,textohistorico,iacmplanoacao,unidadesuperior,mesconclusaoprevisto,arquivocomportamentoespecifico,
+                                                textoajuda,tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso")

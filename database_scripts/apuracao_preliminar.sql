@@ -1,6 +1,6 @@
 -- Table: public.apuracao_preliminar
 
--- DROP TABLE IF EXISTS public.apuracao_preliminar;
+DROP TABLE IF EXISTS public.apuracao_preliminar;
 
 CREATE TABLE IF NOT EXISTS public.apuracao_preliminar
 (
@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS public.apuracao_preliminar
     anexosgerais character varying(5000) COLLATE pg_catalog."default",
     objetosauditoria character varying(5000) COLLATE pg_catalog."default",
     matrizcontrole character varying(5000) COLLATE pg_catalog."default",
+	linkanalise character varying(5000) COLLATE pg_catalog."default",
     tarefasprecedentes character varying(5000) COLLATE pg_catalog."default",
     observadores character varying(5000) COLLATE pg_catalog."default",
     hipoteselegal character varying(5000) COLLATE pg_catalog."default",

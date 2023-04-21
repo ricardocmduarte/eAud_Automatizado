@@ -71,7 +71,10 @@ def tratamento_dados(data):
             dataultimamodificacao = tarefa['dataUltimaModificacao']
             autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-            relatoriopreliminar = tarefa['campos']['relatorioPreliminar']['valor']['nome']
+            prelrelatorio = tarefa['campos']['relatorioPreliminar']['valor']
+            relatoriopreliminar = []
+            if prelrelatorio:
+                relatoriopreliminar = prelrelatorio['nome']
 
             hipotese = tarefa['campos']['hipoteseLegal']['valor']
             hipoteselegal = []
@@ -107,7 +110,10 @@ def tratamento_dados(data):
 
                 pareceres = join_data(pareceres)
 
-            relatorioword = tarefa['campos']['relatorioWord']['valor']['nome']
+            wordrel = tarefa['campos']['relatorioWord']['valor']
+            relatorioword = []
+            if wordrel:
+                relatorioword = wordrel['nome']
 
             unidenvolvidas = tarefa['campos']['unidEnvolvidas']['valor']
             unidadesenvolvidas = []
@@ -125,7 +131,13 @@ def tratamento_dados(data):
 
                 relatoriocom = join_data(relatoriocom)
 
-            observadores = tarefa['campos']['observadores']['valor']
+            obser = tarefa['campos']['observadores']['valor']
+            observadores = []
+            if obser:
+                for i, obs in enumerate(obser):
+                    observadores.append(obs['nomeExibicao'])
+
+                observadores = join_data(observadores)
 
             certificado = tarefa['campos']['certificado']['valor']
             certificados = []
@@ -267,17 +279,17 @@ def salvar_dados(resultado_array):
                  tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
-                 tarefa['listapendencia'],
-                 tarefa['listaabaatividades']
+                 tarefa['pendencias'],
+                 tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
             insert_query = (f"""INSERT INTO relatorio_preliminar (id, situacao, estado, atividade, titulo, titulotarefaassociada,
-                                                titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
+                                                dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
-                                                dataultimamodificacao,autorultimamodificacao,relatoriopreliminar,hipoteselegal,coordenadorequipe,supervisores,
+                                                dataultimamodificacao,autorultimamodificacao,relatoriofinal,relatoriopreliminar,hipoteselegal,coordenadorequipe,supervisores,
                                                 parecer,anexorelatorio,relatorioword,unidadesenvolvidas,relatoriocom,observadores,certificados,
                                                 equipegeral,arquivocomportamentoespecifico, estadosituacao,
-                                                tags,listapendencia,listaabaatividades) VALUES {array_records}""",)
+                                                tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso")

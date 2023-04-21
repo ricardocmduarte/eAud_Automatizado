@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS public.item_trabalho_atividade
     unidadesexecutoras character varying(5000) COLLATE pg_catalog."default",
     detalhamento character varying(5000) COLLATE pg_catalog."default",
     anexosgerais character varying(5000) COLLATE pg_catalog."default",
-    processoassociado character varying(5000) COLLATE pg_catalog."default",
+    processoassociado character varying(10485760) COLLATE pg_catalog."default",
     processt character varying(5000) COLLATE pg_catalog."default",
     origemdemanda character varying(5000) COLLATE pg_catalog."default",
     links character varying(5000) COLLATE pg_catalog."default",

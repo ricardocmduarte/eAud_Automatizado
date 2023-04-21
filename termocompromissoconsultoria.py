@@ -104,12 +104,9 @@ def tratamento_dados(data):
                 hipoteselegal = join_data(hipoteselegal)
 
             docsolicitado = tarefa['campos']['docSolicitacao']['valor']
-            docsolicitacao = []
+            docsolicitacao = ''
             if docsolicitado:
-                for i, file in enumerate(docsolicitado):
-                    docsolicitacao.append(file['nome'])
-
-                docsolicitacao = join_data(docsolicitacao)
+                docsolicitacao = docsolicitado['nome']
 
             tag = tarefa['campos']['tags']['valor']
             tags = []
@@ -144,12 +141,9 @@ def tratamento_dados(data):
                 supervisores = join_data(supervisores)
 
             tempocompro = tarefa['campos']['termoCompromisso']['valor']
-            termocompromisso = []
+            termocompromisso = ''
             if tempocompro:
-                for i, file in enumerate(tempocompro):
-                    termocompromisso.append(file['nome'])
-
-                termocompromisso = join_data(termocompromisso)
+                termocompromisso = tempocompro['nome']
 
             arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
             estadosituacao = tarefa['estadoSituacao']
@@ -168,7 +162,7 @@ def tratamento_dados(data):
                 for i, abas in enumerate(abasatividade):
                     listaabaatividades.append(abas['descricao'])
 
-                listaabaatividades = join_data()
+                listaabaatividades = join_data(listaabaatividades)
 
             lista_final.append({
                 'id': id,
@@ -251,16 +245,16 @@ def salvar_dados(resultado_array):
                  tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
-                 tarefa['listapendencia'],
-                 tarefa['listaabaatividades']
+                 tarefa['pendencias'],
+                 tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
             insert_query = (f"""INSERT INTO termo_compromisso_consultoria (id, situacao, estado, atividade, titulo, titulotarefaassociada,
-                                                titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
+                                                dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,unidadesenvolvidas,anexosgerais,observadores,hipoteselegal,
                                                 docsolicitacao,coordenadorequipe,equipegeral,supervisores,termocompromisso,arquivocomportamentoespecifico, estadosituacao,
-                                                tags,listapendencia,listaabaatividades) VALUES {array_records}""",)
+                                                tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso")

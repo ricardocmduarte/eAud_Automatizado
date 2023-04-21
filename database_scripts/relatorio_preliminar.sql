@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS public.relatorio_preliminar
     hipoteselegal character varying(5000) COLLATE pg_catalog."default",
     relatoriofinal character varying(5000) COLLATE pg_catalog."default",
     coordenadorequipe character varying(5000) COLLATE pg_catalog."default",
-    supervisor character varying(5000) COLLATE pg_catalog."default",
+    supervisores character varying(5000) COLLATE pg_catalog."default",
     parecer character varying(5000) COLLATE pg_catalog."default",
     anexorelatorio character varying(5000) COLLATE pg_catalog."default",
     relatorioword character varying(5000) COLLATE pg_catalog."default",

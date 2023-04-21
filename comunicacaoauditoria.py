@@ -98,7 +98,13 @@ def tratamento_dados(data):
 
                 destinatario = join_data(destinatario)
 
-            copiacomunicacao = tarefa['campos']['copiaComunicacao']['valor']
+            copycom = tarefa['campos']['copiaComunicacao']['valor']
+            copiacomunicacao = []
+            if copycom:
+                for i, file in enumerate(copycom):
+                    copiacomunicacao.append(file['nomeExibicao'])
+
+                copiacomunicacao = join_data(copiacomunicacao)
 
             supervisores = tarefa['campos']['EquipeGeral']['valor']
             supervisor = []
@@ -178,7 +184,7 @@ def tratamento_dados(data):
                 'autorultimamodificacao': autorultimamodificacao,
                 'indminutadestinatario': indminutadestinatario,
                 'detalhamento': detalhamento,
-                'anexogerais': anexgerais,
+                'anexosgerais': anexgerais,
                 'destinatarios': destinatario,
                 'copiacomunicacao': copiacomunicacao,
                 'prazo': prazo,
@@ -233,32 +239,32 @@ def salvar_dados(resultado_array):
                  tarefa['autorultimamodificacao'],
                  tarefa['indminutadestinatario'],
                  tarefa['detalhamento'],
-                 tarefa['anexgerais'],
-                 tarefa['destinatario'],
+                 tarefa['anexosgerais'],
+                 tarefa['destinatarios'],
                  tarefa['copiacomunicacao'],
                  tarefa['prazo'],
                  tarefa['dataenviocomunicacao'],
                  tarefa['dataciencia'],
-                 tarefa['indminutaremente'],
+                 tarefa['indminutaremetente'],
                  tarefa['tarefasprecedentes'],
-                 tarefa['unidadesenvol'],
+                 tarefa['unidadesenvolvidas'],
                  tarefa['coordenadorequipe'],
                  tarefa['equipegeral'],
                  tarefa['supervisores'],
                  tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
-                 tarefa['listapendencia'],
-                 tarefa['listaabaatividades']
+                 tarefa['pendencias'],
+                 tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
-            insert_query = (f"""INSERT INTO comunicado_auditoria (id, situacao, estado, atividade, titulo, titulotarefaassociada,
-                                                titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
+            insert_query = (f"""INSERT INTO comunicacao_auditoria (id, situacao, estado, atividade, titulo, titulotarefaassociada,
+                                                dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
-                                                dataultimamodificacao,autorultimamodificacao,indminutadestinatario,detalhamento,anexgerais,
-                                                destinatario,copiacomunicacao,prazo,dataenviocomunicacao,dataciencia,indminutaremente,
-                                                tarefasprecedentes,unidadesenvol,coordenadorequipe,equipegeral,supervisores,
-                                                estadosituacao, arquivocomportamentoespecifico,tags,listapendencia,listaabaatividades) VALUES {array_records}""")
+                                                dataultimamodificacao,autorultimamodificacao,indminutadestinatario,detalhamento,anexosgerais,
+                                                destinatarios,copiacomunicacao,prazo,dataenviocomunicacao,dataciencia,indminutaremetente,
+                                                tarefasprecedentes,unidadesenvolvidas,coordenadorequipe,equipegeral,supervisores,
+                                                estadosituacao, arquivocomportamentoespecifico,tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso")

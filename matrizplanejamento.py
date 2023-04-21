@@ -103,13 +103,13 @@ def tratamento_dados(data):
 
                 hipoteselegal = join_data(hipoteselegal)
 
-            matriz = tarefa['campos']['matriz']['valor']
-            listamatriz = []
-            if matriz:
-                for i, mat in enumerate(matriz):
-                    listamatriz.append(mat['descQuestao'])
+            listamatriz = tarefa['campos']['matriz']['valor']
+            matriz = []
+            if listamatriz:
+                for i, mat in enumerate(listamatriz):
+                    matriz.append(mat['descQuestao'])
 
-                listamatriz = join_data(listamatriz)
+                matriz = join_data(matriz)
 
             coordenador = tarefa['campos']['CoordenadorEquipe']['valor']
             coordenadorequipe = []
@@ -186,8 +186,8 @@ def tratamento_dados(data):
                 'observadores': observadores,
                 'hipoteselegal': hipoteselegal,
                 'matriz': matriz,
-                'coordenador': coordenadorequipe,
-                'equipe': equipegeral,
+                'coordenadorequipe': coordenadorequipe,
+                'equipegeral': equipegeral,
                 'arquivocomportamentoespecifico': arquivocomportamento,
                 'estadosituacao': estadosituacao,
                 'tags': tags,
@@ -239,16 +239,16 @@ def salvar_dados(resultado_array):
                  tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
-                 tarefa['listapendencia'],
-                 tarefa['listaabaatividades']
+                 tarefa['pendencias'],
+                 tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
             insert_query = (f"""INSERT INTO matriz_planejamento (id, situacao, estado, atividade, titulo, titulotarefaassociada,
-                                                titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
+                                                dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,unidadesenvolvidas,tarefasprecedentes,observadores,
-                                                hipoteselegal,matriz, coordenadorequipe,equipegeral, arquivocomportamentoespecifico,estadosituacao
-                                                tags,listapendencia,listaabaatividades) VALUES {array_records}""")
+                                                hipoteselegal,matriz, coordenadorequipe,equipegeral, arquivocomportamentoespecifico,estadosituacao,
+                                                tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso")

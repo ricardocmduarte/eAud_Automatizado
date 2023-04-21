@@ -1,6 +1,6 @@
 -- Table: public.auditorias
 
--- DROP TABLE IF EXISTS public.auditorias;
+ -- DROP TABLE IF EXISTS public.auditorias;
 
 CREATE TABLE IF NOT EXISTS public.auditorias
 (
@@ -18,12 +18,12 @@ CREATE TABLE IF NOT EXISTS public.auditorias
     prioridade character varying(255) COLLATE pg_catalog."default",
     assunto character varying(5000) COLLATE pg_catalog."default",
     idatividade integer,
-    descricaoatividade character varying(5000) COLLATE pg_catalog."default",
+    descricaoatividade character varying(10485760) COLLATE pg_catalog."default",
     idsituacao integer,
     dataultimamodificacao character varying(50) COLLATE pg_catalog."default",
     autorultimamodificacao character varying(500) COLLATE pg_catalog."default",
     objetosauditoria character varying(5000) COLLATE pg_catalog."default",
-    processosassociados character varying(5000) COLLATE pg_catalog."default",
+    processosassociados character varying(10485760) COLLATE pg_catalog."default",
     dadosgerenciais character varying(5000) COLLATE pg_catalog."default",
     gerentesauditoria character varying(5000) COLLATE pg_catalog."default",
     relatoriopreliminar character varying(5000) COLLATE pg_catalog."default",
@@ -33,14 +33,14 @@ CREATE TABLE IF NOT EXISTS public.auditorias
     conhecimentostecnicos character varying(5000) COLLATE pg_catalog."default",
     localidadesauditoria character varying(5000) COLLATE pg_catalog."default",
     responsavelauditoria character varying(5000) COLLATE pg_catalog."default",
-    anexorelatoripreliminar character varying(5000) COLLATE pg_catalog."default",
-    resultadosesperados character varying(5000) COLLATE pg_catalog."default",
+    anexorelatoriopreliminar character varying(5000) COLLATE pg_catalog."default",
+    objetivosestrategicos character varying(5000) COLLATE pg_catalog."default",
     resultadosindicador character varying(5000) COLLATE pg_catalog."default",
     resultadosdescricao character varying(5000) COLLATE pg_catalog."default",
     origemdemanda character varying(5000) COLLATE pg_catalog."default",
     pessoajuridica character varying(5000) COLLATE pg_catalog."default",
     tipoconsultoria character varying(5000) COLLATE pg_catalog."default",
-    nundenuncia integer,
+    numdenuncia character varying(10485760) COLLATE pg_catalog."default",
     unidadesauditadas character varying(5000) COLLATE pg_catalog."default",
     homemhoras integer,
     equipeauditoria character varying(5000) COLLATE pg_catalog."default",
@@ -54,7 +54,6 @@ CREATE TABLE IF NOT EXISTS public.auditorias
     relatoriofinal character varying(5000) COLLATE pg_catalog."default",
     tarefasprecedentes character varying(5000) COLLATE pg_catalog."default",
     coordenadorequipe character varying(5000) COLLATE pg_catalog."default",
-    equipegeral character varying(5000) COLLATE pg_catalog."default",
     supervisores character varying(5000) COLLATE pg_catalog."default",
     arquivocomportamentoespecifico character varying(5000) COLLATE pg_catalog."default",
     estadosituacao character varying(5000) COLLATE pg_catalog."default",

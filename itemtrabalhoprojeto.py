@@ -104,7 +104,7 @@ def tratamento_dados(data):
             links = []
             if link:
                 for i, lin in enumerate(link):
-                    links.append(lin['nomeExibicao'])
+                    links.append(lin['descricao'] + '|' + lin['url'])
 
                 links = join_data(links)
 
@@ -121,11 +121,7 @@ def tratamento_dados(data):
             destusuariounidade = tarefa['campos']['destinatarioUsuarioUnidade']['valor']
             destinatariousuariounidade = []
             if destusuariounidade:
-                for i, unidade in enumerate(destusuariounidade):
-                    destinatariousuariounidade.append(unidade['nomeExibicao'])
-
-                destinatariousuariounidade = join_data(
-                    destinatariousuariounidade)
+                destinatariousuariounidade = unidade['nomeExibicao']
 
             tarefasprec = tarefa['campos']['tarefasPrecedentes']['valor']
             tarefasprecedentes = []
@@ -257,17 +253,17 @@ def salvar_dados(resultado_array):
                  tarefa['estadosituacao'],
                  tarefa['arquivocomportamentoespecifico'],
                  tarefa['tags'],
-                 tarefa['listapendencia'],
-                 tarefa['listaabaatividades']
+                 tarefa['pendencias'],
+                 tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
             insert_query = (f"""INSERT INTO item_trabalho_projeto (id, situacao, estado, atividade, titulo, titulotarefaassociada,
-                                                titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
+                                                dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,unidadesexecutoras,detalhamento,anexos,
                                                 anexosgerais,processoassociado,produtouaig,supervisores,links,homemhora,unidadesenvolvidas,
                                                 destinatariousuariounidade,tarefasprecedentes,executores,arquivocomportamentoespecifico,estadosituacao,
-                                                tags,listapendencia,listaabaatividades) VALUES {array_records}""")
+                                                tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso")

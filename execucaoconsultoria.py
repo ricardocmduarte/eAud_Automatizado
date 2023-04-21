@@ -238,9 +238,9 @@ def salvar_dados(resultado_array):
                  tarefa['idsituacao'],
                  tarefa['dataultimamodificacao'],
                  tarefa['autorultimamodificacao'],
-                 tarefa['unidadesenvol'],
-                 tarefa['anexos'],
-                 tarefa['tarefasprec'],
+                 tarefa['unidadesenvolvidas'],
+                 tarefa['anexosgerais'],
+                 tarefa['tarefasprecedentes'],
                  tarefa['observadores'],
                  tarefa['hipoteselegal'],
                  tarefa['coordenadorequipe'],
@@ -250,16 +250,16 @@ def salvar_dados(resultado_array):
                  tarefa['estadosituacao'],
                  tarefa['arquivocomportamentoespecifico'],
                  tarefa['tags'],
-                 tarefa['listapendencia'],
-                 tarefa['listaabaatividades']
+                 tarefa['pendencias'],
+                 tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
             insert_query = (f"""INSERT INTO execucao_consultoria (id, situacao, estado, atividade, titulo, titulotarefaassociada,
-                                                titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
+                                                dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
-                                                dataultimamodificacao,autorultimamodificacao,unidadesenvol,anexos,tarefasprec,
+                                                dataultimamodificacao,autorultimamodificacao,unidadesenvolvidas,anexosgerais,tarefasprecedentes,
                                                 observadores,hipoteselegal,coordenadorequipe,equipegeral,supervisores,papeistrabalho,estadosituacao,
-                                                arquivocomportamentoespecifico,tags,listapendencia,listaabaatividades) VALUES {array_records}""")
+                                                arquivocomportamentoespecifico,tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso")

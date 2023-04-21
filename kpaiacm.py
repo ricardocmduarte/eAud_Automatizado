@@ -74,11 +74,7 @@ def tratamento_dados(data):
             kpaconclusao = tarefa['campos']['conclusaoKPA']['valor']
             conclusaokpa = []
             if kpaconclusao:
-                for i, kpa in enumerate(kpaconclusao):
-                    conclusaokpa.append(kpa['valor'])
-
-                conclusaokpa = join_data(conclusaokpa)
-
+                conclusaokpa = kpaconclusao['valor']
             objetivokpa = tarefa['campos']['objkpa']['valor']
 
             anexgeral = tarefa['campos']['anexosGerais']['valor']
@@ -139,7 +135,7 @@ def tratamento_dados(data):
             links = []
             if link:
                 for i, lin in enumerate(link):
-                    links.append(lin['valor'])
+                    links.append(lin['descricao'] + '|' + lin['url'])
 
                 links = join_data(links)
 
@@ -259,18 +255,18 @@ def salvar_dados(resultado_array):
                  tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
-                 tarefa['listapendencia'],
-                 tarefa['listaabaatividades']
+                 tarefa['pendencias'],
+                 tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
             insert_query = (f"""INSERT INTO kpa_iacm (id, situacao, estado, atividade, titulo, titulotarefaassociada,
-                                                titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
+                                                dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
-                                                dataultimamodificacao,autorultimamodificacao,conclusaokpa,anexosgerais,estadosituacao,
-                                                objetivokpa,equipevalidacaoexternaiacm, atividaeskpa,titulokpamodelo, datarealizadamodelokpa, 
+                                                dataultimamodificacao,autorultimamodificacao,conclusaokpa,anexosgerais,
+                                                objetivokpa,equipevalidacaoexternaiacm, atividaeskpa,equipeavaliacaoiacm,titulokpamodelo, datarealizadamodelokpa, 
                                                 datafimmodelokpa, assundomodelokpa,unidadesvalidadoras, produtokpa, resultadoskpa, 
-                                                praticakpa, links,uaigs, arquivocomportamentoespecifico,estadosituacao
-                                                tags,listapendencia,listaabaatividades) VALUES {array_records}""")
+                                                praticakpa, links,uaigs, arquivocomportamentoespecifico,estadosituacao,
+                                                tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso")
