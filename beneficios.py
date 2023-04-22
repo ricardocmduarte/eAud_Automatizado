@@ -75,7 +75,7 @@ def tratamento_dados(data):
 
             beneficioavulso = tarefa['campos']['benAvulso']['valor']
 
-            descricaobeneficio = tarefa['campos']['descricaoBenf']['valor']
+            descricaobeneficio = tarefa['campos']['descricaoBenef']['valor']
 
             valorbruto = tarefa['campos']['valorBruto']['valor']
             descricaocusto = tarefa['campos']['descricaoCusto']['valor']
@@ -126,18 +126,13 @@ def tratamento_dados(data):
             valorliquido = tarefa['campos']['valorLiquido']['valor']
 
             classben = tarefa['campos']['classeBenef']['valor']
-            classebeneficio = []
+            classebeneficio = ''
             if classben:
-                for i, benclass in enumerate(classben):
-                    classebeneficio.append(benclass['valor'])
-                classebeneficio = join_data(classebeneficio)
-
+                classebeneficio = classben['valor']
             bentipo = tarefa['campos']['tipoBeneficio']['valor']
             tipobeneficio = []
             if bentipo:
-                for i, tipo in enumerate(bentipo):
-                    tipobeneficio.append(tipo['valor'])
-                tipobeneficio = join_data(tipobeneficio)
+                tipobeneficio = bentipo['valor']
 
             tarefasprec = tarefa['campos']['tarefasPrecedentes']['valor']
             tarefasprecedentes = []
@@ -146,9 +141,7 @@ def tratamento_dados(data):
                     tarefasprecedentes.append(tarefapre['nomeExibicao'])
                 tarefasprecedentes = join_data(tarefasprecedentes)
 
-            valorprejuizoestimado = tarefa['campos']['valorPrejuizoEstimado']['valor']
-
-            unidproponente = tarefa['campos']['unidadeProponente']['valor']
+            unidproponente = tarefa['campos']['unidadeProponenteBenef']['valor']
             unidadeproponente = ''
             if unidproponente:
                 unidadeproponente = unidproponente['nomeExibicao']
@@ -163,30 +156,25 @@ def tratamento_dados(data):
 
                 tags = join_data(tags)
 
-            situacaoanteriorbeneficio = tarefa['campos']['situacaoanteriorbeneficio']['valor']
+            situacaoanteriorbeneficio = tarefa['campos']['situacaoAnteriorBenef']['valor']
             anoimplementacaobeneficio = tarefa['campos']['anoImplementacaoBeneficio']['valor']
 
             benrepercussao = tarefa['campos']['repercussaoDoBeneficio']['valor']
-            repercussaobeneficio = []
+            repercussaobeneficio = ''
             if benrepercussao:
-                for i, rep in enumerate(benrepercussao):
-                    repercussaobeneficio.append(rep['valor'])
-
-                repercussaobeneficio = join_data(repercussaobeneficio)
+                repercussaobeneficio = benrepercussao['valor']
 
             classbf = tarefa['campos']['classeBF']['valor']
-            classebf = []
+            classebf = ''
             if classbf:
-                for i, bf in enumerate(classbf):
-                    classebf.append(bf['valor'])
-                classebf = join_data(classebf)
+                classebf = classbf['valor']
 
             nivelbeneficio = tarefa['campos']['nivelBeneficio']['valor']
+
             classbnf = tarefa['campos']['classebnf']['valor']
-            classebnf = []
+            classebnf = ''
             if classbnf:
-                for i, bnf in enumerate(classbnf):
-                    classebnf.append(bnf['valor'])
+                classebnf = classbnf['valor']
 
             estadosituacao = tarefa['estadoSituacao']
             arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
@@ -244,7 +232,6 @@ def tratamento_dados(data):
                 'classebeneficio': classebeneficio,
                 'tipobeneficio': tipobeneficio,
                 'tarefasprecedentes': tarefasprecedentes,
-                'valorprejuizoestimado': valorprejuizoestimado,
                 'unidadeproponente': unidadeproponente,
                 'anofatogeradorbeneficio': anofatogeradorbeneficio,
                 'situacaoanateriorbeneficio': situacaoanteriorbeneficio,
@@ -294,20 +281,33 @@ def salvar_dados(resultado_array):
                  tarefa['idsituacao'],
                  tarefa['dataultimamodificacao'],
                  tarefa['autorultimamodificacao'],
-                 tarefa['detalhesmonitoramento'],
-                 tarefa['providencia'],
-                 tarefa['unidadesauditoria'],
+                 tarefa['beneficioavulso'],
+                 tarefa['descricaobeneficio'],
+                 tarefa['valorbruto'],
+                 tarefa['descricaocusto'],
+                 tarefa['dimensaorepercussao'],
+                 tarefa['valorcusto'],
                  tarefa['unidadesenvolvidas'],
-                 tarefa['categoriasmonitoramento'],
+                 tarefa['unidadegestora'],
+                 tarefa['anexosbeneficio'],
+                 tarefa['providenciabeneficio'],
+                 tarefa['dimenssaobeneficio'],
+                 tarefa['parcelasbeneficio'],
+                 tarefa['titulofundamento'],
+                 tarefa['textofundamentobeneficio'],
+                 tarefa['valorliquido'],
+                 tarefa['classebeneficio'],
+                 tarefa['tipobeneficio'],
                  tarefa['tarefasprecedentes'],
                  tarefa['valorprejuizoestimado'],
-                 tarefa['observadores'],
-                 tarefa['unidadegestora'],
-                 tarefa['fundamentos'],
-                 tarefa['ultimoposicionamento'],
-                 tarefa['textoultimoposicionamento'],
-                 tarefa['textoultimamanifestacao'],
-                 tarefa['anexorelatorio'],
+                 tarefa['unidadeproponente'],
+                 tarefa['anofatogeradorbeneficio'],
+                 tarefa['situacaoanateriorbeneficio'],
+                 tarefa['anoimplementacaobeneficio'],
+                 tarefa['repercussaobeneficio'],
+                 tarefa['classebf'],
+                 tarefa['nivelbeneficio'],
+                 tarefa['classebnf'],
                  tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
@@ -318,11 +318,13 @@ def salvar_dados(resultado_array):
             insert_query = (f"""INSERT INTO beneficios (id, situacao, estado, atividade, titulo, titulotarefaassociada,
                                                 dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
-                                                dataultimamodificacao,autorultimamodificacao,detalhesmonitoramento,providencia,unidadesauditoria, 
-                                                unidadesenvolvidas, categoriasmonitoramento,tarefasprecedentes,valorprejuizoestimado, observadores,
-                                                unidadegestora, fundamentos,ultimoposicionamento,textoultimoposicionamento,textoultimamanifestacao,
-                                                anexorelatorio,arquivocomportamentoespecifico, estadosituacao,
-                                                tags,pendencias,abasatividade) VALUES {array_records}""")
+                                                dataultimamodificacao,autorultimamodificacao,beneficioavulso,descricaobeneficio,valorbruto,
+                                                descricaocusto,dimensaorepercussao,valorcusto,unidadesenvolvidas,unidadegestora,
+                                                anexosbeneficio,providenciabeneficio,dimenssaobeneficio,parcelasbeneficio,
+                                                titulofundamento,textofundamentobeneficio,valorliquido,classebeneficio,tipobeneficio,
+                                                tarefasprecedentes,valorprejuizoestimado,unidadeproponente,anofatogeradorbeneficio,situacaoanateriorbeneficio,
+                                                anoimplementacaobeneficio,repercussaobeneficio,classebf,nivelbeneficio,classebnf,
+                                                arquivocomportamentoespecifico, estadosituacao,tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso")
