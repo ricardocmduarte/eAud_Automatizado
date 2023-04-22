@@ -299,7 +299,6 @@ def salvar_dados(resultado_array):
                  tarefa['classebeneficio'],
                  tarefa['tipobeneficio'],
                  tarefa['tarefasprecedentes'],
-                 tarefa['valorprejuizoestimado'],
                  tarefa['unidadeproponente'],
                  tarefa['anofatogeradorbeneficio'],
                  tarefa['situacaoanateriorbeneficio'],
@@ -322,7 +321,7 @@ def salvar_dados(resultado_array):
                                                 descricaocusto,dimensaorepercussao,valorcusto,unidadesenvolvidas,unidadegestora,
                                                 anexosbeneficio,providenciabeneficio,dimenssaobeneficio,parcelasbeneficio,
                                                 titulofundamento,textofundamentobeneficio,valorliquido,classebeneficio,tipobeneficio,
-                                                tarefasprecedentes,valorprejuizoestimado,unidadeproponente,anofatogeradorbeneficio,situacaoanateriorbeneficio,
+                                                tarefasprecedentes,unidadeproponente,anofatogeradorbeneficio,situacaoanateriorbeneficio,
                                                 anoimplementacaobeneficio,repercussaobeneficio,classebf,nivelbeneficio,classebnf,
                                                 arquivocomportamentoespecifico, estadosituacao,tags,pendencias,abasatividade) VALUES {array_records}""")
 
