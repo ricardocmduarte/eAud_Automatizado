@@ -167,7 +167,7 @@ def listar():
         else:
             return ("Erro ao salvar os dados")
 
-    ''' # def achados auditoria
+    # def achados auditoria
     importacoes.achadosauditoria.get_achados(lista_achados)
     # def analise auditoria
     importacoes.analiseauditoria.get_analise_auditoria(lista_analise_auditoria)
@@ -179,7 +179,7 @@ def listar():
         lista_apuracao_preliminar)
     # def atividade continuada
     importacoes.atividadecontinuada.get_atividade_continuada(
-        lista_atividade_continuada
+        lista_atividade_continuada)
     # def auditoria
     importacoes.auditoria.get_auditoria(lista_auditoria)
     # def autoavaliação iacm
@@ -197,25 +197,25 @@ def listar():
         lista_item_processo_analise_tce)
     # def item trabalho atividade
     importacoes.itemtrabalhoatividade.get_item_trabalho_atividade(
-        lista_item_trabalho_atividade)'''
+        lista_item_trabalho_atividade)
     # def item trabalho projeto #
-    '''importacoes.itemtrabalhoprojeto.get_item_trabalho_projeto(
-        lista_item_trabalho_projeto)'''
+    importacoes.itemtrabalhoprojeto.get_item_trabalho_projeto(
+        lista_item_trabalho_projeto)
     # def kpa iacm
-    '''importacoes.kpaiacm.get_kpa_iacm(lista_kpa_iacm)
+    importacoes.kpaiacm.get_kpa_iacm(lista_kpa_iacm)
     # def matriz planejamento
     importacoes.matrizplanejamento.get_matriz_planejamento(
-        lista_matriz_planejamento)'''
+        lista_matriz_planejamento)
     # def minuta posicionamento #
-    '''importacoes.minutaposicionamento.get_minuta_posicionamento(
-        lista_minuta_posicionamento)'''
+    importacoes.minutaposicionamento.get_minuta_posicionamento(
+        lista_minuta_posicionamento)
     # def monitoramento #
     importacoes.monitoramento.get_monitoramento(lista_monitoramento)
     # def planejamento consultoria #
-    '''importacoes.planejamentoconsultoria.get_planejamento_consultoria(
-        lista_planejamento_consultoria)'''
+    importacoes.planejamentoconsultoria.get_planejamento_consultoria(
+        lista_planejamento_consultoria)
     # def projeto geral #
-    '''importacoes.projetogeral.get_projeto_geral(lista_projeto_geral)
+    importacoes.projetogeral.get_projeto_geral(lista_projeto_geral)
     # def relatorio final
     importacoes.relatoriofinal.get_relatorio_final(lista_relatorio_final)
     # def relatorio preliminar
@@ -226,4 +226,4 @@ def listar():
         lista_resultados_consultoria)
     # def termo compromisso consultoria
     importacoes.termocompromissoconsultoria.get_termo_compromisso_consultoria(
-        lista_termo_compromisso_consultoria)'''
+        lista_termo_compromisso_consultoria)

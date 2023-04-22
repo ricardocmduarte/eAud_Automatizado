@@ -368,6 +368,3 @@ def get_beneficios_requisicao(id):
     except requests.exceptions.RequestException as err:
         get_log(err)
         print(err)
-
-
-get_beneficios()

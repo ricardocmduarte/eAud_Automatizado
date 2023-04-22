@@ -53,10 +53,6 @@ def salvar_dados(resultado_array):
         banco = db.db_connection()
         cur = banco.cursor()
 
-        '''db.delete_datas(banco)
-        get_log("Dados do banco foram apagados")
-        print("Dados do banco foram apagados")'''
-
         resultado_array = db.current_datetime_query(resultado_array)
 
         for tarefa in resultado_array:
