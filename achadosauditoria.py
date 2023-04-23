@@ -18,8 +18,7 @@ def get_achados(ids):
         return print(f"Erro ao conectar com a url {tipo_arquivo}, código do erro HTTP:  {str(response)}")
 
     try:
-        '''banco = db.db_connection()
-        db.delete_datas(banco)'''
+
         lista_dados = []
         lista_final = []
         if ids:
@@ -79,6 +78,9 @@ def tratamento_dados(data):
 
                     unidadesenvolvidas = join_data(unidadesenvolvidas)
 
+                else:
+                    unidadesenvolvidas = ''
+
                 itemachado = tarefa['campos']['itensAchadoAuditoria']['valor']
                 itensachadosauditoria = []
                 if itemachado:
@@ -86,6 +88,8 @@ def tratamento_dados(data):
                         itensachadosauditoria.append(item['descricaoSumaria'])
 
                     itensachadosauditoria = join_data(itensachadosauditoria)
+                else:
+                    itensachadosauditoria = ''
 
                 anexgerais = tarefa['campos']['anexosGerais']['valor']
                 anexosgerais = []
@@ -94,9 +98,19 @@ def tratamento_dados(data):
                         anexosgerais.append(file['nome'])
 
                     anexosgerais = join_data(anexosgerais)
+                else:
+                    anexosgerais = ''
 
-                relatoriocom = tarefa['campos']['RelatorioCom']['valor'][
-                    'nome'] if tarefa['campos']['RelatorioCom']['valor'] != None else ''
+                relcom = tarefa['campos']['RelatorioCom']['valor']
+                relatoriocom = []
+                if relcom:
+                    for i, file in enumerate(relcom):
+                        relatoriocom.append(file['nome'])
+
+                    relatoriocom = join_data(relatoriocom)
+                else:
+                    relatoriocom = ''
+
                 tarefaprecedentes = tarefa['campos']['tarefasPrecedentes']['valor']
 
                 observador = tarefa['campos']['observadores']['valor']
@@ -107,6 +121,9 @@ def tratamento_dados(data):
 
                     observadores = join_data(observadores)
 
+                else:
+                    observadores = ''
+
                 hiplegal = tarefa['campos']['hipoteseLegal']['valor']
                 hipoteselegal = []
                 if hiplegal:
@@ -114,6 +131,8 @@ def tratamento_dados(data):
                         hipoteselegal.append(hip['nomeExibicao'])
 
                     hipoteselegal = join_data(hipoteselegal)
+                else:
+                    hipoteselegal = ''
 
                 coordequipe = tarefa['campos']['CoordenadorEquipe']['valor']
                 coordenadorequipe = []
@@ -122,6 +141,8 @@ def tratamento_dados(data):
                         coordenadorequipe.append(coord['nomeExibicao'])
 
                     coordenadorequipe = join_data(coordenadorequipe)
+                else:
+                    coordenadorequipe = ''
 
                 equipgeral = tarefa['campos']['EquipeGeral']['valor']
                 equipegeral = []
@@ -130,6 +151,8 @@ def tratamento_dados(data):
                         equipegeral.append(equipe['nomeExibicao'])
 
                     equipegeral = join_data(equipegeral)
+                else:
+                    equipegeral = ''
 
                 supervisor = tarefa['campos']['supervisores']['valor']
                 supervisores = []
@@ -138,6 +161,8 @@ def tratamento_dados(data):
                         supervisores.append(super['nomeExibicao'])
 
                     supervisores = join_data(supervisores)
+                else:
+                    supervisores = ''
 
                 anexrelatorio = tarefa['campos']['anexosRelatorio']['valor']
                 anexosrelatorios = []
@@ -146,6 +171,8 @@ def tratamento_dados(data):
                         anexosrelatorios.append(file['nome'])
 
                     anexosrelatorios = join_data(anexosrelatorios)
+                else:
+                    anexosrelatorios = ''
 
                 mesconclusaorealizado = tarefa['mesConclusaoRealizado']
                 mesanoultimamodificacao = tarefa['mesAnoUltimaModificacao']
@@ -160,6 +187,8 @@ def tratamento_dados(data):
                         tags.append(tagdesc['descricao'])
 
                     tags = join_data(tags)
+                else:
+                    tags = ''
 
                 pendencias = tarefa['pendencias']
                 listapendencia = []
@@ -168,6 +197,8 @@ def tratamento_dados(data):
                         listapendencia.append(pendencia['nomeUsuarioUnidade'])
 
                     listapendencia = join_data(listapendencia)
+                else:
+                    listapendencia = ''
 
                 abasatividade = tarefa['abasAtividade']
                 listaabaatividades = []
@@ -176,6 +207,8 @@ def tratamento_dados(data):
                         listaabaatividades.append(abas['descricao'])
 
                     listaabaatividades = join_data(listaabaatividades)
+                else:
+                    listaabaatividades = ''
 
                 lista_final.append({
                     'id': id,
