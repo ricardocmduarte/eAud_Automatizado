@@ -75,6 +75,8 @@ def tratamento_dados(data):
                 for i, envolvidasunidades in enumerate(unidadesenvolvidas):
                     nomeunidadesenvolvidas.append(envolvidasunidades['nome'])
                 nomeunidadesenvolvidas = join_data(nomeunidadesenvolvidas)
+            else:
+                nomeunidadesenvolvidas = ''
 
             itemanaliseauditoria = tarefa['campos']['itensDaAnaliseAuditoria']['valor']
             idanaliseauditoria = []
@@ -142,6 +144,8 @@ def tratamento_dados(data):
             matriz = []
             if matrizachados:
                 matriz = matrizachados['nome']
+            else:
+                matriz = ''
 
             coordenadorequipe = tarefa['campos']['CoordenadorEquipe']['valor']
             coordenador = []
@@ -150,6 +154,8 @@ def tratamento_dados(data):
                     coordenador.append(coordequipe['nomeExibicao'])
 
                 coordenador = join_data(coordenador)
+            else:
+                coordenador = ''
 
             equipegeral = tarefa['campos']['EquipeGeral']['valor']
             equipe = []
@@ -158,6 +164,8 @@ def tratamento_dados(data):
                     equipe.append(geralequipe['nomeExibicao'])
 
                 equipe = join_data(equipe)
+            else:
+                equipe = ''
 
             supervisores = tarefa['campos']['EquipeGeral']['valor']
             supervisor = []
@@ -166,6 +174,8 @@ def tratamento_dados(data):
                     supervisor.append(super['nomeExibicao'])
 
                 supervisor = join_data(supervisor)
+            else:
+                supervisor = ''
 
             estadosituacao = tarefa['estadoSituacao']
             arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
@@ -177,6 +187,8 @@ def tratamento_dados(data):
                     tags.append(tagdesc['descricao'])
 
                 tags = join_data(tags)
+            else:
+                tags = ''
 
             pendencias = tarefa['pendencias']
             listapendencia = []
@@ -185,6 +197,8 @@ def tratamento_dados(data):
                     listapendencia.append(pendencia['nomeUsuarioUnidade'])
 
                 listapendencia = join_data(listapendencia)
+            else:
+                listapendencia = ''
 
             abasatividade = tarefa['abasAtividade']
             listaabaatividades = []
@@ -193,6 +207,8 @@ def tratamento_dados(data):
                     listaabaatividades.append(abas['descricao'])
 
                 listaabaatividades = join_data(listaabaatividades)
+            else:
+                listaabaatividades = ''
 
             lista_final.append({
                 'id': id,
