@@ -71,7 +71,11 @@ def tratamento_dados(data):
             autorultimamodificacao = tarefa['autorUltimaModificacao']
 
             detalhamento = tarefa['campos']['Detalhamento']['valor']
-            numdenuncia = tarefa['campos']['numDenuncia']['valor']
+
+            denuncianum = tarefa['campos']['numDenuncia']['valor']
+            numdenuncia = ''
+            if denuncianum:
+                numdenuncia = denuncianum
 
             localtrabalho = tarefa['campos']['localidadesPlanoTrabalho']['valor']
             localidadesplanotrabalho = []
@@ -83,16 +87,27 @@ def tratamento_dados(data):
                 localidadesplanotrabalho = join_data(localidadesplanotrabalho)
 
             proponenteplanotrabalho = tarefa['campos']['proponentePlanoTrabalho']['valor']
-            etapaplanotrabalho = tarefa['campos']['etapaPlanoTrabalho']['valor']['valor']
-            processt = tarefa['campos']['processT']['valor']['valor']
+            planoetapa = tarefa['campos']['etapaPlanoTrabalho']['valor']
+            etapaplanotrabalho = ''
+            if planoetapa:
+                etapaplanotrabalho = planoetapa['valor']
+
+            tprocess = tarefa['campos']['processT']['valor']
+            processt = ''
+            if tprocess:
+                processt = tprocess['valor']
+
             responsavelplanotrabalho = tarefa['campos']['responsavelPlanoTrabalho']['valor']
-            origemdemanda = tarefa['campos']['origemDemanda']['valor']['valor']
+            origindemadna = tarefa['campos']['origemDemanda']['valor']
+            origemdemanda = ''
+            if origindemadna:
+                origemdemanda = origindemadna['valor']
 
             link = tarefa['campos']['links']['valor']
             links = []
             if link:
                 for i, lin in enumerate(link):
-                    links.append(lin['valor'])
+                    links.append(lin['descricao'] + ' | ' + lin['url'])
 
                 links = join_data(links)
 
@@ -123,7 +138,8 @@ def tratamento_dados(data):
                 objetoscgemg = join_data(objetoscgemg)
 
             duracaomeses = tarefa['campos']['duracaoMesesPlanoTrabalho']['valor']
-            recursofinanceiro = tarefa['campos']['recursoFinanceiroPlanoTrabalho']['valor']
+            recursofinanceiro = str(
+                tarefa['campos']['recursoFinanceiroPlanoTrabalho']['valor'])
 
             envolplanotrabalho = tarefa['campos']['envolvidosPlanoTrabalho']['valor']
             envolvidosplanotrabalho = []
@@ -272,8 +288,6 @@ def salvar_dados(resultado_array):
                  tarefa['autorultimamodificacao'],
                  tarefa['numdenuncia'],
                  tarefa['detalhamento'],
-                 tarefa['detalhamento'],
-                 tarefa['proponenteplanotrabalho'],
                  tarefa['etapaplanotrabalho'],
                  tarefa['processt'],
                  tarefa['responsavelplanotrabalho'],
@@ -306,7 +320,7 @@ def salvar_dados(resultado_array):
                                                 responsavelplanotrabalho,origemdemanda,links,anexoplanotrabalho,processoplanotrabalho,
                                                 resultadosesperados,objetoscgemg,duracaomeses,recursofinanceiro,envolvidosplanotrabalho,homemhora,
                                                 gerentesplanotrabalho,equipegeral,supervisores,objetivoplanotrabalho,tipoplanotrabalho,arquivocomportamentoespecifico, estadosituacao,
-                                                tags,pendencias,abasatividade) VALUES {array_records}""",)
+                                                tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso")
