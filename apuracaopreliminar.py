@@ -77,17 +77,26 @@ def tratamento_dados(data):
                         anexosgerais.append(file['nome'])
 
                     anexosgerais = join_data(anexosgerais)
+                else:
+                    anexosgerais = ''
 
                 linkanalise = tarefa['campos']['linksDaAnalise']['valor']
 
-                tarefasprecedentes = tarefa['campos']['tarefasPrecedentes']['valor']
-                observadores = tarefa['campos']['observadores']['valor']
-                hipoteselegal = tarefa['campos']['hipoteseLegal']['valor']
+                prectarefas = tarefa['campos']['tarefasPrecedentes']['valor']
+                tarefasprecedentes = prectarefas if prectarefas else ''
+
+                obss = tarefa['campos']['observadores']['valor']
+                observadores = obss if obss else ''
+
+                hiplegal = tarefa['campos']['hipoteseLegal']['valor']
+                hipoteselegal = hiplegal if hiplegal else ''
 
                 matrizriscos = tarefa['campos']['matrizRiscosControles']['valor']
                 matriz = []
                 if matrizriscos:
                     matriz = matrizriscos['nome']
+                else:
+                    matriz = ''
 
                 coordenadorequipe = tarefa['campos']['CoordenadorEquipe']['valor']
                 coordenador = []
@@ -96,6 +105,8 @@ def tratamento_dados(data):
                         coordenador.append(coordequipe['nomeExibicao'])
 
                     coordenador = join_data(coordenador)
+                else:
+                    coordenador = ''
 
                 equipegeral = tarefa['campos']['EquipeGeral']['valor']
                 equipe = []
@@ -104,6 +115,8 @@ def tratamento_dados(data):
                         equipe.append(geralequipe['nomeExibicao'])
 
                     equipe = join_data(equipe)
+                else:
+                    equipe = ''
 
                 supervisores = tarefa['campos']['EquipeGeral']['valor']
                 supervisor = []
@@ -112,9 +125,13 @@ def tratamento_dados(data):
                         supervisor.append(super['nomeExibicao'])
 
                     supervisor = join_data(supervisor)
+                else:
+                    supervisor = ''
 
                 estadosituacao = tarefa['estadoSituacao']
-                arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
+
+                filecomport = tarefa['arquivoComportamentoEspecifico']
+                arquivocomportamento = filecomport if filecomport else ''
 
                 descricaotag = tarefa['campos']['tags']['valor']
                 tags = []
@@ -123,6 +140,8 @@ def tratamento_dados(data):
                         tags.append(tagdesc['descricao'])
 
                     tags = join_data(tags)
+                else:
+                    tags = ''
 
                 pendencias = tarefa['pendencias']
                 listapendencia = []
@@ -132,6 +151,9 @@ def tratamento_dados(data):
 
                     listapendencia = join_data(listapendencia)
 
+                else:
+                    listapendencia = ''
+
                 abasatividade = tarefa['abasAtividade']
                 listaabaatividades = []
                 if abasatividade:
@@ -139,6 +161,8 @@ def tratamento_dados(data):
                         listaabaatividades.append(abas['descricao'])
 
                     listaabaatividades = join_data(listaabaatividades)
+                else:
+                    listaabaatividades = ''
 
                 lista_final.append({
                     'id': id,

@@ -224,7 +224,12 @@ def tratamento_dados(data):
 
                     anexoauditoria = join_data(anexoauditoria)
 
-                linhaacao = tarefa['campos']['linhaAcaoAuditoria']['valor']['valor']
+                acaolinha = tarefa['campos']['linhaAcaoAuditoria']['valor']
+                linhaacao = []
+                if acaolinha:
+                    linhaacao = acaolinha['valor']
+                else:
+                    linhaacao = ''
 
                 relfinal = tarefa['campos']['relFinalAud']['valor']
                 relatorifinal = []
@@ -305,8 +310,8 @@ def tratamento_dados(data):
                     'tarefasprecedentes': tarefasprecedentes,
                     'envolvidosauditoria': envolauditoria,
                     'processotrabalhoauditoria': processotrabalhoauditoria,
-                    'anexosauditoria': anexoauditoria,
-                    'linhaacaoauditoria': linhaacao,
+                    'anexosauditoria': linhaacao,
+                    'linhaacaoauditoria': anexoauditoria,
                     'relatoriofinal': relatorifinal,
                     'coordenadorequipe': coordenador,
                     'supervisores': supervisor,

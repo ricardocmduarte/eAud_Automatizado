@@ -141,11 +141,7 @@ def tratamento_dados(data):
             hipoteselegal = tarefa['campos']['hipoteseLegal']['valor']
 
             matrizachados = tarefa['campos']['matrizAchados']['valor']
-            matriz = []
-            if matrizachados:
-                matriz = matrizachados['nome']
-            else:
-                matriz = ''
+            matriz = matrizachados['nome'] if matrizachados else ''
 
             coordenadorequipe = tarefa['campos']['CoordenadorEquipe']['valor']
             coordenador = []
@@ -177,8 +173,10 @@ def tratamento_dados(data):
             else:
                 supervisor = ''
 
-            estadosituacao = tarefa['estadoSituacao']
-            arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
+            estadosituacao = tarefa['estadoSituacao'] if tarefa['estadoSituacao'] else ''
+
+            filecomport = tarefa['arquivoComportamentoEspecifico']
+            arquivocomportamento = filecomport if filecomport else ''
 
             descricaotag = tarefa['campos']['tags']['valor']
             tags = []

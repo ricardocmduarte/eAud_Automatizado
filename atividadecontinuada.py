@@ -137,7 +137,12 @@ def tratamento_dados(data):
 
                 supervisorplano = join_data(supervisorplano)
 
-            tipoplano = tarefa['campos']['tipoPlanoTrabalho']['valor']['valor']
+            planotipo = tarefa['campos']['tipoPlanoTrabalho']['valor']
+            tipoplano = []
+            if planotipo:
+                tipoplano = planotipo['valor']
+            else:
+                tipoplano = ''
 
             estadosituacao = tarefa['estadoSituacao']
             arquivocomportamento = tarefa['arquivoComportamentoEspecifico']

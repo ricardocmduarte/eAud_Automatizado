@@ -20,6 +20,6 @@ import projetogeral
 import relatoriofinal
 import relatoriopreliminar
 import resultadosconsultoria
-import tarefas
+import tarefas_id
 import termocompromissoconsultoria
 import beneficios_id

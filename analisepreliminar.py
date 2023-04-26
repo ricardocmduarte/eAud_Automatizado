@@ -106,8 +106,11 @@ def tratamento_dados(data):
                 observadores = tarefa['campos']['observadores']['valor']
                 hipoteselegal = tarefa['campos']['hipoteseLegal']['valor']
 
-                universoauditavel = tarefa['campos']['universosAuditaveisAnalisePreliminar']['valor']
-                objetosauditoria = tarefa['campos']['objetosAuditoriaAnalisePreliminar']['valor']
+                auduniverso = tarefa['campos']['universosAuditaveisAnalisePreliminar']['valor']
+                universoauditavel = auduniverso if auduniverso else ''
+
+                audobj = tarefa['campos']['objetosAuditoriaAnalisePreliminar']['valor']
+                objetosauditoria = audobj if audobj else ''
 
                 coordenadorequipe = tarefa['campos']['CoordenadorEquipe']['valor']
                 coordenador = []
@@ -120,10 +123,7 @@ def tratamento_dados(data):
                     coordenador = ''
 
                 matriz = tarefa['campos']['matrizRiscosControles']['valor']
-                if matriz:
-                    matrizcontrole = matriz['nome']
-                else:
-                    matriz = ''
+                matrizcontrole = matriz['nome'] if matriz else ''
 
                 equipegeral = tarefa['campos']['EquipeGeral']['valor']
                 equipe = []
@@ -134,8 +134,6 @@ def tratamento_dados(data):
                     equipe = join_data(equipe)
                 else:
                     equipe = ''
-
-                classificacaoacesso = tarefa['campos']['classificacaoAcesso']['valor']
 
                 supervisores = tarefa['campos']['EquipeGeral']['valor']
                 supervisor = []
@@ -148,7 +146,9 @@ def tratamento_dados(data):
                     supervisor = ''
 
                 estadosituacao = tarefa['estadoSituacao']
-                arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
+
+                filecomport = tarefa['arquivoComportamentoEspecifico']
+                arquivocomportamento = filecomport if filecomport else ''
 
                 descricaotag = tarefa['campos']['tags']['valor']
                 tags = []
@@ -209,7 +209,6 @@ def tratamento_dados(data):
                 'hipoteselegal': hipoteselegal,
                 'coordenadorequipe': coordenador,
                 'equipegeral': equipe,
-                'classificacaoacesso': classificacaoacesso,
                 'supervisores': supervisor,
                 'arquivocomportamentoespecifico': arquivocomportamento,
                 'estadosituacao': estadosituacao,

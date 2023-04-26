@@ -102,16 +102,10 @@ def tratamento_dados(data):
                     anexosgerais = ''
 
                 relcom = tarefa['campos']['RelatorioCom']['valor']
-                relatoriocom = []
-                if relcom:
-                    for i, file in enumerate(relcom):
-                        relatoriocom.append(file['nome'])
+                relatoriocom = relcom['nome'] if relcom else ''
 
-                    relatoriocom = join_data(relatoriocom)
-                else:
-                    relatoriocom = ''
-
-                tarefaprecedentes = tarefa['campos']['tarefasPrecedentes']['valor']
+                prectarefas = tarefa['campos']['tarefasPrecedentes']['valor']
+                tarefaprecedentes = prectarefas if prectarefas else ''
 
                 observador = tarefa['campos']['observadores']['valor']
                 observadores = []
@@ -120,7 +114,6 @@ def tratamento_dados(data):
                         observadores.append(obs['nomeExibicao'])
 
                     observadores = join_data(observadores)
-
                 else:
                     observadores = ''
 
@@ -178,7 +171,9 @@ def tratamento_dados(data):
                 mesanoultimamodificacao = tarefa['mesAnoUltimaModificacao']
 
                 estadosituacao = tarefa['estadoSituacao']
-                arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
+
+                filecomport = tarefa['arquivoComportamentoEspecifico']
+                arquivocomportamento = filecomport if filecomport else ''
 
                 descricaotag = tarefa['campos']['tags']['valor']
                 tags = []
