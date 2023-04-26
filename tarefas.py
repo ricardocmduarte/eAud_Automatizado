@@ -87,7 +87,7 @@ def tratamento_dados(data):
             mesconclusaoprevisto = concluprevisto if concluprevisto else ''
 
             conclurealizado = tarefa['mesConclousaoRealizado']
-            mesconclurealizado = conclurealizado if conclurealizado else ''
+            mesconclusaorealizado = conclurealizado if conclurealizado else ''
 
             estsituacao = tarefa['estadoSituacao']
             estadosituacao = estsituacao if estsituacao else ''
@@ -135,7 +135,7 @@ def tratamento_dados(data):
                 'dataultimamodificacao': dataultimamodificacao,
                 'autorultimamodificacao': autorultimamodificacao,
                 'mesconclusoaprevisto': mesconclusaoprevisto,
-                'mesconclusaorealizado': mesconclurealizado,
+                'mesconclusaorealizado': mesconclusaorealizado,
                 'estadosituacao': estadosituacao,
                 'arquivocomportamentoespecifico': arquivocomportamento,
                 'tags': tags,
