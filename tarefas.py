@@ -73,81 +73,6 @@ def tratamento_dados(data):
             dataultimamodificacao = tarefa['dataUltimaModificacao']
             autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-            beneficioavulso = tarefa['campos']['benAvulso']['valor']
-
-            descricaobeneficio = tarefa['campos']['descricaoBenef']['valor']
-
-            valorbruto = tarefa['campos']['valorBruto']['valor']
-            descricaocusto = tarefa['campos']['descricaoCusto']['valor']
-
-            drben = tarefa['campos']['drben']['valor']
-            dimensaoerepercussao = []
-            if drben:
-                dimensaoerepercussao = drben['valor']
-
-            valorcusto = tarefa['campos']['valorCusto']['valor']
-
-            unidadeenvolvida = tarefa['campos']['unidadesEnvolvidas']['valor']
-            unidadesenvolvidas = []
-            if unidadeenvolvida:
-                for i, envol in enumerate(unidadeenvolvida):
-                    unidadesenvolvidas.append(envol['nomeExibicao'])
-
-                unidadesenvolvidas = join_data(unidadesenvolvidas)
-
-            unidgestora = tarefa['campos']['unidadeGestoraBeneficio']['valor']
-            unidadegestora = []
-            if unidgestora:
-                unidadegestora = unidgestora['nomeExibicao']
-
-            anexoben = tarefa['campos']['anexosBeneficio']['valor']
-            anexosbeneficio = []
-            if anexoben:
-                for i, file in enumerate(anexoben):
-                    anexosbeneficio.append(file['nome'])
-
-                anexosbeneficio = join_data(anexosbeneficio)
-
-            providenciabeneficio = tarefa['campos']['providenciaBenef']['valor']
-
-            dimensaoben = tarefa['campos']['dimensaoMEBeneficio']['valor']
-            dimensaomebeneficio = []
-            if dimensaoben:
-                dimensaoerepercussao = dimensaoben['valor']
-
-            parcelasbeneficio = tarefa['campos']['parcelasBeneficio']['valor']
-
-            fundbeneficio = tarefa['campos']['fundamentoBenef']['valor']
-            titulofundamento = ''
-            if fundbeneficio:
-                titulofundamento = fundbeneficio['nomeExibicao']
-
-            textofundamentobeneficio = tarefa['campos']['textoFundamentoBenef']['valor']
-            valorliquido = tarefa['campos']['valorLiquido']['valor']
-
-            classben = tarefa['campos']['classeBenef']['valor']
-            classebeneficio = ''
-            if classben:
-                classebeneficio = classben['valor']
-            bentipo = tarefa['campos']['tipoBeneficio']['valor']
-            tipobeneficio = []
-            if bentipo:
-                tipobeneficio = bentipo['valor']
-
-            tarefasprec = tarefa['campos']['tarefasPrecedentes']['valor']
-            tarefasprecedentes = []
-            if tarefasprec:
-                for i, tarefapre in enumerate(tarefasprec):
-                    tarefasprecedentes.append(tarefapre['nomeExibicao'])
-                tarefasprecedentes = join_data(tarefasprecedentes)
-
-            unidproponente = tarefa['campos']['unidadeProponenteBenef']['valor']
-            unidadeproponente = ''
-            if unidproponente:
-                unidadeproponente = unidproponente['nomeExibicao']
-
-            anofatogeradorbeneficio = tarefa['campos']['anoFatoGeradorBeneficio']['valor']
-
             descricaotag = tarefa['campos']['tags']['valor']
             tags = []
             if descricaotag:
@@ -155,29 +80,20 @@ def tratamento_dados(data):
                     tags.append(tagdesc['descricao'])
 
                 tags = join_data(tags)
+            else:
+                tags = ''
 
-            situacaoanteriorbeneficio = tarefa['campos']['situacaoAnteriorBenef']['valor']
-            anoimplementacaobeneficio = tarefa['campos']['anoImplementacaoBeneficio']['valor']
+            concluprevisto = tarefa['mesConclusaoPrevisto']
+            mesconclusaoprevisto = concluprevisto if concluprevisto else ''
 
-            benrepercussao = tarefa['campos']['repercussaoDoBeneficio']['valor']
-            repercussaobeneficio = ''
-            if benrepercussao:
-                repercussaobeneficio = benrepercussao['valor']
+            conclurealizado = tarefa['mesConclousaoRealizado']
+            mesconclurealizado = conclurealizado if conclurealizado else ''
 
-            classbf = tarefa['campos']['classeBF']['valor']
-            classebf = ''
-            if classbf:
-                classebf = classbf['valor']
+            estsituacao = tarefa['estadoSituacao']
+            estadosituacao = estsituacao if estsituacao else ''
 
-            nivelbeneficio = tarefa['campos']['nivelBeneficio']['valor']
-
-            classbnf = tarefa['campos']['classebnf']['valor']
-            classebnf = ''
-            if classbnf:
-                classebnf = classbnf['valor']
-
-            estadosituacao = tarefa['estadoSituacao']
-            arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
+            filecomport = tarefa['arquivoComportamentoEspecifico']
+            arquivocomportamento = filecomport if filecomport else ''
 
             pendencias = tarefa['pendencias']
             listapendencia = []
@@ -186,6 +102,8 @@ def tratamento_dados(data):
                     listapendencia.append(pendencia['nomeUsuarioUnidade'])
 
                 listapendencia = join_data(listapendencia)
+            else:
+                listapendencia = ''
 
             abasatividade = tarefa['abasAtividade']
             listaabaatividades = []
@@ -194,6 +112,8 @@ def tratamento_dados(data):
                     listaabaatividades.append(abas['descricao'])
 
                 listaabaatividades = join_data(listaabaatividades)
+            else:
+                listaabaatividades = ''
 
             lista_final.append({
                 'id': id,
@@ -214,32 +134,8 @@ def tratamento_dados(data):
                 'idsituacao': idsituacao,
                 'dataultimamodificacao': dataultimamodificacao,
                 'autorultimamodificacao': autorultimamodificacao,
-                'beneficioavulso': beneficioavulso,
-                'descricaobeneficio': descricaobeneficio,
-                'valorbruto': valorbruto,
-                'descricaocusto': descricaocusto,
-                'dimensaorepercussao': dimensaoerepercussao,
-                'valorcusto': valorcusto,
-                'unidadesenvolvidas': unidadesenvolvidas,
-                'unidadegestora': unidadegestora,
-                'anexosbeneficio': anexosbeneficio,
-                'providenciabeneficio': providenciabeneficio,
-                'dimenssaobeneficio': dimensaomebeneficio,
-                'parcelasbeneficio': parcelasbeneficio,
-                'titulofundamento': titulofundamento,
-                'textofundamentobeneficio': textofundamentobeneficio,
-                'valorliquido': valorliquido,
-                'classebeneficio': classebeneficio,
-                'tipobeneficio': tipobeneficio,
-                'tarefasprecedentes': tarefasprecedentes,
-                'unidadeproponente': unidadeproponente,
-                'anofatogeradorbeneficio': anofatogeradorbeneficio,
-                'situacaoanateriorbeneficio': situacaoanteriorbeneficio,
-                'anoimplementacaobeneficio': anoimplementacaobeneficio,
-                'repercussaobeneficio': repercussaobeneficio,
-                'classebf': classebf,
-                'nivelbeneficio': nivelbeneficio,
-                'classebnf': classebnf,
+                'mesconclusoaprevisto': mesconclusaoprevisto,
+                'mesconclusaorealizado': mesconclurealizado,
                 'estadosituacao': estadosituacao,
                 'arquivocomportamentoespecifico': arquivocomportamento,
                 'tags': tags,
@@ -281,32 +177,8 @@ def salvar_dados(resultado_array):
                  tarefa['idsituacao'],
                  tarefa['dataultimamodificacao'],
                  tarefa['autorultimamodificacao'],
-                 tarefa['beneficioavulso'],
-                 tarefa['descricaobeneficio'],
-                 tarefa['valorbruto'],
-                 tarefa['descricaocusto'],
-                 tarefa['dimensaorepercussao'],
-                 tarefa['valorcusto'],
-                 tarefa['unidadesenvolvidas'],
-                 tarefa['unidadegestora'],
-                 tarefa['anexosbeneficio'],
-                 tarefa['providenciabeneficio'],
-                 tarefa['dimenssaobeneficio'],
-                 tarefa['parcelasbeneficio'],
-                 tarefa['titulofundamento'],
-                 tarefa['textofundamentobeneficio'],
-                 tarefa['valorliquido'],
-                 tarefa['classebeneficio'],
-                 tarefa['tipobeneficio'],
-                 tarefa['tarefasprecedentes'],
-                 tarefa['unidadeproponente'],
-                 tarefa['anofatogeradorbeneficio'],
-                 tarefa['situacaoanateriorbeneficio'],
-                 tarefa['anoimplementacaobeneficio'],
-                 tarefa['repercussaobeneficio'],
-                 tarefa['classebf'],
-                 tarefa['nivelbeneficio'],
-                 tarefa['classebnf'],
+                 tarefa['mesconclusaoprevisto'],
+                 tarefa['mesconclusaorealizado'],
                  tarefa['arquivocomportamentoespecifico'],
                  tarefa['estadosituacao'],
                  tarefa['tags'],
@@ -315,15 +187,10 @@ def salvar_dados(resultado_array):
                  )]
             array_records = ", ".join(["%s"] * len(lista))
             insert_query = (f"""INSERT INTO tarefas (id, situacao, estado, atividade, titulo, titulotarefaassociada,
-                                                dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
-                                                prioridade,assunto,idatividade,descricaoatividade, idsituacao,
-                                                dataultimamodificacao,autorultimamodificacao,beneficioavulso,descricaobeneficio,valorbruto,
-                                                descricaocusto,dimensaorepercussao,valorcusto,unidadesenvolvidas,unidadegestora,
-                                                anexosbeneficio,providenciabeneficio,dimenssaobeneficio,parcelasbeneficio,
-                                                titulofundamento,textofundamentobeneficio,valorliquido,classebeneficio,tipobeneficio,
-                                                tarefasprecedentes,unidadeproponente,anofatogeradorbeneficio,situacaoanateriorbeneficio,
-                                                anoimplementacaobeneficio,repercussaobeneficio,classebf,nivelbeneficio,classebnf,
-                                                arquivocomportamentoespecifico, estadosituacao,tags,pendencias,abasatividade) VALUES {array_records}""")
+                                                    dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,prioridade,assunto,idatividade,
+                                                    descricaoatividade, idsituacao,dataultimamodificacao,autorultimamodificacao,mesconclusaoprevisto, 
+                                                    mesconclusaorealizadoarquivocomportamentoespecifico, estadosituacao,tags,pendencias,abasatividade) 
+                                                    VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso")

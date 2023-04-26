@@ -57,8 +57,7 @@ def get_idtarefas(tabela, banco):
         cur.execute(f"""SELECT * FROM {tabela}""")
         for ids in cur.fetchall():
             lista_retorno.append({'id': ids[0],
-                                  'situacao': ids[1],
-                                  'atividade': ids[2]})
+                                  'atividade': ids[1]})
 
         return lista_retorno
     except NameError as err:

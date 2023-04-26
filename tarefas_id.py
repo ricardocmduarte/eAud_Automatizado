@@ -27,7 +27,6 @@ def get_tarefas_id():
                 for i, lista_appended in enumerate(resultado_array):
                     lista_final.append({
                         'id': lista_appended['id'],
-                        'situacao': lista_appended['situacao'],
                         'atividade': lista_appended['atividade']
                     })
                 print(f"{offset} atual {tipo_arquivo}")
@@ -63,7 +62,6 @@ def salvar_dados(resultado_array):
         for tarefa in resultado_array:
             lista = [
                 (tarefa['id'],
-                 tarefa['situacao'],
                  tarefa['atividade'])
             ]
 
@@ -92,7 +90,7 @@ def get_tarefas_id_requisicao(offset):
     try:
         url = geral.url + \
             f"tarefa?tamanhoPagina=100&offset={offset}&apenasAtrasadas=false&apenasFinalizadas=false&apenasModificadasNosUltimos30Dias=false&apenasExcluidas=false \
-                &apenasAbertas=false&periodoInicialDataInicio=2021-01-01&colunasSelecionadas=id&colunasSelecionadas=atividade&colunasSelecionadas=situacao"
+                &apenasAbertas=false&periodoInicialDataInicio=2021-01-01&colunasSelecionadas=id&colunasSelecionadas=atividade"
         resp = requests.get(url, headers=geral.header)
 
         if resp.status_code != 200:
