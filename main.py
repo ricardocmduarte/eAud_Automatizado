@@ -1,5 +1,6 @@
 import listas
 import tarefas_id
+import tarefas
 import beneficios
 import beneficios_id
 
@@ -9,5 +10,6 @@ if __name__ == '__main__':
     beneficios_id.get_beneficios_id()
 
     # funções para buscar os dados por completo
+    tarefas.get_tarefas()
     beneficios.get_beneficios()
     listas.listar()
