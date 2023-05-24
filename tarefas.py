@@ -32,7 +32,7 @@ def get_tarefas():
                     f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
 
         get_log(
-            f"Esta requisicao {tipo_arquivo} contém {len(lista_final)} itens")
+            f"Esta requisicao {tipo_arquivo} contém {len(lista_dados)} itens")
 
         # lista final passa por um tratamento de dados
         if lista_dados:
@@ -59,7 +59,8 @@ def tratamento_dados(data):
             estado = tarefa['estado']
             atividade = tarefa['atividade']
             titulo = tarefa['titulo']
-            idtarefaassociada = tarefa['idTarefaAssociada']
+            idtarefaassociada = tarefa['campos']['tarefaAssociada'][
+                'valor']['id'] if tarefa['campos']['tarefaAssociada']['valor'] else ''
             titulotarefaassociada = tarefa['tituloTarefaAssociada']
             dtprevisaoinicio = tarefa['dtPrevisaoInicio']
             dtprevisaofim = tarefa['dtPrevisaoFim']
@@ -86,7 +87,7 @@ def tratamento_dados(data):
             concluprevisto = tarefa['mesConclusaoPrevisto']
             mesconclusaoprevisto = concluprevisto if concluprevisto else ''
 
-            conclurealizado = tarefa['mesConclousaoRealizado']
+            conclurealizado = tarefa['mesConclusaoRealizado']
             mesconclusaorealizado = conclurealizado if conclurealizado else ''
 
             estsituacao = tarefa['estadoSituacao']
@@ -134,7 +135,7 @@ def tratamento_dados(data):
                 'idsituacao': idsituacao,
                 'dataultimamodificacao': dataultimamodificacao,
                 'autorultimamodificacao': autorultimamodificacao,
-                'mesconclusoaprevisto': mesconclusaoprevisto,
+                'mesconclusaoprevisto': mesconclusaoprevisto,
                 'mesconclusaorealizado': mesconclusaorealizado,
                 'estadosituacao': estadosituacao,
                 'arquivocomportamentoespecifico': arquivocomportamento,
@@ -189,7 +190,7 @@ def salvar_dados(resultado_array):
             insert_query = (f"""INSERT INTO tarefas (id, situacao, estado, atividade, titulo, titulotarefaassociada,
                                                     dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,prioridade,assunto,idatividade,
                                                     descricaoatividade, idsituacao,dataultimamodificacao,autorultimamodificacao,mesconclusaoprevisto, 
-                                                    mesconclusaorealizadoarquivocomportamentoespecifico, estadosituacao,tags,pendencias,abasatividade) 
+                                                    mesconclusaorealizado, arquivocomportamentoespecifico, estadosituacao,tags,pendencias,abasatividade) 
                                                     VALUES {array_records}""")
 
             cur.execute(insert_query, lista)

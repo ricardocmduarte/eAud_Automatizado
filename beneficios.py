@@ -32,7 +32,7 @@ def get_beneficios():
                     f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
 
         get_log(
-            f"Esta requisicao {tipo_arquivo} contém {len(lista_final)} itens")
+            f"Esta requisicao {tipo_arquivo} contém {len(lista_dados)} itens")
 
         # lista final passa por um tratamento de dados
         if lista_dados:
@@ -59,7 +59,8 @@ def tratamento_dados(data):
             estado = tarefa['estado']
             atividade = tarefa['atividade']
             titulo = tarefa['titulo']
-            idtarefaassociada = tarefa['idTarefaAssociada']
+            idtarefaassociada = tarefa['campos']['tarefaAssociada'][
+                'valor']['id'] if tarefa['campos']['tarefaAssociada']['valor'] else ''
             titulotarefaassociada = tarefa['tituloTarefaAssociada']
             dtprevisaoinicio = tarefa['dtPrevisaoInicio']
             dtprevisaofim = tarefa['dtPrevisaoFim']

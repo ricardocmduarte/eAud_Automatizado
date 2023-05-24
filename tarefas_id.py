@@ -67,7 +67,7 @@ def salvar_dados(resultado_array):
 
             array_records = ", ".join(["%s"] * len(lista))
             insert_query = (
-                f"""INSERT INTO tarefas_id (id, situacao, atividade) VALUES {array_records}""")
+                f"""INSERT INTO tarefas_id (id, atividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso")

@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS public.tarefas
     idsituacao integer,
     dataultimamodificacao character varying(50) COLLATE pg_catalog."default",
     autorultimamodificacao character varying(500) COLLATE pg_catalog."default",
-    mesconclusoaprevisto character varying(50) COLLATE pg_catalog."default",
+    mesconclusaoprevisto character varying(50) COLLATE pg_catalog."default",
 	mesconclusaorealizado character varying(50) COLLATE pg_catalog."default",
     arquivocomportamentoespecifico character varying(5000) COLLATE pg_catalog."default",
     estadosituacao character varying(5000) COLLATE pg_catalog."default",
