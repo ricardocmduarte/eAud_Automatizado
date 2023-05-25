@@ -3,6 +3,7 @@ import pandas as pd
 from geral import login
 from datetime import datetime
 from log import get_log
+import xlsxwriter
 
 
 def converter():
@@ -33,7 +34,7 @@ def converter():
                         'relatorio_preliminar',
                         'resultados_consultoria',
                         'tarefas',
-                        'termo_compromisso_consultoria',
+                        'termo_compromisso_consultoria'
                         ]
 
         print("Lendo as tabelas")
@@ -111,9 +112,9 @@ def converter():
                 f"Iniciando processo, convertendo tabela {tabela} para excel ")
             get_log("Convertendo as tabelas em xlsx")
             df.to_excel(f"C:\\Users\\m1478769\\OneDrive - SEPLAG MG\\Planilha e-Aud\\excel\\{tabela}.xlsx",
-                        index=False, encoding='utf-8-sig', engine='xlsxwriter')
+                        index=False, engine='xlsxwriter')
 
-            return print("Processo finalizado")
+        return print("Processo finalizado")
     except NameError as err:
         return print("Erro", err)
 

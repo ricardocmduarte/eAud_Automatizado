@@ -76,7 +76,10 @@ def tratamento_dados(data):
             denuncianum = tarefa['campos']['numDenuncia']['valor']
             numdenuncia = ''
             if denuncianum:
-                numdenuncia = denuncianum
+                if denuncianum.startswith('&#34;'):
+                    numdenuncia = ''
+                else:
+                    numdenuncia = denuncianum
 
             localtrabalho = tarefa['campos']['localidadesPlanoTrabalho']['valor']
             localidadesplanotrabalho = []
