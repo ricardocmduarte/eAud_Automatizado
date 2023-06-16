@@ -86,32 +86,32 @@ def converter():
                 f''' SELECT * FROM {tabela}''', banco)
 
             df = pd.DataFrame(sql_query)
-            # Save to cloud
-            # df.to_csv(f"C:\\Users\\{login}\\OneDrive - SEPLAG MG\\Planilha e-Aud\\csv\\{tabela}.csv",
-            #           index=False, encoding='utf-8-sig')
-            # df.to_excel(f"C:\\Users\\{login}\\OneDrive - SEPLAG MG\\Planilha e-Aud\\excel\\{tabela}.xlsx",
-            #             index=False, encoding='utf-8-sig')
 
-            ''' print(f"Iniciando processo, convertendo tabela {tabela} para csv ")
-            # Save local server
+            #####################
+            # Save local server #
+            #####################
+            print(f"Iniciando processo, convertendo tabela {tabela} para csv ")
+
             df.to_csv(f"R:\\BASES_DADOS\\e-AUD\\dados_{datahora()}\\csv\\{tabela}.csv",
                       index=False, encoding='utf-8-sig')
 
             print(
                 f"Iniciando processo, convertendo tabela {tabela} para excel ")
             df.to_excel(f"R:\\BASES_DADOS\\e-AUD\\dados_{datahora()}\\excel\\{tabela}.xlsx",
-                        index=False, encoding='utf-8-sig', engine='xlsxwriter')'''
+                        index=False, engine='xlsxwriter')
 
-            # Save cloud path
+            ###################
+            # Save cloud path #
+            ###################
             print(f"Iniciando processo, convertendo tabela {tabela} para csv ")
             get_log("Convertendos as tabelas em csv")
-            df.to_csv(f"C:\\Users\\m1478769\\OneDrive - SEPLAG MG\\Planilha e-Aud\\csv\\{tabela}.csv",
+            df.to_csv(f"C:\\Users\\m1478769\\OneDrive - SEPLAG MG\\Planilha e-Aud\\dados_{datahora()}\\csv\\{tabela}.csv",
                       index=False, encoding='utf-8-sig')
 
             print(
                 f"Iniciando processo, convertendo tabela {tabela} para excel ")
             get_log("Convertendo as tabelas em xlsx")
-            df.to_excel(f"C:\\Users\\m1478769\\OneDrive - SEPLAG MG\\Planilha e-Aud\\excel\\{tabela}.xlsx",
+            df.to_excel(f"C:\\Users\\m1478769\\OneDrive - SEPLAG MG\\Planilha e-Aud\\dados_{datahora()}\\excel\\{tabela}.xlsx",
                         index=False, engine='xlsxwriter')
 
         return print("Processo finalizado")
