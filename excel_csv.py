@@ -40,47 +40,6 @@ def converter():
         print("Lendo as tabelas")
         get_log("Iniciando conversão das tabelas em csv/excel")
 
-        tabelas_banco = ['achados_auditoria',
-                         'arquivos',
-                         'auditorias',
-                         'auditorias_pendencias',
-                         'auditorias_localidade',
-                         'auditorias_unidades_envolvidas',
-                         'auditorias_unidades_auditadas',
-                         'achados_auditoria_pendencias',
-                         'analise_auditoria',
-                         'analise_auditoria_pendencias',
-                         'analise_preliminar',
-                         'analise_preliminar_pendencias',
-                         'beneficios',
-                         'beneficios_pendencias',
-                         'escopo_auditoria',
-                         'escopo_auditoria_pendencias',
-                         'indicadores',
-                         'localidades',
-                         'matriz_planejamento',
-                         'matriz_planejamento_pendencias',
-                         'monitoramento',
-                         'monitoramento_manifestacao',
-                         'monitoramento_pendencias',
-                         'monitoramento_posicionamento',
-                         'monitoramento_unidades',
-                         'plano_operacional',
-                         'plano_operacional_pactuacao',
-                         'plano_operacional_pendencias',
-                         'plano_trabalho',
-                         'plano_trabalho_localidades',
-                         'plano_trabalho_pendencias',
-                         'plano_trabalho_unidades_envolvidas',
-                         'relatorio_auditoria',
-                         'relatorio_auditoria_pendencias',
-                         'tarefas',
-                         'tarefas_pendencias',
-                         'unidade',
-                         'unidade_gestores',
-                         'unidade_tipos',
-                         'usuario']
-
         for tabela in tabela_banco:
             sql_query = pd.read_sql_query(
                 f''' SELECT * FROM {tabela}''', banco)
