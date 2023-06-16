@@ -56,8 +56,7 @@ def tratamento_dados(data):
             estado = tarefa['estado']
             atividade = tarefa['atividade']
             titulo = tarefa['titulo']
-            idtarefaassociada = tarefa['campos']['tarefaAssociada'][
-                'valor']['id'] if tarefa['campos']['tarefaAssociada']['valor'] else ''
+            idtarefaassociada = tarefa['idTarefaAssociada'] if tarefa['idTarefaAssociada'] else ''
             titulotarefaassociada = tarefa['tituloTarefaAssociada']
             dtprevisaoinicio = tarefa['dtPrevisaoInicio']
             dtprevisaofim = tarefa['dtPrevisaoFim']
@@ -206,6 +205,7 @@ def salvar_dados(resultado_array):
                  tarefa['estado'],
                  tarefa['atividade'],
                  tarefa['titulo'],
+                 tarefa['idtarefaassociada'],
                  tarefa['titulotarefaassociada'],
                  tarefa['dtprevisaoinicio'],
                  tarefa['dtprevisaofim'],
@@ -238,7 +238,7 @@ def salvar_dados(resultado_array):
                  tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
-            insert_query = (f"""INSERT INTO auto_avaliacao_iacm (id, situacao, estado, atividade, titulo, titulotarefaassociada,
+            insert_query = (f"""INSERT INTO auto_avaliacao_iacm (id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada,
                                                 dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,anexosgerais,equipevalidacaoexterna,unidadevalidadoras,

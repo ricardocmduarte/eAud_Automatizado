@@ -37,6 +37,7 @@ def get_analise_auditoria(ids):
         # comando para salvar os dados tratados
         if lista_final:
             salvar_dados(lista_final)
+
         get_log(f"Lista de {tipo_arquivo} ok")
         return print(f"Lista de {tipo_arquivo} ok")
     except NameError as err:
@@ -55,8 +56,7 @@ def tratamento_dados(data):
             estado = tarefa['estado']
             atividade = tarefa['atividade']
             titulo = tarefa['titulo']
-            idtarefaassociada = tarefa['campos']['tarefaAssociada'][
-                'valor']['id'] if tarefa['campos']['tarefaAssociada']['valor'] else ''
+            idtarefaassociada = tarefa['idTarefaAssociada'] if tarefa['idTarefaAssociada'] else ''
             titulotarefaassociada = tarefa['tituloTarefaAssociada']
             dtprevisaoinicio = tarefa['dtPrevisaoInicio']
             dtprevisaofim = tarefa['dtPrevisaoFim']
@@ -278,6 +278,7 @@ def salvar_dados(resultado_array):
                  tarefa['atividade'],
                  tarefa['titulo'],
                  tarefa['titulotarefaassociada'],
+                 tarefa['idtarefaassociada'],
                  tarefa['dtprevisaoinicio'],
                  tarefa['dtprevisaofim'],
                  tarefa['dtrealizadainicio'],
@@ -316,7 +317,7 @@ def salvar_dados(resultado_array):
                  tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
-            insert_query = (f"""INSERT INTO analise_auditoria (id, situacao, estado, atividade, titulo, titulotarefaassociada,
+            insert_query = (f"""INSERT INTO analise_auditoria (id, situacao, estado, atividade, titulo, titulotarefaassociada, idtarefaassociada,
                                                 dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,unidadesenvolvidas,

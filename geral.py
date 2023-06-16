@@ -2,12 +2,6 @@ import requests
 import dadosreader
 
 dados = dadosreader.read_ini_file()
-url_exe = ''
-key_exe = ''
-server_exe = ''
-db_exe = ''
-masp_exe = ''
-password_exe = ''
 
 """----------------------Global variables e-Aud Produção-------------------------------"""
 url = dados[0]
