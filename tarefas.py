@@ -53,95 +53,95 @@ def tratamento_dados(data):
     try:
         lista_final = []
         for i, tarefa in enumerate(data):
+            if tarefa:
+                id = tarefa['id']
+                situacao = tarefa['situacao']
+                estado = tarefa['estado']
+                atividade = tarefa['atividade']
+                titulo = tarefa['titulo']
+                idtarefaassociada = tarefa['idTarefaAssociada'] if tarefa['idTarefaAssociada'] else 0
+                titulotarefaassociada = tarefa['tituloTarefaAssociada']
+                dtprevisaoinicio = tarefa['dtPrevisaoInicio']
+                dtprevisaofim = tarefa['dtPrevisaoFim']
+                dtrealizadainicio = tarefa['dtRealizadaInicio']
+                dtrealizadafim = tarefa['dtRealizadaFim']
+                prioridade = tarefa['prioridade']
+                assunto = tarefa['assunto']
+                idatividade = tarefa['idAtividade']
+                descricaoatividade = tarefa['descricaoAtividade']
+                idsituacao = tarefa['idSituacao']
+                dataultimamodificacao = tarefa['dataUltimaModificacao']
+                autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-            id = tarefa['id']
-            situacao = tarefa['situacao']
-            estado = tarefa['estado']
-            atividade = tarefa['atividade']
-            titulo = tarefa['titulo']
-            idtarefaassociada = tarefa['idTarefaAssociada'] if tarefa['idTarefaAssociada'] else ''
-            titulotarefaassociada = tarefa['tituloTarefaAssociada']
-            dtprevisaoinicio = tarefa['dtPrevisaoInicio']
-            dtprevisaofim = tarefa['dtPrevisaoFim']
-            dtrealizadainicio = tarefa['dtRealizadaInicio']
-            dtrealizadafim = tarefa['dtRealizadaFim']
-            prioridade = tarefa['prioridade']
-            assunto = tarefa['assunto']
-            idatividade = tarefa['idAtividade']
-            descricaoatividade = tarefa['descricaoAtividade']
-            idsituacao = tarefa['idSituacao']
-            dataultimamodificacao = tarefa['dataUltimaModificacao']
-            autorultimamodificacao = tarefa['autorUltimaModificacao']
+                descricaotag = tarefa['campos']['tags']['valor']
+                tags = []
+                if descricaotag:
+                    for i, tagdesc in enumerate(descricaotag):
+                        tags.append(tagdesc['descricao'])
 
-            descricaotag = tarefa['campos']['tags']['valor']
-            tags = []
-            if descricaotag:
-                for i, tagdesc in enumerate(descricaotag):
-                    tags.append(tagdesc['descricao'])
+                    tags = join_data(tags)
+                else:
+                    tags = ''
 
-                tags = join_data(tags)
-            else:
-                tags = ''
+                concluprevisto = tarefa['mesConclusaoPrevisto']
+                mesconclusaoprevisto = concluprevisto if concluprevisto else ''
 
-            concluprevisto = tarefa['mesConclusaoPrevisto']
-            mesconclusaoprevisto = concluprevisto if concluprevisto else ''
+                conclurealizado = tarefa['mesConclusaoRealizado']
+                mesconclusaorealizado = conclurealizado if conclurealizado else ''
 
-            conclurealizado = tarefa['mesConclusaoRealizado']
-            mesconclusaorealizado = conclurealizado if conclurealizado else ''
+                estsituacao = tarefa['estadoSituacao']
+                estadosituacao = estsituacao if estsituacao else ''
 
-            estsituacao = tarefa['estadoSituacao']
-            estadosituacao = estsituacao if estsituacao else ''
+                filecomport = tarefa['arquivoComportamentoEspecifico']
+                arquivocomportamento = filecomport if filecomport else ''
 
-            filecomport = tarefa['arquivoComportamentoEspecifico']
-            arquivocomportamento = filecomport if filecomport else ''
+                pendencias = tarefa['pendencias']
+                listapendencia = []
+                if pendencias:
+                    for i, pendencia in enumerate(pendencias):
+                        listapendencia.append(pendencia['nomeUsuarioUnidade'])
 
-            pendencias = tarefa['pendencias']
-            listapendencia = []
-            if pendencias:
-                for i, pendencia in enumerate(pendencias):
-                    listapendencia.append(pendencia['nomeUsuarioUnidade'])
+                    listapendencia = join_data(listapendencia)
+                else:
+                    listapendencia = ''
 
-                listapendencia = join_data(listapendencia)
-            else:
-                listapendencia = ''
+                abasatividade = tarefa['abasAtividade']
+                listaabaatividades = []
+                if abasatividade:
+                    for i, abas in enumerate(abasatividade):
+                        listaabaatividades.append(abas['descricao'])
 
-            abasatividade = tarefa['abasAtividade']
-            listaabaatividades = []
-            if abasatividade:
-                for i, abas in enumerate(abasatividade):
-                    listaabaatividades.append(abas['descricao'])
+                    listaabaatividades = join_data(listaabaatividades)
+                else:
+                    listaabaatividades = ''
 
-                listaabaatividades = join_data(listaabaatividades)
-            else:
-                listaabaatividades = ''
-
-            lista_final.append({
-                'id': id,
-                'situacao': situacao,
-                'estado': estado,
-                'atividade': atividade,
-                'titulo': titulo,
-                'idtarefaassociada': idtarefaassociada,
-                'titulotarefaassociada': titulotarefaassociada,
-                'dtprevisaoinicio': dtprevisaoinicio,
-                'dtprevisaofim': dtprevisaofim,
-                'dtrealizadainicio': dtrealizadainicio,
-                'dtrealizadafim': dtrealizadafim,
-                'prioridade': prioridade,
-                'assunto': assunto,
-                'idatividade': idatividade,
-                'descricaoatividade': descricaoatividade,
-                'idsituacao': idsituacao,
-                'dataultimamodificacao': dataultimamodificacao,
-                'autorultimamodificacao': autorultimamodificacao,
-                'mesconclusaoprevisto': mesconclusaoprevisto,
-                'mesconclusaorealizado': mesconclusaorealizado,
-                'estadosituacao': estadosituacao,
-                'arquivocomportamentoespecifico': arquivocomportamento,
-                'tags': tags,
-                'pendencias': listapendencia,
-                'abasatividade': listaabaatividades,
-            })
+                lista_final.append({
+                    'id': id,
+                    'situacao': situacao,
+                    'estado': estado,
+                    'atividade': atividade,
+                    'titulo': titulo,
+                    'idtarefaassociada': idtarefaassociada,
+                    'titulotarefaassociada': titulotarefaassociada,
+                    'dtprevisaoinicio': dtprevisaoinicio,
+                    'dtprevisaofim': dtprevisaofim,
+                    'dtrealizadainicio': dtrealizadainicio,
+                    'dtrealizadafim': dtrealizadafim,
+                    'prioridade': prioridade,
+                    'assunto': assunto,
+                    'idatividade': idatividade,
+                    'descricaoatividade': descricaoatividade,
+                    'idsituacao': idsituacao,
+                    'dataultimamodificacao': dataultimamodificacao,
+                    'autorultimamodificacao': autorultimamodificacao,
+                    'mesconclusaoprevisto': mesconclusaoprevisto,
+                    'mesconclusaorealizado': mesconclusaorealizado,
+                    'estadosituacao': estadosituacao,
+                    'arquivocomportamentoespecifico': arquivocomportamento,
+                    'tags': tags,
+                    'pendencias': listapendencia,
+                    'abasatividade': listaabaatividades,
+                })
 
         get_log(f"Lista {tipo_arquivo} tratada com sucesso")
         return lista_final

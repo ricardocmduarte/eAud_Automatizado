@@ -50,195 +50,196 @@ def tratamento_dados(data):
     try:
         lista_final = []
         for i, tarefa in enumerate(data):
+            if tarefa:
+                id = tarefa['id']
+                situacao = tarefa['situacao']
+                estado = tarefa['estado']
+                atividade = tarefa['atividade']
+                titulo = tarefa['titulo']
+                idtarefaassociada = tarefa['idTarefaAssociada'] if tarefa['idTarefaAssociada'] else 0
+                titulotarefaassociada = tarefa['tituloTarefaAssociada']
+                dtprevisaoinicio = tarefa['dtPrevisaoInicio']
+                dtprevisaofim = tarefa['dtPrevisaoFim']
+                dtrealizadainicio = tarefa['dtRealizadaInicio']
+                dtrealizadafim = tarefa['dtRealizadaFim']
+                prioridade = tarefa['prioridade']
+                assunto = tarefa['assunto']
+                idatividade = tarefa['idAtividade']
+                descricaoatividade = tarefa['descricaoAtividade']
+                idsituacao = tarefa['idSituacao']
+                dataultimamodificacao = tarefa['dataUltimaModificacao']
+                autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-            id = tarefa['id']
-            situacao = tarefa['situacao']
-            estado = tarefa['estado']
-            atividade = tarefa['atividade']
-            titulo = tarefa['titulo']
-            idtarefaassociada = tarefa['idTarefaAssociada'] if tarefa['idTarefaAssociada'] else ''
-            titulotarefaassociada = tarefa['tituloTarefaAssociada']
-            dtprevisaoinicio = tarefa['dtPrevisaoInicio']
-            dtprevisaofim = tarefa['dtPrevisaoFim']
-            dtrealizadainicio = tarefa['dtRealizadaInicio']
-            dtrealizadafim = tarefa['dtRealizadaFim']
-            prioridade = tarefa['prioridade']
-            assunto = tarefa['assunto']
-            idatividade = tarefa['idAtividade']
-            descricaoatividade = tarefa['descricaoAtividade']
-            idsituacao = tarefa['idSituacao']
-            dataultimamodificacao = tarefa['dataUltimaModificacao']
-            autorultimamodificacao = tarefa['autorUltimaModificacao']
+                unidadeexecutora = tarefa['campos']['unidadeExecutora']['valor']
+                fatosobapuracao = tarefa['campos']['FATOtce']['valor']['valor']
 
-            unidadeexecutora = tarefa['campos']['unidadeExecutora']['valor']
-            fatosobapuracao = tarefa['campos']['FATOtce']['valor']['valor']
+                anexgeral = tarefa['campos']['anexosGerais']['valor']
+                anexosgerais = []
+                if anexgeral:
+                    for i, file in enumerate(anexgeral):
+                        anexosgerais.append(file['nome'])
 
-            anexgeral = tarefa['campos']['anexosGerais']['valor']
-            anexosgerais = []
-            if anexgeral:
-                for i, file in enumerate(anexgeral):
-                    anexosgerais.append(file['nome'])
+                    anexosgerais = join_data(anexosgerais)
 
-                anexosgerais = join_data(anexosgerais)
+                processosassociados = tarefa['campos']['processosAssociados']['valor']
+                tceorigem = tarefa['campos']['TCEorigem']['valor']['valor']
+                produtouaig = tarefa['campos']['produtoUaig']['valor']
+                numprocessotribunal = tarefa['campos']['numproceTrib']['valor']
 
-            processosassociados = tarefa['campos']['processosAssociados']['valor']
-            tceorigem = tarefa['campos']['TCEorigem']['valor']['valor']
-            produtouaig = tarefa['campos']['produtoUaig']['valor']
-            numprocessotribunal = tarefa['campos']['numproceTrib']['valor']
+                localinteracao = tarefa['campos']['localidadesInteracao']['valor']
+                localidadesinteracao = []
+                if localinteracao:
+                    for i, local in enumerate(localinteracao):
+                        localidadesinteracao.append(local['nomeExibicao'])
 
-            localinteracao = tarefa['campos']['localidadesInteracao']['valor']
-            localidadesinteracao = []
-            if localinteracao:
-                for i, local in enumerate(localinteracao):
-                    localidadesinteracao.append(local['nomeExibicao'])
+                    localidadesinteracao = join_data(localidadesinteracao)
 
-                localidadesinteracao = join_data(localidadesinteracao)
+                numresolucaoportaria = tarefa['campos']['numpor']['valor']
+                dataencaminhado = tarefa['campos']['dataEnc']['valor']
+                fatoapuracao = tarefa['campos']['fatoApuracao']['valor']
 
-            numresolucaoportaria = tarefa['campos']['numpor']['valor']
-            dataencaminhado = tarefa['campos']['dataEnc']['valor']
-            fatoapuracao = tarefa['campos']['fatoApuracao']['valor']
+                link = tarefa['campos']['links']['valor']
+                links = []
+                if link:
+                    for i, lin in enumerate(link):
+                        links.append(lin['descricao'] + '|' + lin['url'])
 
-            link = tarefa['campos']['links']['valor']
-            links = []
-            if link:
-                for i, lin in enumerate(link):
-                    links.append(lin['descricao'] + '|' + lin['url'])
+                    links = join_data(links)
 
-                links = join_data(links)
+                datainstauracao = tarefa['campos']['CrgDthInstauracao']['valor']
 
-            datainstauracao = tarefa['campos']['CrgDthInstauracao']['valor']
+                unidenvolvidas = tarefa['campos']['unidEnvolvidas']['valor']
+                unidadesenvolvidas = []
+                if unidenvolvidas:
+                    for i, envolvidos in enumerate(unidenvolvidas):
+                        unidadesenvolvidas.append(envolvidos['nomeExibicao'])
 
-            unidenvolvidas = tarefa['campos']['unidEnvolvidas']['valor']
-            unidadesenvolvidas = []
-            if unidenvolvidas:
-                for i, envolvidos in enumerate(unidenvolvidas):
-                    unidadesenvolvidas.append(envolvidos['nomeExibicao'])
+                    unidadesenvolvidas = join_data(unidadesenvolvidas)
 
-                unidadesenvolvidas = join_data(unidadesenvolvidas)
+                procedenciatce = tarefa['campos']['ProcedenciaTCE']['valor']['valor']
 
-            procedenciatce = tarefa['campos']['ProcedenciaTCE']['valor']['valor']
+                destinatario = tarefa['campos']['destinatarioUsuarioUnidade']['valor']
+                destinatariousuariounidade = []
+                if destinatario:
+                    for i, destiny in enumerate(destinatario):
+                        destinatariousuariounidade.append(
+                            destiny['nomeExibicao'])
 
-            destinatario = tarefa['campos']['destinatarioUsuarioUnidade']['valor']
-            destinatariousuariounidade = []
-            if destinatario:
-                for i, destiny in enumerate(destinatario):
-                    destinatariousuariounidade.append(destiny['nomeExibicao'])
+                    destinatariousuariounidade = join_data(
+                        destinatariousuariounidade)
 
-                destinatariousuariounidade = join_data(
-                    destinatariousuariounidade)
+                executor = tarefa['campos']['executores']['valor']
+                executores = []
+                if executor:
+                    for i, obs in enumerate(executor):
+                        executores.append(obs['nomeExibicao'])
 
-            executor = tarefa['campos']['executores']['valor']
-            executores = []
-            if executor:
-                for i, obs in enumerate(executor):
-                    executores.append(obs['nomeExibicao'])
+                    executores = join_data(executores)
 
-                executores = join_data(executores)
+                valorprejuizoestimado = tarefa['campos']['valorPrejuizoEstimado']['valor']
 
-            valorprejuizoestimado = tarefa['campos']['valorPrejuizoEstimado']['valor']
+                tag = tarefa['campos']['tags']['valor']
+                tags = []
+                if tag:
+                    for i, tagtag in enumerate(tag):
+                        tags.append(tagtag['descricao'])
 
-            tag = tarefa['campos']['tags']['valor']
-            tags = []
-            if tag:
-                for i, tagtag in enumerate(tag):
-                    tags.append(tagtag['descricao'])
+                    tags = join_data(tags)
 
-                tags = join_data(tags)
+                gerentesub = tarefa['campos']['gersubp']['valor']
+                gerentesubprojeto = []
+                if gerentesub:
+                    for i, gerente in enumerate(gerentesub):
+                        gerentesubprojeto.append(gerente['nomeExibicao'])
 
-            gerentesub = tarefa['campos']['gersubp']['valor']
-            gerentesubprojeto = []
-            if gerentesub:
-                for i, gerente in enumerate(gerentesub):
-                    gerentesubprojeto.append(gerente['nomeExibicao'])
+                    gerentesubprojeto = join_data(gerentesubprojeto)
 
-                gerentesubprojeto = join_data(gerentesubprojeto)
+                tipopessoa = tarefa['campos']['tpjpf']['valor']['valor']
 
-            tipopessoa = tarefa['campos']['tpjpf']['valor']['valor']
+                cp = tarefa['campos']['CPF']['valor']
+                cpf = []
+                if cp:
+                    for i, c in enumerate(cp):
+                        cpf.append(c['nomeExibicao'])
 
-            cp = tarefa['campos']['CPF']['valor']
-            cpf = []
-            if cp:
-                for i, c in enumerate(cp):
-                    cpf.append(c['nomeExibicao'])
+                    cpf = join_data(cpf)
 
-                cpf = join_data(cpf)
+                cnpj = tarefa['campos']['CNPJs']['valor']
+                cnpjs = []
+                if cnpj:
+                    for i, file in enumerate(cnpj):
+                        cnpjs.append(file['nomeExibicao'])
 
-            cnpj = tarefa['campos']['CNPJs']['valor']
-            cnpjs = []
-            if cnpj:
-                for i, file in enumerate(cnpj):
-                    cnpjs.append(file['nomeExibicao'])
+                    cnpjs = join_data(cnpjs)
 
-                cnpjs = join_data(cnpjs)
+                valoratualizado = tarefa['campos']['valoratu']['valor']
+                arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
+                estadosituacao = tarefa['estadoSituacao']
 
-            valoratualizado = tarefa['campos']['valoratu']['valor']
-            arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
-            estadosituacao = tarefa['estadoSituacao']
+                pendencias = tarefa['pendencias']
+                listapendencia = []
+                if pendencias:
+                    for i, pendencia in enumerate(pendencias):
+                        listapendencia.append(pendencia['nomeUsuarioUnidade'])
 
-            pendencias = tarefa['pendencias']
-            listapendencia = []
-            if pendencias:
-                for i, pendencia in enumerate(pendencias):
-                    listapendencia.append(pendencia['nomeUsuarioUnidade'])
+                    listapendencia = join_data(listapendencia)
 
-                listapendencia = join_data(listapendencia)
+                abasatividade = tarefa['abasAtividade']
+                listaabaatividades = []
+                if abasatividade:
+                    for i, abas in enumerate(abasatividade):
+                        listaabaatividades.append(abas['descricao'])
 
-            abasatividade = tarefa['abasAtividade']
-            listaabaatividades = []
-            if abasatividade:
-                for i, abas in enumerate(abasatividade):
-                    listaabaatividades.append(abas['descricao'])
+                    listaabaatividades = join_data(listaabaatividades)
 
-                listaabaatividades = join_data(listaabaatividades)
-
-            lista_final.append({
-                'id': id,
-                'situacao': situacao,
-                'estado': estado,
-                'atividade': atividade,
-                'titulo': titulo,
-                'idtarefaassociada': idtarefaassociada,
-                'titulotarefaassociada': titulotarefaassociada,
-                'dtprevisaoinicio': dtprevisaoinicio,
-                'dtprevisaofim': dtprevisaofim,
-                'dtrealizadainicio': dtrealizadainicio,
-                'dtrealizadafim': dtrealizadafim,
-                'prioridade': prioridade,
-                'assunto': assunto,
-                'idatividade': idatividade,
-                'descricaoatividade': descricaoatividade,
-                'idsituacao': idsituacao,
-                'dataultimamodificacao': dataultimamodificacao,
-                'autorultimamodificacao': autorultimamodificacao,
-                'unidadeexecutora': unidadeexecutora,
-                'fatosobapuracao': fatosobapuracao,
-                'anexosgerais': anexosgerais,
-                'processosassociados': processosassociados,
-                'tceorigem': tceorigem,
-                'produtouaig': produtouaig,
-                'numprocessotribunal': numprocessotribunal,
-                'localidadesinteracao': localidadesinteracao,
-                'numresolucaoportaria': numresolucaoportaria,
-                'dataencaminhado': dataencaminhado,
-                'fatoapuracao': fatoapuracao,
-                'links': links,
-                'datainstauracao': datainstauracao,
-                'unidadesenvolvidas': unidadesenvolvidas,
-                'procedenciatce': procedenciatce,
-                'destinatariousuariounidade': destinatariousuariounidade,
-                'executores': executores,
-                'valorprejuizoestimado': valorprejuizoestimado,
-                'tags': tags,
-                'gerentesubprojeto': gerentesubprojeto,
-                'tipopessoa': tipopessoa,
-                'cpf': cpf,
-                'cnpjs': cnpjs,
-                'valoratualizado': valoratualizado,
-                'arquivocomportamentoespecifico': arquivocomportamento,
-                'estadosituacao': estadosituacao,
-                'pendencias': listapendencia,
-                'abasatividade': listaabaatividades,
-            })
+                lista_final.append({
+                    'id': id,
+                    'situacao': situacao,
+                    'estado': estado,
+                    'atividade': atividade,
+                    'titulo': titulo,
+                    'idtarefaassociada': idtarefaassociada,
+                    'titulotarefaassociada': titulotarefaassociada,
+                    'dtprevisaoinicio': dtprevisaoinicio,
+                    'dtprevisaofim': dtprevisaofim,
+                    'dtrealizadainicio': dtrealizadainicio,
+                    'dtrealizadafim': dtrealizadafim,
+                    'prioridade': prioridade,
+                    'assunto': assunto,
+                    'idatividade': idatividade,
+                    'descricaoatividade': descricaoatividade,
+                    'idsituacao': idsituacao,
+                    'dataultimamodificacao': dataultimamodificacao,
+                    'autorultimamodificacao': autorultimamodificacao,
+                    'unidadeexecutora': unidadeexecutora,
+                    'fatosobapuracao': fatosobapuracao,
+                    'anexosgerais': anexosgerais,
+                    'processosassociados': processosassociados,
+                    'tceorigem': tceorigem,
+                    'produtouaig': produtouaig,
+                    'numprocessotribunal': numprocessotribunal,
+                    'localidadesinteracao': localidadesinteracao,
+                    'numresolucaoportaria': numresolucaoportaria,
+                    'dataencaminhado': dataencaminhado,
+                    'fatoapuracao': fatoapuracao,
+                    'links': links,
+                    'datainstauracao': datainstauracao,
+                    'unidadesenvolvidas': unidadesenvolvidas,
+                    'procedenciatce': procedenciatce,
+                    'destinatariousuariounidade': destinatariousuariounidade,
+                    'executores': executores,
+                    'valorprejuizoestimado': valorprejuizoestimado,
+                    'tags': tags,
+                    'gerentesubprojeto': gerentesubprojeto,
+                    'tipopessoa': tipopessoa,
+                    'cpf': cpf,
+                    'cnpjs': cnpjs,
+                    'valoratualizado': valoratualizado,
+                    'arquivocomportamentoespecifico': arquivocomportamento,
+                    'estadosituacao': estadosituacao,
+                    'pendencias': listapendencia,
+                    'abasatividade': listaabaatividades,
+                })
 
         get_log(f"Lista {tipo_arquivo} tratada com sucesso")
         return lista_final

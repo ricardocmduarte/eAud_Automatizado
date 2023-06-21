@@ -57,7 +57,7 @@ def tratamento_dados(data):
                 estado = tarefa['estado']
                 atividade = tarefa['atividade']
                 titulo = tarefa['titulo']
-                idtarefaassociada = tarefa['idTarefaAssociada'] if tarefa['idTarefaAssociada'] else ''
+                idtarefaassociada = tarefa['idTarefaAssociada'] if tarefa['idTarefaAssociada'] else 0
                 titulotarefaassociada = tarefa['tituloTarefaAssociada']
                 dtprevisaoinicio = tarefa['dtPrevisaoInicio']
                 dtprevisaofim = tarefa['dtPrevisaoFim']

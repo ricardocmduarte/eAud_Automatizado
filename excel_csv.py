@@ -49,26 +49,28 @@ def converter():
             #####################
             # Save local server #
             #####################
-            print(f"Iniciando processo, convertendo tabela {tabela} para csv ")
+            print(
+                f"Iniciando processo, convertendo tabela {tabela} para csv  - pasta de rede")
 
             df.to_csv(f"R:\\BASES_DADOS\\e-AUD\\dados_{datahora()}\\csv\\{tabela}.csv",
                       index=False, encoding='utf-8-sig')
 
             print(
-                f"Iniciando processo, convertendo tabela {tabela} para excel ")
+                f"Iniciando processo, convertendo tabela {tabela} para excel - pasta de rede")
             df.to_excel(f"R:\\BASES_DADOS\\e-AUD\\dados_{datahora()}\\excel\\{tabela}.xlsx",
                         index=False, engine='xlsxwriter')
 
             ###################
             # Save cloud path #
             ###################
-            print(f"Iniciando processo, convertendo tabela {tabela} para csv ")
+            print(
+                f"Iniciando processo, convertendo tabela {tabela} para csv - nuvem")
             get_log("Convertendos as tabelas em csv")
             df.to_csv(f"C:\\Users\\m1478769\\OneDrive - SEPLAG MG\\Planilha e-Aud\\dados_{datahora()}\\csv\\{tabela}.csv",
                       index=False, encoding='utf-8-sig')
 
             print(
-                f"Iniciando processo, convertendo tabela {tabela} para excel ")
+                f"Iniciando processo, convertendo tabela {tabela} para excel - nuvem")
             get_log("Convertendo as tabelas em xlsx")
             df.to_excel(f"C:\\Users\\m1478769\\OneDrive - SEPLAG MG\\Planilha e-Aud\\dados_{datahora()}\\excel\\{tabela}.xlsx",
                         index=False, engine='xlsxwriter')

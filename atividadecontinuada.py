@@ -49,168 +49,169 @@ def tratamento_dados(data):
     try:
         lista_final = []
         for i, tarefa in enumerate(data):
+            if tarefa:
+                id = tarefa['id']
+                situacao = tarefa['situacao']
+                estado = tarefa['estado']
+                atividade = tarefa['atividade']
+                titulo = tarefa['titulo']
+                idtarefaassociada = tarefa['idTarefaAssociada'] if tarefa['idTarefaAssociada'] else 0
+                titulotarefaassociada = tarefa['tituloTarefaAssociada']
+                dtprevisaoinicio = tarefa['dtPrevisaoInicio']
+                dtprevisaofim = tarefa['dtPrevisaoFim']
+                dtrealizadainicio = tarefa['dtRealizadaInicio']
+                dtrealizadafim = tarefa['dtRealizadaFim']
+                prioridade = tarefa['prioridade']
+                assunto = tarefa['assunto']
+                idatividade = tarefa['idAtividade']
+                descricaoatividade = tarefa['descricaoAtividade']
+                idsituacao = tarefa['idSituacao']
+                dataultimamodificacao = tarefa['dataUltimaModificacao']
+                autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-            id = tarefa['id']
-            situacao = tarefa['situacao']
-            estado = tarefa['estado']
-            atividade = tarefa['atividade']
-            titulo = tarefa['titulo']
-            idtarefaassociada = tarefa['idTarefaAssociada'] if tarefa['idTarefaAssociada'] else ''
-            titulotarefaassociada = tarefa['tituloTarefaAssociada']
-            dtprevisaoinicio = tarefa['dtPrevisaoInicio']
-            dtprevisaofim = tarefa['dtPrevisaoFim']
-            dtrealizadainicio = tarefa['dtRealizadaInicio']
-            dtrealizadafim = tarefa['dtRealizadaFim']
-            prioridade = tarefa['prioridade']
-            assunto = tarefa['assunto']
-            idatividade = tarefa['idAtividade']
-            descricaoatividade = tarefa['descricaoAtividade']
-            idsituacao = tarefa['idSituacao']
-            dataultimamodificacao = tarefa['dataUltimaModificacao']
-            autorultimamodificacao = tarefa['autorUltimaModificacao']
+                detalhamento = tarefa['campos']['Detalhamento']['valor']
+                localidades = tarefa['campos']['localidadesPlanoTrabalho']['valor']
+                localtrabalho = []
+                if localidades:
+                    for i, local in enumerate(localidades):
+                        localtrabalho.append(local['nomeExibicao'])
 
-            detalhamento = tarefa['campos']['Detalhamento']['valor']
-            localidades = tarefa['campos']['localidadesPlanoTrabalho']['valor']
-            localtrabalho = []
-            if localidades:
-                for i, local in enumerate(localidades):
-                    localtrabalho.append(local['nomeExibicao'])
+                    localtrabalho = join_data(localtrabalho)
 
-                localtrabalho = join_data(localtrabalho)
+                proponenteplanotrabalho = tarefa['campos']['proponentePlanoTrabalho']['valor']
+                etapaplanotrabalho = tarefa['campos']['etapaPlanoTrabalho']['valor']
+                responsavelplanotrabalho = tarefa['campos']['responsavelPlanoTrabalho']['valor']
 
-            proponenteplanotrabalho = tarefa['campos']['proponentePlanoTrabalho']['valor']
-            etapaplanotrabalho = tarefa['campos']['etapaPlanoTrabalho']['valor']
-            responsavelplanotrabalho = tarefa['campos']['responsavelPlanoTrabalho']['valor']
+                links = tarefa['campos']['links']['valor']
+                linktarefa = []
+                if links:
+                    for i, link in enumerate(links):
+                        linktarefa.append(
+                            link['descricao'] + ' | ' + link['url'])
 
-            links = tarefa['campos']['links']['valor']
-            linktarefa = []
-            if links:
-                for i, link in enumerate(links):
-                    linktarefa.append(link['descricao'] + ' | ' + link['url'])
+                    linktarefa = join_data(linktarefa)
 
-                linktarefa = join_data(linktarefa)
+                anexosplanotrabalho = tarefa['campos']['anexosPlanoTrabalho']['valor']
+                anexos = []
+                if anexosplanotrabalho:
+                    for i, anexo in enumerate(anexosplanotrabalho):
+                        anexos.append(anexo['nomeExibicao'])
 
-            anexosplanotrabalho = tarefa['campos']['anexosPlanoTrabalho']['valor']
-            anexos = []
-            if anexosplanotrabalho:
-                for i, anexo in enumerate(anexosplanotrabalho):
-                    anexos.append(anexo['nomeExibicao'])
+                    anexos = join_data(anexos)
 
-                anexos = join_data(anexos)
+                processoplanotrabalho = tarefa['campos']['processoTrabalhoPlanoTrabalho']['valor']
 
-            processoplanotrabalho = tarefa['campos']['processoTrabalhoPlanoTrabalho']['valor']
+                resultadoesperado = tarefa['campos']['resultadosEsperadosPlanoTrabalho']['valor']
+                resultados = []
+                if resultadoesperado:
+                    for i, resul in enumerate(resultadoesperado):
+                        resultados.append(resul['nomeExibicao'])
 
-            resultadoesperado = tarefa['campos']['resultadosEsperadosPlanoTrabalho']['valor']
-            resultados = []
-            if resultadoesperado:
-                for i, resul in enumerate(resultadoesperado):
-                    resultados.append(resul['nomeExibicao'])
+                    resultados = join_data(resultados)
 
-                resultados = join_data(resultados)
+                tarefasprecedentes = tarefa['campos']['tarefasPrecedentes']['valor']
+                recursofinanceiro = tarefa['campos']['recursoFinanceiroPlanoTrabalho']['valor']
 
-            tarefasprecedentes = tarefa['campos']['tarefasPrecedentes']['valor']
-            recursofinanceiro = tarefa['campos']['recursoFinanceiroPlanoTrabalho']['valor']
+                envolvidosplanotrabalho = tarefa['campos']['envolvidosPlanoTrabalho']['valor']
+                envolvidos = []
+                if envolvidosplanotrabalho:
+                    for i, envolv in enumerate(envolvidosplanotrabalho):
+                        envolvidos.append(envolv['nomeExibicao'])
 
-            envolvidosplanotrabalho = tarefa['campos']['envolvidosPlanoTrabalho']['valor']
-            envolvidos = []
-            if envolvidosplanotrabalho:
-                for i, envolv in enumerate(envolvidosplanotrabalho):
-                    envolvidos.append(envolv['nomeExibicao'])
+                    envolvidos = join_data(envolvidos)
 
-                envolvidos = join_data(envolvidos)
+                homemhora = tarefa['campos']['homemHorasPlanoTrabalho']['valor']
 
-            homemhora = tarefa['campos']['homemHorasPlanoTrabalho']['valor']
+                gerentes = tarefa['campos']['gerentesPlanoTrabalho']['valor']
+                gerente = []
+                if gerentes:
+                    for i, gere in enumerate(gerentes):
+                        gerente.append(gere['nomeExibicao'])
 
-            gerentes = tarefa['campos']['gerentesPlanoTrabalho']['valor']
-            gerente = []
-            if gerentes:
-                for i, gere in enumerate(gerentes):
-                    gerente.append(gere['nomeExibicao'])
+                    gerente = join_data(gerente)
 
-                gerente = join_data(gerente)
+                supervisoresplano = tarefa['campos']['supervisoresPlanoTrabalho']['valor']
+                supervisorplano = []
+                if supervisoresplano:
+                    for i, supervi in enumerate(supervisoresplano):
+                        supervisorplano.append(supervi['nomeExibicao'])
 
-            supervisoresplano = tarefa['campos']['supervisoresPlanoTrabalho']['valor']
-            supervisorplano = []
-            if supervisoresplano:
-                for i, supervi in enumerate(supervisoresplano):
-                    supervisorplano.append(supervi['nomeExibicao'])
+                    supervisorplano = join_data(supervisorplano)
 
-                supervisorplano = join_data(supervisorplano)
+                planotipo = tarefa['campos']['tipoPlanoTrabalho']['valor']
+                tipoplano = []
+                if planotipo:
+                    tipoplano = planotipo['valor']
+                else:
+                    tipoplano = ''
 
-            planotipo = tarefa['campos']['tipoPlanoTrabalho']['valor']
-            tipoplano = []
-            if planotipo:
-                tipoplano = planotipo['valor']
-            else:
-                tipoplano = ''
+                estadosituacao = tarefa['estadoSituacao']
+                arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
 
-            estadosituacao = tarefa['estadoSituacao']
-            arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
+                descricaotag = tarefa['campos']['tags']['valor']
+                tags = []
+                if descricaotag:
+                    for i, tagdesc in enumerate(descricaotag):
+                        tags.append(tagdesc['descricao'])
 
-            descricaotag = tarefa['campos']['tags']['valor']
-            tags = []
-            if descricaotag:
-                for i, tagdesc in enumerate(descricaotag):
-                    tags.append(tagdesc['descricao'])
+                    tags = join_data(tags)
 
-                tags = join_data(tags)
+                pendencias = tarefa['pendencias']
+                listapendencia = []
+                if pendencias:
+                    for i, pendencia in enumerate(pendencias):
+                        listapendencia.append(pendencia['nomeUsuarioUnidade'])
 
-            pendencias = tarefa['pendencias']
-            listapendencia = []
-            if pendencias:
-                for i, pendencia in enumerate(pendencias):
-                    listapendencia.append(pendencia['nomeUsuarioUnidade'])
+                    listapendencia = join_data(listapendencia)
 
-                listapendencia = join_data(listapendencia)
+                abasatividade = tarefa['abasAtividade']
+                listaabaatividades = []
+                if abasatividade:
+                    for i, abas in enumerate(abasatividade):
+                        listaabaatividades.append(abas['descricao'])
 
-            abasatividade = tarefa['abasAtividade']
-            listaabaatividades = []
-            if abasatividade:
-                for i, abas in enumerate(abasatividade):
-                    listaabaatividades.append(abas['descricao'])
+                    listaabaatividades = join_data(listaabaatividades)
 
-                listaabaatividades = join_data(listaabaatividades)
-
-            lista_final.append({
-                'id': id,
-                'situacao': situacao,
-                'estado': estado,
-                'atividade': atividade,
-                'titulo': titulo,
-                'idtarefaassociada': idtarefaassociada,
-                'titulotarefaassociada': titulotarefaassociada,
-                'dtprevisaoinicio': dtprevisaoinicio,
-                'dtprevisaofim': dtprevisaofim,
-                'dtrealizadainicio': dtrealizadainicio,
-                'dtrealizadafim': dtrealizadafim,
-                'prioridade': prioridade,
-                'assunto': assunto,
-                'idatividade': idatividade,
-                'descricaoatividade': descricaoatividade,
-                'idsituacao': idsituacao,
-                'dataultimamodificacao': dataultimamodificacao,
-                'autorultimamodificacao': autorultimamodificacao,
-                'detalhamento': detalhamento,
-                'proponenteplanotrabalho': proponenteplanotrabalho,
-                'etapaplanotrabalho': etapaplanotrabalho,
-                'responsavelplanotrabalho': responsavelplanotrabalho,
-                'processoplanotrabalho': processoplanotrabalho,
-                'localidade': localtrabalho,
-                'links': linktarefa,
-                'tarefasprecedentes': tarefasprecedentes,
-                'resultados': resultados,
-                'recurso': recursofinanceiro,
-                'envolvidos': envolvidos,
-                'homemhora': homemhora,
-                'gerentes': gerente,
-                'supervisorplanotrabalho': supervisorplano,
-                'tipoplano': tipoplano,
-                'arquivocomportamentoespecifico': arquivocomportamento,
-                'estadosituacao': estadosituacao,
-                'tags': tags,
-                'pendencias': listapendencia,
-                'abasatividade': listaabaatividades,
-            })
+                lista_final.append({
+                    'id': id,
+                    'situacao': situacao,
+                    'estado': estado,
+                    'atividade': atividade,
+                    'titulo': titulo,
+                    'idtarefaassociada': idtarefaassociada,
+                    'titulotarefaassociada': titulotarefaassociada,
+                    'dtprevisaoinicio': dtprevisaoinicio,
+                    'dtprevisaofim': dtprevisaofim,
+                    'dtrealizadainicio': dtrealizadainicio,
+                    'dtrealizadafim': dtrealizadafim,
+                    'prioridade': prioridade,
+                    'assunto': assunto,
+                    'idatividade': idatividade,
+                    'descricaoatividade': descricaoatividade,
+                    'idsituacao': idsituacao,
+                    'dataultimamodificacao': dataultimamodificacao,
+                    'autorultimamodificacao': autorultimamodificacao,
+                    'detalhamento': detalhamento,
+                    'proponenteplanotrabalho': proponenteplanotrabalho,
+                    'etapaplanotrabalho': etapaplanotrabalho,
+                    'responsavelplanotrabalho': responsavelplanotrabalho,
+                    'processoplanotrabalho': processoplanotrabalho,
+                    'localidade': localtrabalho,
+                    'links': linktarefa,
+                    'tarefasprecedentes': tarefasprecedentes,
+                    'resultados': resultados,
+                    'recurso': recursofinanceiro,
+                    'envolvidos': envolvidos,
+                    'homemhora': homemhora,
+                    'gerentes': gerente,
+                    'supervisorplanotrabalho': supervisorplano,
+                    'tipoplano': tipoplano,
+                    'arquivocomportamentoespecifico': arquivocomportamento,
+                    'estadosituacao': estadosituacao,
+                    'tags': tags,
+                    'pendencias': listapendencia,
+                    'abasatividade': listaabaatividades,
+                })
         get_log(f"Lista {tipo_arquivo} tratada com sucesso")
         return lista_final
     except NameError as err:

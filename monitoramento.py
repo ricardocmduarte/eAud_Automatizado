@@ -50,169 +50,171 @@ def tratamento_dados(data):
     try:
         lista_final = []
         for i, tarefa in enumerate(data):
+            if tarefa:
+                id = tarefa['id']
+                situacao = tarefa['situacao']
+                estado = tarefa['estado']
+                atividade = tarefa['atividade']
+                titulo = tarefa['titulo']
+                idtarefaassociada = tarefa['idTarefaAssociada'] if tarefa['idTarefaAssociada'] else 0
+                titulotarefaassociada = tarefa['tituloTarefaAssociada']
+                dtprevisaoinicio = tarefa['dtPrevisaoInicio']
+                dtprevisaofim = tarefa['dtPrevisaoFim']
+                dtrealizadainicio = tarefa['dtRealizadaInicio']
+                dtrealizadafim = tarefa['dtRealizadaFim']
+                prioridade = tarefa['prioridade']
+                assunto = tarefa['assunto']
+                idatividade = tarefa['idAtividade']
+                descricaoatividade = tarefa['descricaoAtividade']
+                idsituacao = tarefa['idSituacao']
+                dataultimamodificacao = tarefa['dataUltimaModificacao']
+                autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-            id = tarefa['id']
-            situacao = tarefa['situacao']
-            estado = tarefa['estado']
-            atividade = tarefa['atividade']
-            titulo = tarefa['titulo']
-            idtarefaassociada = tarefa['idTarefaAssociada'] if tarefa['idTarefaAssociada'] else ''
-            titulotarefaassociada = tarefa['tituloTarefaAssociada']
-            dtprevisaoinicio = tarefa['dtPrevisaoInicio']
-            dtprevisaofim = tarefa['dtPrevisaoFim']
-            dtrealizadainicio = tarefa['dtRealizadaInicio']
-            dtrealizadafim = tarefa['dtRealizadaFim']
-            prioridade = tarefa['prioridade']
-            assunto = tarefa['assunto']
-            idatividade = tarefa['idAtividade']
-            descricaoatividade = tarefa['descricaoAtividade']
-            idsituacao = tarefa['idSituacao']
-            dataultimamodificacao = tarefa['dataUltimaModificacao']
-            autorultimamodificacao = tarefa['autorUltimaModificacao']
+                detalhesmonitoramento = tarefa['campos']['detalhesMonitoramento']['valor']
 
-            detalhesmonitoramento = tarefa['campos']['detalhesMonitoramento']['valor']
+                prov = tarefa['campos']['providencia']['valor']
+                providencia = ''
+                if prov:
+                    providencia = prov['valor']
 
-            prov = tarefa['campos']['providencia']['valor']
-            providencia = ''
-            if prov:
-                providencia = prov['valor']
+                unidadeauditoria = tarefa['campos']['unidadesAuditoria']['valor']
+                unidadesauditoria = []
+                if unidadeauditoria:
+                    for i, aud in enumerate(unidadeauditoria):
+                        unidadesauditoria.append(aud['nomeExibicao'])
 
-            unidadeauditoria = tarefa['campos']['unidadesAuditoria']['valor']
-            unidadesauditoria = []
-            if unidadeauditoria:
-                for i, aud in enumerate(unidadeauditoria):
-                    unidadesauditoria.append(aud['nomeExibicao'])
+                    unidadesauditoria = join_data(unidadesauditoria)
 
-                unidadesauditoria = join_data(unidadesauditoria)
+                unidadeenvolvida = tarefa['campos']['unidEnvolvidas']['valor']
+                unidadesenvolvidas = []
+                if unidadeenvolvida:
+                    for i, envol in enumerate(unidadeenvolvida):
+                        unidadesenvolvidas.append(envol['nomeExibicao'])
 
-            unidadeenvolvida = tarefa['campos']['unidEnvolvidas']['valor']
-            unidadesenvolvidas = []
-            if unidadeenvolvida:
-                for i, envol in enumerate(unidadeenvolvida):
-                    unidadesenvolvidas.append(envol['nomeExibicao'])
+                    unidadesenvolvidas = join_data(unidadesenvolvidas)
 
-                unidadesenvolvidas = join_data(unidadesenvolvidas)
+                categoriamonitoramento = tarefa['campos']['categoriasMonitoramento']['valor']
+                categoriasmonitoramento = []
+                if categoriamonitoramento:
+                    for i, cat in enumerate(categoriamonitoramento):
+                        categoriasmonitoramento.append(cat['nomeExibicao'])
 
-            categoriamonitoramento = tarefa['campos']['categoriasMonitoramento']['valor']
-            categoriasmonitoramento = []
-            if categoriamonitoramento:
-                for i, cat in enumerate(categoriamonitoramento):
-                    categoriasmonitoramento.append(cat['nomeExibicao'])
+                    categoriasmonitoramento = join_data(
+                        categoriasmonitoramento)
 
-                categoriasmonitoramento = join_data(categoriasmonitoramento)
+                tarefasprec = tarefa['campos']['tarefasPrecedentes']['valor']
+                tarefasprecedentes = []
+                if tarefasprec:
+                    for i, tarefapre in enumerate(tarefasprec):
+                        tarefasprecedentes.append(tarefapre['nomeExibicao'])
+                    tarefasprecedentes = join_data(tarefasprecedentes)
 
-            tarefasprec = tarefa['campos']['tarefasPrecedentes']['valor']
-            tarefasprecedentes = []
-            if tarefasprec:
-                for i, tarefapre in enumerate(tarefasprec):
-                    tarefasprecedentes.append(tarefapre['nomeExibicao'])
-                tarefasprecedentes = join_data(tarefasprecedentes)
+                valorprejuizoestimado = tarefa['campos']['valorPrejuizoEstimado']['valor']
 
-            valorprejuizoestimado = tarefa['campos']['valorPrejuizoEstimado']['valor']
+                observador = tarefa['campos']['observadores']['valor']
+                observadores = []
+                if observador:
+                    for i, obs in enumerate(observador):
+                        observadores.append(obs['nomeExibicao'])
 
-            observador = tarefa['campos']['observadores']['valor']
-            observadores = []
-            if observador:
-                for i, obs in enumerate(observador):
-                    observadores.append(obs['nomeExibicao'])
+                    observadores = join_data(observadores)
 
-                observadores = join_data(observadores)
+                descricaotag = tarefa['campos']['tags']['valor']
+                tags = []
+                if descricaotag:
+                    for i, tagdesc in enumerate(descricaotag):
+                        tags.append(tagdesc['descricao'])
 
-            descricaotag = tarefa['campos']['tags']['valor']
-            tags = []
-            if descricaotag:
-                for i, tagdesc in enumerate(descricaotag):
-                    tags.append(tagdesc['descricao'])
+                    tags = join_data(tags)
 
-                tags = join_data(tags)
+                unidadegestora = tarefa['campos']['unidadeGestora']['valor']['nomeExibicao']
 
-            unidadegestora = tarefa['campos']['unidadeGestora']['valor']['nomeExibicao']
+                fundamento = tarefa['campos']['fundamentos']['valor']
+                fundamentos = []
+                if fundamento:
+                    for i, fund in enumerate(fundamento):
+                        fundamentos.append(fund['descricao'])
 
-            fundamento = tarefa['campos']['fundamentos']['valor']
-            fundamentos = []
-            if fundamento:
-                for i, fund in enumerate(fundamento):
-                    fundamentos.append(fund['descricao'])
+                    fundamentos = join_data(fundamentos)
 
-                fundamentos = join_data(fundamentos)
+                ultimoposicionamento = tarefa['campos']['tipoUltimoPosicionamento']['valor']
+                tipoultimoposicionamento = []
+                if ultimoposicionamento:
+                    for i, pos in enumerate(ultimoposicionamento):
+                        tipoultimoposicionamento.append(pos['valor'])
 
-            ultimoposicionamento = tarefa['campos']['tipoUltimoPosicionamento']['valor']
-            tipoultimoposicionamento = []
-            if ultimoposicionamento:
-                for i, pos in enumerate(ultimoposicionamento):
-                    tipoultimoposicionamento.append(pos['valor'])
+                    tipoultimoposicionamento = join_data(
+                        tipoultimoposicionamento)
 
-                tipoultimoposicionamento = join_data(tipoultimoposicionamento)
+                textoultimoposicionamento = tarefa['campos']['textoUltimoPosicionamento']['valor']
+                textoultimopamanifestacao = tarefa['campos']['textoUltimaManifestacao']['valor']
 
-            textoultimoposicionamento = tarefa['campos']['textoUltimoPosicionamento']['valor']
-            textoultimopamanifestacao = tarefa['campos']['textoUltimaManifestacao']['valor']
+                anexorel = tarefa['campos']['anexosRelatorio']['valor']
+                anexosrelatorio = []
+                if anexorel:
+                    for i, file in enumerate(anexorel):
+                        anexosrelatorio.append(file['nome'])
 
-            anexorel = tarefa['campos']['anexosRelatorio']['valor']
-            anexosrelatorio = []
-            if anexorel:
-                for i, file in enumerate(anexorel):
-                    anexosrelatorio.append(file['nome'])
+                    anexosrelatorio = join_data(anexosrelatorio)
 
-                anexosrelatorio = join_data(anexosrelatorio)
+                estadosituacao = tarefa['estadoSituacao']
+                arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
 
-            estadosituacao = tarefa['estadoSituacao']
-            arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
+                pendencias = tarefa['pendencias']
+                listapendencia = []
+                if pendencias:
+                    for i, pendencia in enumerate(pendencias):
+                        listapendencia.append(pendencia['nomeUsuarioUnidade'])
 
-            pendencias = tarefa['pendencias']
-            listapendencia = []
-            if pendencias:
-                for i, pendencia in enumerate(pendencias):
-                    listapendencia.append(pendencia['nomeUsuarioUnidade'])
+                    listapendencia = join_data(listapendencia)
 
-                listapendencia = join_data(listapendencia)
+                abasatividade = tarefa['abasAtividade']
+                listaabaatividades = []
+                if abasatividade:
+                    for i, abas in enumerate(abasatividade):
+                        listaabaatividades.append(abas['descricao'])
 
-            abasatividade = tarefa['abasAtividade']
-            listaabaatividades = []
-            if abasatividade:
-                for i, abas in enumerate(abasatividade):
-                    listaabaatividades.append(abas['descricao'])
+                    listaabaatividades = join_data(listaabaatividades)
 
-                listaabaatividades = join_data(listaabaatividades)
-
-            lista_final.append({
-                'id': id,
-                'situacao': situacao,
-                'estado': estado,
-                'atividade': atividade,
-                'titulo': titulo,
-                'idtarefaassociada': idtarefaassociada,
-                'titulotarefaassociada': titulotarefaassociada,
-                'dtprevisaoinicio': dtprevisaoinicio,
-                'dtprevisaofim': dtprevisaofim,
-                'dtrealizadainicio': dtrealizadainicio,
-                'dtrealizadafim': dtrealizadafim,
-                'prioridade': prioridade,
-                'assunto': assunto,
-                'idatividade': idatividade,
-                'descricaoatividade': descricaoatividade,
-                'idsituacao': idsituacao,
-                'dataultimamodificacao': dataultimamodificacao,
-                'autorultimamodificacao': autorultimamodificacao,
-                'detalhesmonitoramento': detalhesmonitoramento,
-                'providencia': providencia,
-                'unidadesauditoria': unidadesauditoria,
-                'unidadesenvolvidas': unidadesenvolvidas,
-                'categoriasmonitoramento': categoriasmonitoramento,
-                'tarefasprecedentes': tarefasprecedentes,
-                'valorprejuizoestimado': valorprejuizoestimado,
-                'observadores': observadores,
-                'unidadegestora': unidadegestora,
-                'fundamentos': fundamentos,
-                'ultimoposicionamento': tipoultimoposicionamento,
-                'textoultimoposicionamento': textoultimoposicionamento,
-                'textoultimamanifestacao': textoultimopamanifestacao,
-                'anexorelatorio': anexosrelatorio,
-                'estadosituacao': estadosituacao,
-                'arquivocomportamentoespecifico': arquivocomportamento,
-                'tags': tags,
-                'pendencias': listapendencia,
-                'abasatividade': listaabaatividades,
-            })
+                lista_final.append({
+                    'id': id,
+                    'situacao': situacao,
+                    'estado': estado,
+                    'atividade': atividade,
+                    'titulo': titulo,
+                    'idtarefaassociada': idtarefaassociada,
+                    'titulotarefaassociada': titulotarefaassociada,
+                    'dtprevisaoinicio': dtprevisaoinicio,
+                    'dtprevisaofim': dtprevisaofim,
+                    'dtrealizadainicio': dtrealizadainicio,
+                    'dtrealizadafim': dtrealizadafim,
+                    'prioridade': prioridade,
+                    'assunto': assunto,
+                    'idatividade': idatividade,
+                    'descricaoatividade': descricaoatividade,
+                    'idsituacao': idsituacao,
+                    'dataultimamodificacao': dataultimamodificacao,
+                    'autorultimamodificacao': autorultimamodificacao,
+                    'detalhesmonitoramento': detalhesmonitoramento,
+                    'providencia': providencia,
+                    'unidadesauditoria': unidadesauditoria,
+                    'unidadesenvolvidas': unidadesenvolvidas,
+                    'categoriasmonitoramento': categoriasmonitoramento,
+                    'tarefasprecedentes': tarefasprecedentes,
+                    'valorprejuizoestimado': valorprejuizoestimado,
+                    'observadores': observadores,
+                    'unidadegestora': unidadegestora,
+                    'fundamentos': fundamentos,
+                    'ultimoposicionamento': tipoultimoposicionamento,
+                    'textoultimoposicionamento': textoultimoposicionamento,
+                    'textoultimamanifestacao': textoultimopamanifestacao,
+                    'anexorelatorio': anexosrelatorio,
+                    'estadosituacao': estadosituacao,
+                    'arquivocomportamentoespecifico': arquivocomportamento,
+                    'tags': tags,
+                    'pendencias': listapendencia,
+                    'abasatividade': listaabaatividades,
+                })
 
         get_log(f"Lista {tipo_arquivo} tratada com sucesso")
         return lista_final
