@@ -54,6 +54,7 @@ def converter():
                         'comunicacao_auditoria',
                         'escopo_auditoria',
                         'execucao_consultoria',
+                        'interacoes',
                         'item_analise_tce',
                         'item_trabalho_atividade',
                         'item_trabalho_projeto',
