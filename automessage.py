@@ -10,13 +10,13 @@ def send_message():
     try:
         msg = f'''
             ### Envio automático de mensagem {datahora()} ###
-            
+
             Os dados da API do eAud foram baixados com sucesso
 
             Os arquivos estão armazenados na pasta de rede no formato csv e excel: 
                 - R:\\BASES_DADOS\\e-AUD
             Na nuvem no formato csv e excel:
-                - C:\\Users\\m1478769\\OneDrive - SEPLAG MG\\Planilha e-Aud
+                - https://cecad365-my.sharepoint.com/:f:/g/personal/m1478769_ca_mg_gov_br/EhYDn_fjqzdCmAJitmpRXoEBw160x22B9x2XNBnGX-E1yw
 
             Caso não consiga acessar a pasta na nuvem, gentileza encaminhar uma mensagem/e-mail para
             endrew.barbosa@cge.mg.gov.br
