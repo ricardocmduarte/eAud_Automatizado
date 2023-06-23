@@ -3,6 +3,7 @@ import tarefas_id
 import tarefas
 import beneficios
 import beneficios_id
+import interacao
 import excel_csv
 
 if __name__ == '__main__':
@@ -14,5 +15,6 @@ if __name__ == '__main__':
     tarefas.get_tarefas()
     beneficios.get_beneficios()
     listas.listar()
+    interacao.get_interacao()
 
     excel_csv.converter()
