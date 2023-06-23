@@ -19,7 +19,8 @@ def read_ini_file():
         'server',
         'database',
         'masp',
-        'pswd'
+        'pswd',
+        'teams'
     ]
 
     for key in keys:

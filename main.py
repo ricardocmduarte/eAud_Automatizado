@@ -5,6 +5,7 @@ import beneficios
 import beneficios_id
 import interacao
 import excel_csv
+import automessage
 
 if __name__ == '__main__':
     # get_tarefas e get_beneficios_id devem ser executados primeiros para adquirirem os ids
@@ -18,3 +19,4 @@ if __name__ == '__main__':
     interacao.get_interacao()
 
     excel_csv.converter()
+    automessage.send_message()
