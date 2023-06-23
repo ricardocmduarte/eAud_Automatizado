@@ -66,6 +66,23 @@ def get_idtarefas(tabela, banco):
         print("Erro get idtarefas", err)
 
 
+def get_idtarefas_status(banco):
+    try:
+        lista_retorno = []
+        cur = banco.cursor()
+        cur.execute(f"""SELECT id, situacao FROM tarefas
+                    WHERE situacao = 'Concluída'""")
+        for ids in cur.fetchall():
+            lista_retorno.append({'id': ids[0],
+                                  'situacao': ids[1]})
+
+        return lista_retorno
+    except NameError as err:
+        get_log("ERRO GET ID TAREFAS")
+        get_log(err)
+        print("Erro get idtarefas", err)
+
+
 def get_idbeneficios(tabela, banco):
     try:
         lista_retorno = []

@@ -1,9 +1,26 @@
 import geral
+import db
 import requests
 import json
 from log import get_log
 
 tipo_arquivo = 'get_interacao'
+
+
+def get_interacao():
+    banco = db.db_connection()
+    resultado = db.get_idtarefas_status(banco)
+    return resultado
+
+
+def tratamento_dados(lista):
+    pass
+
+
+def salvar_dados(resultado_array):
+
+    banco = db.db_connection()
+    cur = banco.cursor()
 
 
 def get_auditoria_requisicao(id):
@@ -41,4 +58,4 @@ def get_auditoria_requisicao(id):
         print(err)
 
 
-get_auditoria_requisicao(1479128)
+get_interacao()
