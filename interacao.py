@@ -8,19 +8,98 @@ tipo_arquivo = 'get_interacao'
 
 
 def get_interacao():
-    banco = db.db_connection()
-    resultado = db.get_idtarefas_status(banco)
-    return resultado
+
+    response = geral.check_url_health('tarefa')
+    get_log(f"Iniciado {tipo_arquivo}")
+
+    if response != 200:
+        get_log(
+            f"Erro ao conectar com a url {tipo_arquivo}, código do erro HTTP:  {str(response)}".upper())
+        return print(f"Erro ao conectar com a url {tipo_arquivo}, código do erro HTTP:  {str(response)}")
+
+    try:
+        lista_dados = []
+        lista_final = []
+        banco = db.db_connection()
+        lista_ids = db.get_idtarefas('tarefas', banco)
+        if lista_ids:
+            for i, id in enumerate(lista_ids):
+                lista_dados.append(get_auditoria_requisicao(id['id']))
+                print(f"Iteração {str(i)} {tipo_arquivo}")
+        get_log(
+            f"Esta requisicao {tipo_arquivo} contém {len(lista_dados)} itens".upper())
+
+        if lista_dados:
+            lista_final = tratamento_dados(lista_dados)
+
+        if lista_final:
+            salvar_dados(lista_final)
+
+        get_log(f"Lista de {tipo_arquivo} ok".upper())
+        return print(f"Lista de {tipo_arquivo} ok")
+    except NameError as err:
+        get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
+        get_log(err)
+        return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
 
-def tratamento_dados(lista):
-    pass
+def tratamento_dados(data):
+    try:
+        lista_final = []
+        for i, tarefa in enumerate(data):
+            for j, teste in enumerate(tarefa):
+                idtarefa = teste['idTarefa']
+                tipointeracao = teste['tipoInteracao']
+                autor = teste['autor']
+                unidadeautor = teste['unidadeAutor']
+                date = teste['data']
+
+                lista_final.append({
+                    'id': idtarefa,
+                    'tipointeracao': tipointeracao,
+                    'autor': autor,
+                    'idtarefa': idtarefa,
+                    'unidadeautor': unidadeautor,
+                    'datamodificacao': date,
+                })
+
+        get_log(f"Lista {tipo_arquivo} tratada com sucesso".upper())
+        return lista_final
+
+    except NameError as err:
+        get_log(f"Erro ao tratar os dados {tipo_arquivo}".upper())
+        get_log(err)
+        return print(f"Erro ao tratar os dados {tipo_arquivo}", err)
 
 
 def salvar_dados(resultado_array):
 
-    banco = db.db_connection()
-    cur = banco.cursor()
+    try:
+        banco = db.db_connection()
+        cur = banco.cursor()
+
+        if resultado_array:
+            for tarefa in resultado_array:
+                lista = [(
+                    tarefa['tipointeracao'],
+                    tarefa['autor'],
+                    tarefa['unidadeautor'],
+                    tarefa['idtarefa'],
+                    tarefa['datamodificacao']
+                )]
+                array_records = ", ".join(["%s"] * len(lista))
+                insert_query = (
+                    f"""INSERT INTO interacoes (tipointeracao, autor, unidadeautor, idtarefa, datamodificacao) VALUES {array_records}""")
+
+                cur.execute(insert_query, lista)
+        get_log(f"{tipo_arquivo} salvo com sucesso".upper())
+        banco.commit()
+        banco.close()
+
+    except NameError as err:
+        get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
+        get_log(err)
+        return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
 
 def get_auditoria_requisicao(id):
@@ -56,6 +135,3 @@ def get_auditoria_requisicao(id):
     except requests.exceptions.RequestException as err:
         get_log(err)
         print(err)
-
-
-get_interacao()
