@@ -8,6 +8,7 @@ from datetime import datetime
 def send_message():
     dados = dadosreader.read_ini_file()
     try:
+        get_log(f"Iniciando envio de mensagem automática".upper())
         msg = f'''
             ### Envio automático de mensagem {datahora()} ###
 
@@ -27,6 +28,7 @@ def send_message():
         myTeamsMessage = pymsteams.connectorcard(dados[6])
         myTeamsMessage.text(msg)
         myTeamsMessage.send()
+        get_log(f"Mensagem automática enviada com sucesso".upper())
 
     except NameError as err:
         get_log(f"Erro {err} ao enviar mensagem automática no teams")
