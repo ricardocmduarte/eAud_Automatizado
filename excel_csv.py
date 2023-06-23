@@ -1,3 +1,4 @@
+import os
 import db
 import pandas as pd
 from geral import login
@@ -6,8 +7,40 @@ from log import get_log
 import xlsxwriter
 
 
+def mk_dir():
+    #####################
+    # Save local server #
+    #####################
+    local_path_csv = f'R:\\BASES_DADOS\\e-AUD\\dados_{datahora()}\\csv'
+    local_path_excel = f'R:\\BASES_DADOS\\e-AUD\\dados_{datahora()}\\excel'
+
+    #####################
+    # Save local server #
+    #####################
+    cloud_path_csv = f'C:\\Users\\{login}\\OneDrive - SEPLAG MG\\Planilha e-Aud\\dados_{datahora()}\\csv'
+    cloud_path_excel = f'C:\\Users\\{login}\\OneDrive - SEPLAG MG\\Planilha e-Aud\\dados_{datahora()}\\excel'
+
+    path_list = [local_path_csv, local_path_excel,
+                 cloud_path_csv, cloud_path_excel]
+
+    try:
+        for dir in path_list:
+            if os.path.exists(dir):
+                get_log(f"Pasta {dir} já existe")
+                print(f"Pasta {dir} já existe")
+            else:
+                os.makedirs(dir)
+                get_log(f"Pasta {dir} criada com sucesso!")
+                print(f"Pasta {dir} criada com sucesso!")
+        return print("Criação de pastas finalizada com sucesso!")
+    except NameError as err:
+        get_log(f"Erro {err}")
+        return print(f"Erro {err}")
+
+
 def converter():
     try:
+        mk_dir()
         banco = db.db_connection()
 
         tabela_banco = ['achados_auditoria',
