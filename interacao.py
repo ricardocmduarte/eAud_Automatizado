@@ -52,7 +52,9 @@ def tratamento_dados(data):
                 tipointeracao = teste['tipoInteracao']
                 autor = teste['autor']
                 unidadeautor = teste['unidadeAutor']
-                date = teste['data']
+                date = teste['data'][0:10]
+
+                teste_data = strftime_date(date)
 
                 lista_final.append({
                     'id': idtarefa,
@@ -60,7 +62,7 @@ def tratamento_dados(data):
                     'autor': autor,
                     'idtarefa': idtarefa,
                     'unidadeautor': unidadeautor,
-                    'datamodificacao': date,
+                    'datamodificacao': teste_data,
                 })
 
         get_log(f"Lista {tipo_arquivo} tratada com sucesso".upper())
@@ -135,3 +137,20 @@ def get_auditoria_requisicao(id):
     except requests.exceptions.RequestException as err:
         get_log(err)
         print(err)
+
+
+def strftime_date(date_str):
+    try:
+        if date_str:
+            full_date = date_str
+            year = full_date[0:4]
+            month = full_date[5:7]
+            day = full_date[8:10]
+
+            pt_br_date = (f"{day}/{month}/{year}")
+
+            return pt_br_date
+    except NameError as err:
+        get_log(
+            f"Erro {err} ao converter a data para pt_br em interacao".upper())
+        print(f"Erro {err} ao converter a data para pt_br em interacao".upper())
