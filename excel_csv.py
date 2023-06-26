@@ -1,6 +1,8 @@
 import os
 import db
 import pandas as pd
+import automessage
+
 from geral import login
 from datetime import datetime
 from log import get_log
@@ -78,6 +80,7 @@ def converter():
             df.to_excel(f"C:\\Users\\m1478769\\OneDrive - SEPLAG MG\\Planilha e-Aud\\dados_{datahora()}\\excel\\{tabela}.xlsx",
                         index=False, engine='xlsxwriter')
 
+        automessage.send_message()
         return print("Processo finalizado")
     except NameError as err:
         return print("Erro", err)

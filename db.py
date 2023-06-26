@@ -89,7 +89,7 @@ def delete_datas(banco):
                      'item_trabalho_projeto', 'kpa_iacm', 'matriz_planejamento', 'minuta_posicionamento',
                      'monitoramento',  'planejamento_consultoria', 'projeto_geral', 'relatorio_final',
                      'relatorio_preliminar', 'resultados_consultoria', 'termo_compromisso_consultoria',
-                     'tarefas', 'tarefas_id', 'beneficios', 'beneficios_id', '']
+                     'tarefas', 'tarefas_id', 'beneficios', 'beneficios_id']
 
     try:
         for table in lista_tabelas:
