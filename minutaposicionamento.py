@@ -4,7 +4,7 @@ import geral
 from log import get_log
 import json
 from join_function import join_data
-
+from datetime import datetime
 
 tipo_arquivo = 'get_minuta_posicionamento'
 
@@ -58,16 +58,16 @@ def tratamento_dados(data):
                 titulo = tarefa['titulo']
                 idtarefaassociada = tarefa['idTarefaAssociada'] if tarefa['idTarefaAssociada'] else 0
                 titulotarefaassociada = tarefa['tituloTarefaAssociada']
-                dtprevisaoinicio = tarefa['dtPrevisaoInicio']
-                dtprevisaofim = tarefa['dtPrevisaoFim']
-                dtrealizadainicio = tarefa['dtRealizadaInicio']
-                dtrealizadafim = tarefa['dtRealizadaFim']
+                dtprevisaoinicio = datetime.strptime(tarefa['dtPrevisaoInicio'], '%d/%m/%Y') if tarefa['dtPrevisaoInicio'] else None
+                dtprevisaofim = datetime.strptime(tarefa['dtPrevisaoFim'], '%d/%m/%Y') if tarefa['dtPrevisaoFim'] else None
+                dtrealizadainicio = datetime.strptime(tarefa['dtRealizadaInicio'], '%d/%m/%Y') if tarefa['dtRealizadaInicio'] else None
+                dtrealizadafim = datetime.strptime(tarefa['dtRealizadaFim'], '%d/%m/%Y') if tarefa['dtRealizadaFim'] else None                                
                 prioridade = tarefa['prioridade']
                 assunto = tarefa['assunto']
                 idatividade = tarefa['idAtividade']
                 descricaoatividade = tarefa['descricaoAtividade']
                 idsituacao = tarefa['idSituacao']
-                dataultimamodificacao = tarefa['dataUltimaModificacao']
+                dataultimamodificacao = datetime.strptime(tarefa['dataUltimaModificacao'], '%d/%m/%Y %H:%M:%S') if tarefa['dataUltimaModificacao'] else None                
                 autorultimamodificacao = tarefa['autorUltimaModificacao']
 
                 provminuta = tarefa['campos']['providenciaMinuta']['valor']
@@ -241,7 +241,7 @@ def salvar_dados(resultado_array):
                  tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
-            insert_query = (f"""INSERT INTO minuta_posicionamento (id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada,
+            insert_query = (f"""INSERT INTO minuta_posicionamento_teste (id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada,
                                                 dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,providenciaminuta,anexosgerais,destinatariousuariounidade, 

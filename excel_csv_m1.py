@@ -9,37 +9,37 @@ from log import get_log
 import xlsxwriter
 
 
-def converter():
+def converter_m1():
     try:
         mk_dir()
         banco = db.db_connection()
 
-        tabela_banco = [#'achados_auditoria',
-                        #'analise_auditoria',
-                        #'analise_preliminar',
-                        #'apuracao_preliminar',
-                        'atividade_continuada',
-                        'auditorias',
-                        #'auto_avaliacao_iacm',
-                        'beneficios',
-                        #'comunicacao_auditoria',
-                        #'escopo_auditoria',
-                        #'execucao_consultoria',
-                        'interacoes',
-                        #'item_analise_tce',
-                        #'item_trabalho_atividade',
-                        #'item_trabalho_projeto',
-                        #'kpa_iacm',
-                        #'matriz_planejamento',
-                        #'minuta_posicionamento',
-                        'monitoramento',
-                        #'planejamento_consultoria',
-                        'projeto_geral',
-                        #'relatorio_final',
-                        #'relatorio_preliminar',
-                        #'resultados_consultoria',
-                        'tarefas',
-                        #'termo_compromisso_consultoria'
+        tabela_banco = ['achados_auditoria_teste',
+                        'analise_auditoria_teste',
+                        'analise_preliminar_teste',
+                        'apuracao_preliminar_teste',
+                        'atividade_continuada_teste',
+                        'auditorias_teste',
+                        'auto_avaliacao_iacm_teste',
+                        'beneficios_teste',
+                        'comunicacao_auditoria_teste',
+                        'escopo_auditoria_teste',
+                        'execucao_consultoria_teste',
+                        'interacoes_teste',
+                        'item_analise_tce_teste',
+                        'item_trabalho_atividade_teste',
+                        'item_trabalho_projeto_teste',
+                        'kpa_iacm_teste',
+                        'matriz_planejamento_teste',
+                        'minuta_posicionamento_teste',
+                        'monitoramento_teste',
+                        'planejamento_consultoria_teste',
+                        'projeto_geral_teste',
+                        'relatorio_final_teste',
+                        'relatorio_preliminar_teste',
+                        'resultados_consultoria_teste',
+                        'tarefas_teste',
+                        'termo_compromisso_consultoria_teste'
                         ]
 
         print("Lendo as tabelas")
@@ -119,4 +119,4 @@ def mk_dir():
     except NameError as err:
         get_log(f"Erro {err}")
         return print(f"Erro {err}")
-converter()
+converter_m1()

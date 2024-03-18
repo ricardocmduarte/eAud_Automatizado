@@ -37,8 +37,7 @@ def delete_query(tabela, banco):
         get_log(err)
         print("Erro delete query", err)
 
-
-# Adiciona o item dataatualizacao na lista assim salvando no banco com a data e hora que o script foi executado
+# Adiciona o item data atualizacao na lista assim salvando no banco com a data e hora que o script foi executado
 def current_datetime_query(lista):
     lista_retorno = []
     now = datetime.now()
@@ -83,22 +82,43 @@ def get_idbeneficios(tabela, banco):
 
 
 def delete_datas(banco):
-    lista_tabelas = ['achados_auditoria',  'analise_auditoria', 'analise_preliminar',  'apuracao_preliminar',
-                     'atividade_continuada', 'auditorias', 'auto_avaliacao_iacm', 'comunicacao_auditoria',
-                     'escopo_auditoria', 'execucao_consultoria', 'interacoes', 'item_analise_tce', 'item_trabalho_atividade',
-                     'item_trabalho_projeto', 'kpa_iacm', 'matriz_planejamento', 'minuta_posicionamento',
-                     'monitoramento',  'planejamento_consultoria', 'projeto_geral', 'relatorio_final',
-                     'relatorio_preliminar', 'resultados_consultoria', 'termo_compromisso_consultoria',
-                     'tarefas', 'tarefas_id', 'beneficios', 'beneficios_id']
+    #lista_tabelas = ['achados_auditoria',  'analise_auditoria', 'analise_preliminar',  'apuracao_preliminar',
+                     #'atividade_continuada', 'auditorias', 'auto_avaliacao_iacm', 'comunicacao_auditoria',
+                     #'escopo_auditoria', 'execucao_consultoria', 'interacoes', 'item_analise_tce', 'item_trabalho_atividade',
+                     #'item_trabalho_projeto', 'kpa_iacm', 'matriz_planejamento', 'minuta_posicionamento',
+                     #'monitoramento',  'planejamento_consultoria', 'projeto_geral', 'relatorio_final',
+                     #'relatorio_preliminar', 'resultados_consultoria', 'termo_compromisso_consultoria',
+                     #'tarefas', 'tarefas_id', 'beneficios', 'beneficios_id']
 
+   #lista_tabelas = ['atividade_continuada', 'auditorias', 'monitoramento', 'projeto_geral', 'tarefas_id', 'beneficios_id', 'tarefas', 'beneficios', 'interacoes']
+
+    #lista_tabelas = ['atividade_continuada_teste', 'auditorias_teste', 'interacoes_teste', 'monitoramento_teste', 
+    #                'projeto_geral_teste', 'tarefas_Teste', 'tarefas_id_teste', 'beneficios_teste', 'beneficios_id_teste']             
+    
+    lista_tabelas = ['achados_auditoria_teste',  'analise_auditoria_teste', 'analise_preliminar_teste',  'apuracao_preliminar_teste',
+                    'auto_avaliacao_iacm_teste', 'comunicacao_auditoria_teste','escopo_auditoria_teste', 'execucao_consultoria_teste', 
+                    'item_analise_tce_teste', 'item_trabalho_atividade_teste','item_trabalho_projeto_teste', 'kpa_iacm_teste', 
+                    'matriz_planejamento_teste', 'minuta_posicionamento_teste','monitoramento_teste', 'planejamento_consultoria_teste',
+                    'relatorio_final_teste','relatorio_preliminar_teste', 'resultados_consultoria_teste', 
+                    'termo_compromisso_consultoria_teste','tarefas_id_teste']
+    
+    #lista_tabelas = ['achados_auditoria_teste',  'analise_auditoria_teste', 'analise_preliminar_teste',  'apuracao_preliminar_teste',
+    #               'atividade_continuada_teste', 'auditorias_teste', 'auto_avaliacao_iacm_teste', 'comunicacao_auditoria_teste',
+    #               'escopo_auditoria_teste', 'execucao_consultoria_teste', 'interacoes_teste', 'item_analise_tce_teste', 'item_trabalho_atividade_teste',
+    #               'item_trabalho_projeto_teste', 'kpa_iacm_teste', 'matriz_planejamento_teste', 'minuta_posicionamento_teste',
+    #               'monitoramento_teste',  'planejamento_consultoria_teste', 'projeto_geral_teste', 'relatorio_final_teste',
+    #               'relatorio_preliminar_teste', 'resultados_consultoria_teste', 'termo_compromisso_consultoria_teste',
+    #                'tarefas_Teste', 'tarefas_id_teste', 'beneficios_teste', 'beneficios_id_teste']
+                                                                                                                                                
     try:
-        for table in lista_tabelas:
-            delete_query = (f"""DELETE FROM {table}""")
-            banco.cursor().execute(delete_query)
-            print(f"Dados da tabela {table} foram apagados com sucesso!")
-            banco.commit()
-        print("Todos os dados foram apagados")
+         for table in lista_tabelas:
+             delete_query = (f"""DELETE FROM {table}""")
+             banco.cursor().execute(delete_query)
+             print(f"Dados da tabela {table} foram apagados com sucesso!")
+             banco.commit()
+         print("Todos os dados foram apagados")
     except NameError as err:
-        get_log("Erro ao deletar os dados")
-        get_log(err)
-        print("Erro ao deletar dados")
+         get_log("Erro ao deletar os dados")
+         get_log(err)
+         print("Erro ao deletar dados")
+ 

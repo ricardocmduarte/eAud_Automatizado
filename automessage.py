@@ -15,19 +15,19 @@ def send_message():
             Os dados da API do eAud foram baixados com sucesso
 
             Os arquivos estão armazenados na pasta de rede no formato csv e excel: 
-                - R:\\BASES_DADOS\\e-AUD
+                - U:\30_Dashboards para E-aud\4_Dados do E-aud
             Na nuvem no formato csv e excel:
-                - https://cecad365-my.sharepoint.com/:f:/g/personal/m1478769_ca_mg_gov_br/EhYDn_fjqzdCmAJitmpRXoEBw160x22B9x2XNBnGX-E1yw
-
+                - https://cecad365-my.sharepoint.com/:f:/r/personal/m1503249_ca_mg_gov_br/Documents/Planilha%20e-Aud?csf=1&web=1&e=Tzjg2v
+                
             Caso não consiga acessar a pasta na nuvem, gentileza encaminhar uma mensagem/e-mail para
-            endrew.barbosa@cge.mg.gov.br
+            ricardo.duarte@cge.mg.gov.br
 
             Atenciosamente,
-            Endrew via Python AutoMessage
+            Ricardo via Python AutoMessage
         '''
-        myTeamsMessage = pymsteams.connectorcard(dados[6])
-        myTeamsMessage.text(msg)
-        myTeamsMessage.send()
+       # myTeamsMessage = pymsteams.connectorcard(dados[6])
+       # myTeamsMessage.text(msg)
+       # myTeamsMessage.send()
         get_log(f"Mensagem automática enviada com sucesso".upper())
 
     except NameError as err:

@@ -1,5 +1,5 @@
 import configparser
-# from getpass import getuser, getpass
+#from getpass import getuser, getpass
 
 # Função responsável por ler extrair os dados sensíveis
 
@@ -19,9 +19,9 @@ def read_ini_file():
         'server',
         'database',
         'masp',
-        'pswd',
-        'teams',
-        'teamsteste'
+        'pswd'
+        #'teams,
+        #'teamsteste'
     ]
 
     for key in keys:
@@ -36,8 +36,8 @@ def read_ini_file():
 # Função para verificar o usuário e senha
 """class login():
     def username(masp):
-        if masp == 'm1478769':
-            print("Welcome back, Drew! Please type your password below to continue...")
+        if masp == 'm1503249':
+            print("Welcome back, Ricardo! Please type your password below to continue...")
         else:
             print("Hello there! Please type your password bellow to continue...")
         return masp

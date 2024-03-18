@@ -4,7 +4,7 @@ import geral
 from log import get_log
 import json
 from join_function import join_data
-
+from datetime import datetime
 
 tipo_arquivo = 'get_item_processo_analise_tce'
 
@@ -58,16 +58,16 @@ def tratamento_dados(data):
                 titulo = tarefa['titulo']
                 idtarefaassociada = tarefa['idTarefaAssociada'] if tarefa['idTarefaAssociada'] else 0
                 titulotarefaassociada = tarefa['tituloTarefaAssociada']
-                dtprevisaoinicio = tarefa['dtPrevisaoInicio']
-                dtprevisaofim = tarefa['dtPrevisaoFim']
-                dtrealizadainicio = tarefa['dtRealizadaInicio']
-                dtrealizadafim = tarefa['dtRealizadaFim']
+                dtprevisaoinicio = datetime.strptime(tarefa['dtPrevisaoInicio'], '%d/%m/%Y') if tarefa['dtPrevisaoInicio'] else None
+                dtprevisaofim = datetime.strptime(tarefa['dtPrevisaoFim'], '%d/%m/%Y') if tarefa['dtPrevisaoFim'] else None
+                dtrealizadainicio = datetime.strptime(tarefa['dtRealizadaInicio'], '%d/%m/%Y') if tarefa['dtRealizadaInicio'] else None
+                dtrealizadafim = datetime.strptime(tarefa['dtRealizadaFim'], '%d/%m/%Y') if tarefa['dtRealizadaFim'] else None                                
                 prioridade = tarefa['prioridade']
                 assunto = tarefa['assunto']
                 idatividade = tarefa['idAtividade']
                 descricaoatividade = tarefa['descricaoAtividade']
                 idsituacao = tarefa['idSituacao']
-                dataultimamodificacao = tarefa['dataUltimaModificacao']
+                dataultimamodificacao = datetime.strptime(tarefa['dataUltimaModificacao'], '%d/%m/%Y %H:%M:%S') if tarefa['dataUltimaModificacao'] else None                
                 autorultimamodificacao = tarefa['autorUltimaModificacao']
 
                 unidadeexecutora = tarefa['campos']['unidadeExecutora']['valor']
@@ -86,16 +86,17 @@ def tratamento_dados(data):
                 produtouaig = tarefa['campos']['produtoUaig']['valor']
                 numprocessotribunal = tarefa['campos']['numproceTrib']['valor']
 
-                localinteracao = tarefa['campos']['localidadesInteracao']['valor']
+                localinteracao = tarefa['campos'].get('localidadesinteracao', {}).get('valor', None)
                 localidadesinteracao = []
                 if localinteracao:
                     for i, local in enumerate(localinteracao):
                         localidadesinteracao.append(local['nomeExibicao'])
 
                     localidadesinteracao = join_data(localidadesinteracao)
+                
 
                 numresolucaoportaria = tarefa['campos']['numpor']['valor']
-                dataencaminhado = tarefa['campos']['dataEnc']['valor']
+                dataencaminhado = datetime.strptime(tarefa['campos']['dataEnc']['valor'], '%d/%m/%Y') if tarefa['campos']['dataEnc']['valor'] else None                                 
                 fatoapuracao = tarefa['campos']['fatoApuracao']['valor']
 
                 link = tarefa['campos']['links']['valor']
@@ -106,7 +107,7 @@ def tratamento_dados(data):
 
                     links = join_data(links)
 
-                datainstauracao = tarefa['campos']['CrgDthInstauracao']['valor']
+                datainstauracao = datetime.strptime(tarefa['campos']['CrgDthInstauracao']['valor'], '%d/%m/%Y %H:%M:%S') if tarefa['campos']['CrgDthInstauracao']['valor'] else None 
 
                 unidenvolvidas = tarefa['campos']['unidEnvolvidas']['valor']
                 unidadesenvolvidas = []
@@ -306,7 +307,7 @@ def salvar_dados(resultado_array):
                  tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
-            insert_query = (f"""INSERT INTO item_analise_tce (id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada,
+            insert_query = (f"""INSERT INTO item_analise_tce_teste (id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada,
                                                 dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,unidadeexecutora,fatosobapuracao,anexosgerais,

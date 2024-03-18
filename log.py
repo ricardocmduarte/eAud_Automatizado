@@ -18,7 +18,7 @@ def get_log(msg):
 
 def save_log(lista_msg):
     dia = datetime.now().strftime("%d-%b-%Y")
-    log_file = f"C:\\Users\\{getlogin()}\\OneDrive - SEPLAG MG\\logs eAud\\log eAud {dia}.txt"
+    log_file = f"C:\\Users\\{getlogin()}\\OneDrive - Cidade Administrativa MG\\logs eAud\\log eAud {dia}.txt"
     with open(log_file, 'a') as f:
         for linha in lista_msg:
             f.write(f"{linha}\n")

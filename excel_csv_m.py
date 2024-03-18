@@ -9,7 +9,7 @@ from log import get_log
 import xlsxwriter
 
 
-def converter():
+def converter_m():
     try:
         mk_dir()
         banco = db.db_connection()
@@ -18,27 +18,29 @@ def converter():
                         #'analise_auditoria',
                         #'analise_preliminar',
                         #'apuracao_preliminar',
-                        'atividade_continuada',
-                        'auditorias',
+                        #'atividade_continuada_teste',
+                        #'auditorias_teste',
                         #'auto_avaliacao_iacm',
-                        'beneficios',
+                        #'beneficios_teste',
                         #'comunicacao_auditoria',
                         #'escopo_auditoria',
                         #'execucao_consultoria',
-                        'interacoes',
+                        #'interacoes_teste',
                         #'item_analise_tce',
                         #'item_trabalho_atividade',
                         #'item_trabalho_projeto',
                         #'kpa_iacm',
                         #'matriz_planejamento',
                         #'minuta_posicionamento',
-                        'monitoramento',
+                        #'monitoramento_teste',
                         #'planejamento_consultoria',
-                        'projeto_geral',
+                        #'projeto_geral_teste',
                         #'relatorio_final',
                         #'relatorio_preliminar',
                         #'resultados_consultoria',
-                        'tarefas',
+                        #'tarefas_teste'
+                        'tarefas_id_teste',
+                        'beneficios_id_teste'
                         #'termo_compromisso_consultoria'
                         ]
 
@@ -119,4 +121,4 @@ def mk_dir():
     except NameError as err:
         get_log(f"Erro {err}")
         return print(f"Erro {err}")
-converter()
+converter_m()

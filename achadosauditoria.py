@@ -4,6 +4,7 @@ import geral
 from log import get_log
 import json
 from join_function import join_data
+from datetime import datetime
 
 tipo_arquivo = 'get_achados'
 
@@ -25,7 +26,7 @@ def get_achados(ids):
             for i, id in enumerate(ids):
                 lista_dados.append(get_achados_requisicao(id))
 
-                print(f"Iteração {str(i)} {tipo_arquivo}")
+                print(f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
 
         get_log(
             f"Esta requisicao {tipo_arquivo} contém {len(lista_dados)} itens")
@@ -57,16 +58,16 @@ def tratamento_dados(data):
                 titulo = tarefa['titulo']
                 idtarefaassociada = tarefa['idTarefaAssociada'] if tarefa['idTarefaAssociada'] else 0
                 titulotarefaassociada = tarefa['tituloTarefaAssociada']
-                dtprevisaoinicio = tarefa['dtPrevisaoInicio']
-                dtprevisaofim = tarefa['dtPrevisaoFim']
-                dtrealizadainicio = tarefa['dtRealizadaInicio']
-                dtrealizadafim = tarefa['dtRealizadaFim']
+                dtprevisaoinicio = datetime.strptime(tarefa['dtPrevisaoInicio'], '%d/%m/%Y') if tarefa['dtPrevisaoInicio'] else None
+                dtprevisaofim = datetime.strptime(tarefa['dtPrevisaoFim'], '%d/%m/%Y') if tarefa['dtPrevisaoFim'] else None
+                dtrealizadainicio = datetime.strptime(tarefa['dtRealizadaInicio'], '%d/%m/%Y') if tarefa['dtRealizadaInicio'] else None
+                dtrealizadafim = datetime.strptime(tarefa['dtRealizadaFim'], '%d/%m/%Y') if tarefa['dtRealizadaFim'] else None
                 prioridade = tarefa['prioridade']
                 assunto = tarefa['assunto']
                 idatividade = tarefa['idAtividade']
                 descricaoatividade = tarefa['descricaoAtividade']
                 idsituacao = tarefa['idSituacao']
-                dataultimamodificacao = tarefa['dataUltimaModificacao']
+                dataultimamodificacao = datetime.strptime(tarefa['dataUltimaModificacao'], '%d/%m/%Y %H:%M:%S') if tarefa['dataUltimaModificacao'] else None
                 autorultimamodificacao = tarefa['autorUltimaModificacao']
 
                 unidadeenvolvida = tarefa['campos']['unidEnvolvidas']['valor']
@@ -298,7 +299,7 @@ def salvar_dados(resultado_array):
                  tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
-            insert_query = (f"""INSERT INTO achados_auditoria (id, situacao, estado, atividade, titulo,idtarefaassociada,
+            insert_query = (f"""INSERT INTO achados_auditoria_teste (id, situacao, estado, atividade, titulo,idtarefaassociada,
                                                 titulotarefaassociada,dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtRealizadaFim,
                                                 prioridade,assunto,idatividade,descricaoatividade,idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,unidadesenvolvidas,itensachadosauditoria,anexosgerais,
@@ -319,7 +320,10 @@ def salvar_dados(resultado_array):
 def get_achados_requisicao(id):
     try:
         url = geral.url + \
-            f"tarefa/{id}/dto/json"
+             f"tarefa/{id}/dto/json"
+        #url = geral.url + \
+             #f"execucao/achado-auditoria?ids={id}"
+            
         resp = requests.get(url, headers=geral.header)
 
         if resp.status_code != 200:
@@ -348,3 +352,6 @@ def get_achados_requisicao(id):
     except requests.exceptions.RequestException as err:
         get_log(err)
         print(err)
+
+   
+            

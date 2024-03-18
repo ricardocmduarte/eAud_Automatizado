@@ -3,6 +3,7 @@ import db
 import requests
 import json
 from log import get_log
+from datetime import datetime
 
 tipo_arquivo = 'get_interacao'
 
@@ -21,13 +22,14 @@ def get_interacao():
         lista_dados = []
         lista_final = []
         banco = db.db_connection()
-        lista_ids = db.get_idtarefas('tarefas', banco)
+        lista_ids = db.get_idtarefas('tarefas_teste', banco)
         if lista_ids:
             for i, id in enumerate(lista_ids):
                 lista_dados.append(get_auditoria_requisicao(id['id']))
-                print(f"Iteração {str(i)} {tipo_arquivo}")
-        get_log(
-            f"Esta requisicao {tipo_arquivo} contém {len(lista_dados)} itens".upper())
+
+                print(f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
+                
+        get_log(f"Esta requisicao {tipo_arquivo} contém {len(lista_dados)} itens".upper())
 
         if lista_dados:
             lista_final = tratamento_dados(lista_dados)
@@ -52,8 +54,8 @@ def tratamento_dados(data):
                 tipointeracao = teste['tipoInteracao']
                 autor = teste['autor']
                 unidadeautor = teste['unidadeAutor']
-                date = teste['data'][0:10]
-
+                date = datetime.strptime(teste['data'][0:10], '%Y-%m-%d') if teste['data'][0:10] else None
+                teste_data = date
                 teste_data = strftime_date(date)
 
                 lista_final.append({
@@ -91,7 +93,7 @@ def salvar_dados(resultado_array):
                 )]
                 array_records = ", ".join(["%s"] * len(lista))
                 insert_query = (
-                    f"""INSERT INTO interacoes (tipointeracao, autor, unidadeautor, idtarefa, datamodificacao) VALUES {array_records}""")
+                    f"""INSERT INTO interacoes_teste (tipointeracao, autor, unidadeautor, idtarefa, datamodificacao) VALUES {array_records}""")
 
                 cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso".upper())
@@ -139,18 +141,31 @@ def get_auditoria_requisicao(id):
         print(err)
 
 
+#def strftime_date(date_str):
+#    try:
+#        if date_str:
+#            full_date = date_str
+#            year = full_date[0:4]
+#            month = full_date[5:7]
+#            day = full_date[8:10]
+#
+#            pt_br_date = (f"{day}/{month}/{year}")
+#
+#            return pt_br_date
+#    except NameError as err:
+#        get_log(f"Erro {err} ao converter a data para pt_br em interacao".upper())
+#        print(f"Erro {err} ao converter a data para pt_br em interacao".upper())
+        
 def strftime_date(date_str):
     try:
         if date_str:
-            full_date = date_str
-            year = full_date[0:4]
-            month = full_date[5:7]
-            day = full_date[8:10]
-
-            pt_br_date = (f"{day}/{month}/{year}")
-
+            year = date_str.year
+            month = date_str.month
+            day = date_str.day
+            pt_br_date = f"{day:02d}/{month:02d}/{year}"
             return pt_br_date
-    except NameError as err:
-        get_log(
-            f"Erro {err} ao converter a data para pt_br em interacao".upper())
-        print(f"Erro {err} ao converter a data para pt_br em interacao".upper())
+    except AttributeError as err:
+        get_log(f"Erro {err} ao converter a data para pt_br em interacao".upper())
+        print(f"Erro {err} ao converter a data para pt_br em interacao".upper())        
+
+get_interacao()

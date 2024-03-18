@@ -18,7 +18,7 @@ def get_tarefas_id():
 
     try:
         offset = 0
-        limite_offset = 50000
+        limite_offset = 50000 #100 #200 #20000 #30000 #50000 #80000 #100000
         lista_final = []
 
         while offset < limite_offset:
@@ -31,7 +31,7 @@ def get_tarefas_id():
                     })
                 print(f"{offset} atual {tipo_arquivo}")
 
-                offset += 100
+                offset += 5
             else:
                 offset += limite_offset
 
@@ -67,7 +67,7 @@ def salvar_dados(resultado_array):
 
             array_records = ", ".join(["%s"] * len(lista))
             insert_query = (
-                f"""INSERT INTO tarefas_id (id, atividade) VALUES {array_records}""")
+                f"""INSERT INTO tarefas_id_teste (id, atividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso")
@@ -89,8 +89,8 @@ def salvar_dados(resultado_array):
 def get_tarefas_id_requisicao(offset):
     try:
         url = geral.url + \
-            f"tarefa?tamanhoPagina=100&offset={offset}&apenasAtrasadas=false&apenasFinalizadas=false&apenasModificadasNosUltimos30Dias=false&apenasExcluidas=false \
-                &apenasAbertas=false&periodoInicialDataInicio=2021-01-01&colunasSelecionadas=id&colunasSelecionadas=atividade"
+            f"tarefa?tamanhoPagina=5&offset={offset}&apenasAtrasadas=false&apenasFinalizadas=false&apenasModificadasNosUltimos30Dias=false&apenasExcluidas=false \
+                &apenasAbertas=false&periodoInicialDataInicio=2024-03-09&periodoFinalDataInicio=2024-03-16&colunasSelecionadas=id&colunasSelecionadas=atividade"
         resp = requests.get(url, headers=geral.header)
 
         if resp.status_code != 200:
@@ -118,3 +118,4 @@ def get_tarefas_id_requisicao(offset):
     except requests.exceptions.RequestException as err:
         get_log(err)
         print(err)
+get_tarefas_id()
