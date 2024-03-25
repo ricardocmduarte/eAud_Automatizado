@@ -17,13 +17,13 @@ def get_termo_compromisso_consultoria(ids):
         get_log(
             f"Erro ao conectar com a url {tipo_arquivo}, código do erro HTTP:  {str(response)}".upper())
         return print(f"Erro ao conectar com a url {tipo_arquivo}, código do erro HTTP:  {str(response)}")
-
-    lista_dados = []
-    lista_final = []
+ 
     try:
+        lista_dados = []
+        lista_final = []
         if ids:
             for i, id in enumerate(ids):
-                lista_dados.append(get_termo_requisicao(id))
+                lista_dados.append(get_termo_compromisso_consultoria_requisicao(id))
 
                 print(
                     f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
@@ -266,7 +266,7 @@ def salvar_dados(resultado_array):
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
 
-def get_termo_requisicao(id):
+def get_termo_compromisso_consultoria_requisicao(id):
     try:
         url = geral.url + \
             f"tarefa/{id}/dto/json"

@@ -50,6 +50,7 @@ def listar():
     importacoes_m5.resultadosconsultoria.get_resultados_consultoria(lista_resultados_consultoria)
     # def Termo Compromisso Consultória
     importacoes_m5.termocompromissoconsultoria.get_termo_compromisso_consultoria(lista_termo_compromisso_consultoria)
+
 listar()
 
 

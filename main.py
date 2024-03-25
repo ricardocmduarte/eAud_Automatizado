@@ -1,10 +1,10 @@
 
-#import tarefas_id
-#import beneficios_id
+import tarefas_id
+import beneficios_id
 import tarefas
 import beneficios
 import interacao
-#import listas_m
+import listas_m
 import listas_m1
 import listas_m2
 import listas_m3
@@ -17,13 +17,13 @@ import excel_csv
 if __name__ == '__main__':
 
     # get_tarefas e get_beneficios_id devem ser executados primeiros para adquirirem os ids.
-    #tarefas_id.get_tarefas_id()
-    #beneficios_id.get_beneficios_id()   
+    tarefas_id.get_tarefas_id()
+    beneficios_id.get_beneficios_id()   
     # funções para buscar os dados por completo.
     tarefas.get_tarefas()
     beneficios.get_beneficios()
     interacao.get_interacao()
-    #listas_m.listar()
+    listas_m.listar()
     listas_m1.listar()
     listas_m2.listar()
     listas_m3.listar()

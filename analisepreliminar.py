@@ -23,6 +23,7 @@ def get_analise_preliminar(ids):
         lista_final = []
         if ids:
             for i, id in enumerate(ids):
+                id = 1601922
                 lista_dados.append(get_analise_preliminar_requisicao(id))
 
                 print(
@@ -51,7 +52,6 @@ def tratamento_dados(data):
         lista_final = []
         for i, tarefa in enumerate(data):
             if tarefa:
-
                 id = tarefa['id']
                 situacao = tarefa['situacao']
                 estado = tarefa['estado']
@@ -270,12 +270,12 @@ def salvar_dados(resultado_array):
                  )]
             array_records = ", ".join(["%s"] * len(lista))
             insert_query = (f"""INSERT INTO analise_preliminar_teste (id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada,
-                                                dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
-                                                prioridade,assunto,idatividade,descricaoatividade, idsituacao,
-                                                dataultimamodificacao,autorultimamodificacao,unidadesenvolvidas,universosauditaveis,anexosgerais,
-                                                objetosauditoria,matrizcontrole,tarefasprecedentes,
-                                                observadores, hipoteselegal,coordenadorequipe,equipegeral,supervisores, arquivocomportamentoespecifico,
-                                                estadosituacao,tags,pendencias,abasatividade) VALUES {array_records}""")
+                                                dtprevisaoinicio, dtprevisaofim, dtrealizadainicio, dtrealizadafim,
+                                                prioridade, assunto, idatividade, descricaoatividade, idsituacao,
+                                                dataultimamodificacao, autorultimamodificacao, unidadesenvolvidas, universosauditaveis, anexosgerais,
+                                                objetosauditoria, matrizcontrole, tarefasprecedentes,
+                                                observadores, hipoteselegal, coordenadorequipe, equipegeral, supervisores, arquivocomportamentoespecifico,
+                                                estadosituacao, tags, pendencias, abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso")

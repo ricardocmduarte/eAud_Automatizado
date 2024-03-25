@@ -5,8 +5,8 @@ def dicionario():
     # Nome do campo : Listas que deve ser criada
     dict = {'CGE - Achados': 'lista_achados',
             'CGE - Análises da Auditoria': 'lista_analises_auditoria',
-            'CGE - Análises Preliminar': 'lista_analises_preliminar',
-            'CGE - Apuração Preliminar': 'lista_apuracacao_preliminar',
+            'CGE - Análise Preliminar': 'lista_analises_preliminar',
+            'CGE - Apuração Preliminar': 'lista_apuracao_preliminar',
             }
 
     lista_titulo_atividade = list(dict.keys())
@@ -23,13 +23,13 @@ def listar():
     for i, tipo in enumerate(lista_titulo_atividade):
         
         if tipo == 'CGE - Achados':
-            lista_achados = []
+           lista_achados = []
         elif tipo == 'CGE - Análises da Auditoria':
             lista_analises_auditoria = []
-        elif tipo == 'CGE - Análises Preliminar': 
+        elif tipo == 'CGE - Análise Preliminar': 
             lista_analises_preliminar = []
         elif tipo == 'CGE - Apuração Preliminar': 
-            lista_apuracacao_preliminar = []
+            lista_apuracao_preliminar = []
         else:
             pass
             #return("Erro ao criar as listas")
@@ -46,7 +46,7 @@ def listar():
             lista_analises_preliminar.append(tarefa['id'])
         #Lista de Apuração Preliminar
         elif tarefa['atividade'] == lista_titulo_atividade[3]:
-            lista_apuracacao_preliminar.append(tarefa['id'])
+            lista_apuracao_preliminar.append(tarefa['id'])
         else:
             pass
             #return ("Erro ao salvar os dados")
@@ -58,5 +58,5 @@ def listar():
     # def Análises Preliminar
     importacoes_m1.analisepreliminar.get_analise_preliminar(lista_analises_preliminar)
     # def Apuração Preliminar
-    importacoes_m1.apuracaopreliminar.get_apuracao_preliminar(lista_apuracacao_preliminar)
+    importacoes_m1.apuracaopreliminar.get_apuracao_preliminar(lista_apuracao_preliminar)
 listar()

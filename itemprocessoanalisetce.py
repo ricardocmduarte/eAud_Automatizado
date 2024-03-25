@@ -107,7 +107,7 @@ def tratamento_dados(data):
 
                     links = join_data(links)
 
-                datainstauracao = datetime.strptime(tarefa['campos']['CrgDthInstauracao']['valor'], '%d/%m/%Y %H:%M:%S') if tarefa['campos']['CrgDthInstauracao']['valor'] else None 
+                datainstauracao = datetime.strptime(tarefa['campos']['CrgDthInstauracao']['valor'], '%Y-%m-%dT%H:%M:%S') if tarefa['campos']['CrgDthInstauracao']['valor'] else None 
 
                 unidenvolvidas = tarefa['campos']['unidEnvolvidas']['valor']
                 unidadesenvolvidas = []
@@ -308,13 +308,13 @@ def salvar_dados(resultado_array):
                  )]
             array_records = ", ".join(["%s"] * len(lista))
             insert_query = (f"""INSERT INTO item_analise_tce_teste (id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada,
-                                                dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
-                                                prioridade,assunto,idatividade,descricaoatividade, idsituacao,
-                                                dataultimamodificacao,autorultimamodificacao,unidadeexecutora,fatosobapuracao,anexosgerais,
-                                                processosassociados,tceorigem,produtouaig,numprocessotribunal,localidadesinteracao,numresolucaoportaria,
-                                                dataencaminhado,fatoapuracao,links,datainstauracao,unidadesenvolvidas,valoratualizado,procedenciatce,destinatariousuariounidade,
-                                                executores,valorprejuizoestimado,gerentesubprojeto,tipopessoa,cpf,cnpjs,arquivocomportamentoespecifico,estadosituacao,
-                                                tags,pendencias,abasatividade) VALUES {array_records}""")
+                                                dtprevisaoinicio, dtprevisaofim, dtrealizadainicio, dtrealizadafim,
+                                                prioridade, assunto, idatividade, descricaoatividade, idsituacao,
+                                                dataultimamodificacao, autorultimamodificacao, unidadeexecutora, fatosobapuracao, anexosgerais,
+                                                processosassociados, tceorigem, produtouaig, numprocessotribunal, localidadesinteracao, numresolucaoportaria,
+                                                dataencaminhado, fatoapuracao, links, datainstauracao, unidadesenvolvidas, valoratualizado, procedenciatce, destinatariousuariounidade,
+                                                executores, valorprejuizoestimado, gerentesubprojeto, tipopessoa, cpf, cnpjs, arquivocomportamentoespecifico, estadosituacao,
+                                                tags, pendencias, abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso")

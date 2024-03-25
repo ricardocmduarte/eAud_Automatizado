@@ -40,7 +40,7 @@ def converter_m():
                         #'resultados_consultoria',
                         #'tarefas_teste'
                         'tarefas_id_teste',
-                        'beneficios_id_teste'
+                        'beneficios_id'
                         #'termo_compromisso_consultoria'
                         ]
 

@@ -22,7 +22,7 @@ def get_interacao():
         lista_dados = []
         lista_final = []
         banco = db.db_connection()
-        lista_ids = db.get_idtarefas('tarefas_teste', banco)
+        lista_ids = db.get_idtarefas('tarefas_id_teste', banco)
         if lista_ids:
             for i, id in enumerate(lista_ids):
                 lista_dados.append(get_auditoria_requisicao(id['id']))

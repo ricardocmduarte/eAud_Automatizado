@@ -14,7 +14,7 @@ def dicionario():
             'CGE - Comunicação de Auditoria': 'lista_comunicacao_auditoria',
             'CGE - Escopo da Auditoria': 'lista_escopo_auditoria',
             'CGE - Execução (Consultoria)': 'lista_execucao_consultoria',
-            'CGEMG - Item de Processo (Análise de TCE)': 'lista_item_processo',
+            'CGE - Item de Processo (Análise de TCE)': 'lista_item_processo',
             'CGE - Item de Trabalho (Atividade)': 'lista_item_trabalho_atividade',
             'CGE - Item de Trabalho (Projeto)': 'lista_item_trabalho_projeto',
             'KPA IACM': 'lista_kpa_iacm',
@@ -65,7 +65,7 @@ def listar():
             lista_execucao_consultoria = []
         elif tipo == 'CGE - Item de Trabalho (Atividade)':
             lista_item_trabalho_atividade = []
-        elif tipo == 'CGEMG - Item de Processo (Análise de TCE)':
+        elif tipo == 'CGE - Item de Processo (Análise de TCE)':
             lista_item_processo_analise_tce = []
         elif tipo == 'CGE - Item de Trabalho (Projeto)':
             lista_item_trabalho_projeto = []

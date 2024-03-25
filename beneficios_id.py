@@ -85,10 +85,10 @@ def salvar_dados(resultado_array):
 def get_beneficios_id_requisicao(offset):
     try:
         url = geral.url + \
-            f"monitoramento/beneficio?tamanhoPagina=5&offset={offset}&apenasAbertas=false&apenasModificadasNosUltimos30Dias=false&dataInteracaoInicial=2024-03-09&dataInteracaoFinal=2024-03-16&colunasSelecionadas=id&colunasSelecionadas=atividade"
+            f"monitoramento/beneficio?tamanhoPagina=5&offset={offset}&apenasAbertas=false&apenasModificadasNosUltimos30Dias=false&dataInteracaoInicial=2024-03-24&dataInteracaoFinal=2024-03-30&colunasSelecionadas=id&colunasSelecionadas=atividade"
             
         '''f"monitoramento/beneficio?tamanhoPagina=100&offset={offset}&apenasAtrasadas=false&apenasFinalizadas=false&apenasModificadasNosUltimos30Dias=false&apenasExcluidas=false \
-                apenasAbertas=false&periodoInicialDataInicio=2023-01-01&colunasSelecionadas=id&colunasSelecionadas=atividade"'''
+                apenasAbertas=false&periodoInicialDataInicio=2024-03-17&colunasSelecionadas=id&colunasSelecionadas=atividade"'''
         
         resp = requests.get(url, headers=geral.header)
 
