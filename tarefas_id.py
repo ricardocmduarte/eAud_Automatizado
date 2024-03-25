@@ -90,7 +90,7 @@ def get_tarefas_id_requisicao(offset):
     try:
         url = geral.url + \
             f"tarefa?tamanhoPagina=5&offset={offset}&apenasAtrasadas=false&apenasFinalizadas=false&apenasModificadasNosUltimos30Dias=false&apenasExcluidas=false \
-                &apenasAbertas=false&periodoInicialDataInicio=2024-03-09&periodoFinalDataInicio=2024-03-16&colunasSelecionadas=id&colunasSelecionadas=atividade"
+                &apenasAbertas=false&periodoInicialDataInicio=2024-03-17&colunasSelecionadas=id&colunasSelecionadas=atividade"    #&periodoFinalDataInicio=2024-03-23&
         resp = requests.get(url, headers=geral.header)
 
         if resp.status_code != 200:

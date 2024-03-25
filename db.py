@@ -95,20 +95,20 @@ def delete_datas(banco):
     #lista_tabelas = ['atividade_continuada_teste', 'auditorias_teste', 'interacoes_teste', 'monitoramento_teste', 
     #                'projeto_geral_teste', 'tarefas_Teste', 'tarefas_id_teste', 'beneficios_teste', 'beneficios_id_teste']             
     
-    lista_tabelas = ['achados_auditoria_teste',  'analise_auditoria_teste', 'analise_preliminar_teste',  'apuracao_preliminar_teste',
-                    'auto_avaliacao_iacm_teste', 'comunicacao_auditoria_teste','escopo_auditoria_teste', 'execucao_consultoria_teste', 
-                    'item_analise_tce_teste', 'item_trabalho_atividade_teste','item_trabalho_projeto_teste', 'kpa_iacm_teste', 
-                    'matriz_planejamento_teste', 'minuta_posicionamento_teste','monitoramento_teste', 'planejamento_consultoria_teste',
-                    'relatorio_final_teste','relatorio_preliminar_teste', 'resultados_consultoria_teste', 
-                    'termo_compromisso_consultoria_teste','tarefas_id_teste']
-    
     #lista_tabelas = ['achados_auditoria_teste',  'analise_auditoria_teste', 'analise_preliminar_teste',  'apuracao_preliminar_teste',
-    #               'atividade_continuada_teste', 'auditorias_teste', 'auto_avaliacao_iacm_teste', 'comunicacao_auditoria_teste',
-    #               'escopo_auditoria_teste', 'execucao_consultoria_teste', 'interacoes_teste', 'item_analise_tce_teste', 'item_trabalho_atividade_teste',
-    #               'item_trabalho_projeto_teste', 'kpa_iacm_teste', 'matriz_planejamento_teste', 'minuta_posicionamento_teste',
-    #               'monitoramento_teste',  'planejamento_consultoria_teste', 'projeto_geral_teste', 'relatorio_final_teste',
-    #               'relatorio_preliminar_teste', 'resultados_consultoria_teste', 'termo_compromisso_consultoria_teste',
-    #                'tarefas_Teste', 'tarefas_id_teste', 'beneficios_teste', 'beneficios_id_teste']
+    #                'auto_avaliacao_iacm_teste', 'comunicacao_auditoria_teste','escopo_auditoria_teste', 'execucao_consultoria_teste', 
+    #                'item_analise_tce_teste', 'item_trabalho_atividade_teste','item_trabalho_projeto_teste', 'kpa_iacm_teste', 
+    #                'matriz_planejamento_teste', 'minuta_posicionamento_teste','monitoramento_teste', 'planejamento_consultoria_teste',
+    #                'relatorio_final_teste','relatorio_preliminar_teste', 'resultados_consultoria_teste', 
+    #                'termo_compromisso_consultoria_teste','tarefas_id_teste','beneficios_teste', 'beneficios_id_teste']
+    
+    lista_tabelas = ['achados_auditoria_teste',  'analise_auditoria_teste', 'analise_preliminar_teste',  'apuracao_preliminar_teste',
+                   'atividade_continuada_teste', 'auditorias_teste', 'auto_avaliacao_iacm_teste', 'comunicacao_auditoria_teste',
+                   'escopo_auditoria_teste', 'execucao_consultoria_teste', 'interacoes_teste', 'item_analise_tce_teste', 'item_trabalho_atividade_teste',
+                   'item_trabalho_projeto_teste', 'kpa_iacm_teste', 'matriz_planejamento_teste', 'minuta_posicionamento_teste',
+                   'monitoramento_teste',  'planejamento_consultoria_teste', 'projeto_geral_teste', 'relatorio_final_teste',
+                   'relatorio_preliminar_teste', 'resultados_consultoria_teste', 'termo_compromisso_consultoria_teste',
+                    'tarefas_Teste', 'tarefas_id_teste', 'beneficios_teste', 'beneficios_id_teste']
                                                                                                                                                 
     try:
          for table in lista_tabelas:

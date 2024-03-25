@@ -80,7 +80,6 @@ def tratamento_dados(data):
                     nomeunidadesenvolvidas = join_data(nomeunidadesenvolvidas)
                 else:
                     nomeunidadesenvolvidas = ''
-
                 itemanaliseauditoria = tarefa['campos']['itensDaAnaliseAuditoria']['valor']
                 idanaliseauditoria = []
                 descteste = []
@@ -107,24 +106,24 @@ def tratamento_dados(data):
                     descachado.append(itens['teste']['descAchado'])
                     observacoes.append(itens['observacao'])
 
-                descescopo = itens['escopos']
-                descricaoescopo = []
-                for i, esc in enumerate(descescopo):
-                    descricaoescopo.append(esc['descricao'])
-                    valortotalescopo.append(esc['valorTotal'])
-                    valorauditadoescopo.append(esc['valorAuditado'])
-                    anexo = esc['anexo']
-                    if anexo:
-                        anexoescopo.append(anexo['nome'])
-
-                    responsaveisitem = itens['responsaveis']
-                    for i, resp in enumerate(responsaveisitem):
-                        responsavelitem.append(resp['nomeExibicao'])
-
-                    evidenciasitem = itens['evidencias']
-                    for i, evi in enumerate(evidenciasitem):
-                        anexoevidencia.append(evi['anexo']['nome'])
-                        autoranexoevidencia.append(evi['autor']['nome'])
+                    descescopo = itens['escopos']
+                    descricaoescopo = []
+                    for j, esc in enumerate(descescopo):
+                        descricaoescopo.append(esc['descricao'])
+                        valortotalescopo.append(esc['valorTotal'])
+                        valorauditadoescopo.append(esc['valorAuditado'])
+                        anexo = esc['anexo']
+                        if anexo:
+                            anexoescopo.append(anexo['nome'])
+    
+                        responsaveisitem = itens['responsaveis']
+                        for k, resp in enumerate(responsaveisitem):
+                            responsavelitem.append(resp['nomeExibicao'])
+    
+                        evidenciasitem = itens['evidencias']
+                        for l, evi in enumerate(evidenciasitem):
+                            anexoevidencia.append(evi['anexo']['nome'])
+                            autoranexoevidencia.append(evi['autor']['nome'])
 
                 descteste = join_data(descteste)
                 desccriterio = join_data(desccriterio)

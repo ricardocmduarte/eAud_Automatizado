@@ -24,7 +24,7 @@ def listar():
             lista_relatorio_preliminar = []
         elif tipo == 'CGE - Resultados (Consultoria)':
             lista_resultados_consultoria = []
-        elif tipo == 'CGE - Termo de Compromisso (Consultoria)':
+        if tipo == 'CGE - Termo de Compromisso (Consultoria)':
             lista_termo_compromisso_consultoria = []
         else:
             pass

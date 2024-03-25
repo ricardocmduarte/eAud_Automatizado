@@ -23,6 +23,7 @@ def get_analise_preliminar(ids):
         lista_final = []
         if ids:
             for i, id in enumerate(ids):
+                id = 1601922
                 lista_dados.append(get_analise_preliminar_requisicao(id))
 
                 print(

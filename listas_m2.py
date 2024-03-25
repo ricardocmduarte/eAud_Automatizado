@@ -42,7 +42,7 @@ def listar():
         elif tarefa['atividade'] == lista_titulo_atividade[1]:
             lista_comunicacao_auditoria.append(tarefa['id'])
         #Lista de Escopo da Auditoria
-        elif tarefa['atividade'] == lista_titulo_atividade[0]:
+        elif tarefa['atividade'] == lista_titulo_atividade[2]:
             lista_escopo_auditoria.append(tarefa['id'])
         #Lista de Execução Consultoria
         elif tarefa['atividade'] == lista_titulo_atividade[3]:
