@@ -71,11 +71,14 @@ def tratamento_dados(data):
                 autorultimamodificacao = tarefa['autorUltimaModificacao']
 
                 escopo = tarefa['campos']['escopos']['valor']
+                
+                escopodescricao = []
+                escopovalortotal = []
+                escopovalorauditado = []
                 if escopo:
-                    escopodescricao = []
-                    escopovalortotal = []
-                    escopovalorauditado = []
-
+                    #escopodescricao = []
+                    #escopovalortotal = []
+                    #escopovalorauditado = []
                     for i, esco in enumerate(escopo):
                         escopodescricao.append(esco['descricao'])
                         escopovalortotal.append(str(esco['valorTotal']))
