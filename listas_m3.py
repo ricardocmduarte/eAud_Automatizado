@@ -3,7 +3,8 @@ from db import get_idtarefas, db_connection
 
 def dicionario():
     # Nome do campo: lista que deve ser criada
-    dict = {'CGE - Item de Processo (Análise de TCE)': 'lista_item_processo',
+    dict = {'CGEMG - Item de Processo (Análise de TCE)': 'lista_item_processo',
+            'CGE - Item de Processo (Análise de TCE)': 'lista_item_processo',
             'CGE - Item de Trabalho (Atividade)': 'lista_item_trabalho_atividade',
             'CGE - Item de Trabalho (Projeto)': 'lista_item_trabalho_projeto',
             'KPA IACM': 'lista_kpa_iacm',
@@ -22,8 +23,10 @@ def listar():
 
     for i, tipo in enumerate(lista_titulo_atividade):
 
-        if tipo == 'CGE - Item de Processo (Análise de TCE)':
+        if tipo == 'CGEMG - Item de Processo (Análise de TCE)':
             lista_item_processo = []
+        elif tipo == 'CGE - Item de Processo (Análise de TCE)':
+            lista_item_processo
         elif tipo == 'CGE - Item de Trabalho (Atividade)':
             lista_item_trabalho_atividade = []
         elif tipo == 'CGE - Item de Trabalho (Projeto)':
