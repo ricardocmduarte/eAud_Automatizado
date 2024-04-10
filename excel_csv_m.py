@@ -39,7 +39,7 @@ def converter_m():
                         #'relatorio_preliminar',
                         #'resultados_consultoria',
                         #'tarefas_teste'
-                        'tarefas_id_teste',
+                        #'tarefas_id_teste',
                         'beneficios_id'
                         #'termo_compromisso_consultoria'
                         ]
@@ -59,12 +59,12 @@ def converter_m():
             print(
                 f"Iniciando processo, convertendo tabela {tabela} para csv  - pasta de rede")
 
-            df.to_csv(f"U:\\30_Dashboards para E-aud\\4_Dados do E-aud\\dados_{datahora()}\\csv\\{tabela}.csv",
+            df.to_csv(f"U:\\30_Dashboards para E-aud\\4_Dados do E-aud\\dados1_{datahora()}\\csv\\{tabela}.csv",
                       index=False, encoding='utf-8-sig')
 
             print(
                 f"Iniciando processo, convertendo tabela {tabela} para excel - pasta de rede")
-            df.to_excel(f"U:\\30_Dashboards para E-aud\\4_Dados do E-aud\\dados_{datahora()}\\excel\\{tabela}.xlsx",
+            df.to_excel(f"U:\\30_Dashboards para E-aud\\4_Dados do E-aud\\dados1_{datahora()}\\excel\\{tabela}.xlsx",
                         index=False, engine='xlsxwriter')
 
             ###################
@@ -73,13 +73,13 @@ def converter_m():
             print(
                 f"Iniciando processo, convertendo tabela {tabela} para csv - nuvem")
             get_log("Convertendos as tabelas em csv")
-            df.to_csv(f"C:\\Users\\m1503249\\OneDrive - Cidade Administrativa MG\\Planilha e-Aud\\dados_{datahora()}\\csv\\{tabela}.csv",
+            df.to_csv(f"C:\\Users\\m1503249\\OneDrive - Cidade Administrativa MG\\Planilha e-Aud\\dados1_{datahora()}\\csv\\{tabela}.csv",
                       index=False, encoding='utf-8-sig')
 
             print(
                 f"Iniciando processo, convertendo tabela {tabela} para excel - nuvem")
             get_log("Convertendo as tabelas em xlsx")
-            df.to_excel(f"C:\\Users\\m1503249\\OneDrive - Cidade Administrativa MG\\Planilha e-Aud\\dados_{datahora()}\\excel\\{tabela}.xlsx",
+            df.to_excel(f"C:\\Users\\m1503249\\OneDrive - Cidade Administrativa MG\\Planilha e-Aud\\dados1_{datahora()}\\excel\\{tabela}.xlsx",
                         index=False, engine='xlsxwriter')
 
         automessage.send_message()
@@ -96,14 +96,14 @@ def mk_dir():
     #####################
     # Save local server #
     #####################
-    local_path_csv = f'U:\\30_Dashboards para E-aud\\4_Dados do E-aud\\dados_{datahora()}\\csv'
-    local_path_excel = f'U:\\30_Dashboards para E-aud\\4_Dados do E-aud\\dados_{datahora()}\\excel'
+    local_path_csv = f'U:\\30_Dashboards para E-aud\\4_Dados do E-aud\\dados1_{datahora()}\\csv'
+    local_path_excel = f'U:\\30_Dashboards para E-aud\\4_Dados do E-aud\\dados1_{datahora()}\\excel'
 
     #####################
     # Save local server #
     #####################
-    cloud_path_csv = f'C:\\Users\\{login}\\OneDrive - Cidade Administrativa MG\\Planilha e-Aud\\dados_{datahora()}\\csv'
-    cloud_path_excel = f'C:\\Users\\{login}\\OneDrive - Cidade Administrativa MG\\Planilha e-Aud\\dados_{datahora()}\\excel'
+    cloud_path_csv = f'C:\\Users\\{login}\\OneDrive - Cidade Administrativa MG\\Planilha e-Aud\\dados1_{datahora()}\\csv'
+    cloud_path_excel = f'C:\\Users\\{login}\\OneDrive - Cidade Administrativa MG\\Planilha e-Aud\\dados1_{datahora()}\\excel'
 
     path_list = [local_path_csv, local_path_excel,
                  cloud_path_csv, cloud_path_excel]

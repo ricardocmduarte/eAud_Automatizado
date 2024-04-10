@@ -1,5 +1,5 @@
 import configparser
-#from getpass import getuser, getpass
+from getpass import getuser, getpass
 
 # Função responsável por ler extrair os dados sensíveis
 
@@ -19,9 +19,9 @@ def read_ini_file():
         'server',
         'database',
         'masp',
-        'pswd'
-        #'teams,
-        #'teamsteste'
+        'pswd',
+        #'teams',
+        'teamsteste'
     ]
 
     for key in keys:

@@ -3,12 +3,13 @@ import dadosreader
 
 dados = dadosreader.read_ini_file()
 #url_data = 'https://eaud.cgu.gov.br/api/auth/'
-#key_data = '49186fb733c34d21c1bd8b37beef17ce'
-#server_data = '10.15.135.44'
-#database_data = 'eAud'
-#masp_data = 'm1503249'
-#pswd_data = 'Ri11@Ck06'
-#teams_data = 'https://cecad365.webhook.office.com/webhookb2/6e239511-72d5-4b67-b246-72f816722fc1@e5d3ae7c-9b38-48de-a087-f6734a287574/IncomingWebhook/00d73a4c522f42a1b436d91d6ff3e3f7/1439ca6d-7a4e-4610-8706-675c6b9d3d6c'
+#key_data = '83'
+#server_data = '10.15.1'
+#database_data = 'eAu'
+#masp_data = 'm1503'
+#pswd_data = 'Ri11'
+#teams_data = https://cecad365.webhook.office.com/webhookb2/2312fdce-cec5-4868-a4b4-69e73fbf51ba@e5d3ae7c-9b38-48de-a087-f6734a287574/IncomingWebhook/bd39c4b46106455face502ba6e38ffc6/1439ca6d-7a4e-4610-8706-675c6b9d3d6c 
+#teamsteste_data = https://cecad365.webhook.office.com/webhookb2/6e239511-72d5-4b67-b246-72f816722fc1@e5d3ae7c-9b38-48de-a087-f6734a287574/IncomingWebhook/e5a935383c01424985495a92ce47f60d/1439ca6d-7a4e-4610-8706-675c6b9d3d6c
 
 """----------------------Global variables e-Aud Produção-------------------------------"""
 url = dados[0] #url_data 
@@ -23,8 +24,8 @@ database = dados[3] #database_data
 login = dados[4] #masp_data 
 password = dados[5] #pswd_data 
 
-#teams = #teams_data #dados[6]
-#teamsteste = dados[7]
+#teams = dados[6] #teams_data 
+teamsteste = dados[6]
 
 print("Iniciando o programa...")
 

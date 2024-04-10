@@ -80,6 +80,8 @@ def tratamento_dados(data):
 
                 detalhamento = tarefa['campos']['Detalhamento']['valor']
 
+                #detalhamento = tarefa['campos']['detalhamento']['valor']
+
                 anexosgerais = tarefa['campos']['anexosGerais']['valor']
                 anexos = []
                 if anexosgerais:

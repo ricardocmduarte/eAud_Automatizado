@@ -14,8 +14,8 @@ def dicionario():
             'CGE - Comunicação de Auditoria': 'lista_comunicacao_auditoria',
             'CGE - Escopo da Auditoria': 'lista_escopo_auditoria',
             'CGE - Execução (Consultoria)': 'lista_execucao_consultoria',             
-            'CGEMG - Item de Processo (Análise de TCE)': 'lista_item_processo',
-            'CGE - Item de Processo (Análise de TCE)': 'lista_item_processo',
+            'CGEMG - Item de Processo (Análise de TCE)': 'lista_item_processo_analise_tce',
+            'CGE - Item de Processo (Análise de TCE)': 'lista_item_processo_analise_tce1',
             'CGE - Item de Trabalho (Atividade)': 'lista_item_trabalho_atividade',
             'CGE - Item de Trabalho (Projeto)': 'lista_item_trabalho_projeto',
             'KPA IACM': 'lista_kpa_iacm',
@@ -69,7 +69,7 @@ def listar():
         elif tipo == 'CGEMG - Item de Processo (Análise de TCE)':
             lista_item_processo_analise_tce = []
         elif tipo == 'CGE - Item de Processo (Análise de TCE)':
-            lista_item_processo_analise_tce = []
+            lista_item_processo_analise_tce1 = []
         elif tipo == 'CGE - Item de Trabalho (Projeto)':
             lista_item_trabalho_projeto = []
         elif tipo == 'KPA IACM':
@@ -129,41 +129,43 @@ def listar():
         # lista de item processo analise tce
         elif tarefa['atividade'] == lista_titulo_atividade[10]:
             lista_item_processo_analise_tce.append(tarefa['id'])
-        # lista de item trabalho atividade
         elif tarefa['atividade'] == lista_titulo_atividade[11]:
+            lista_item_processo_analise_tce1.append(tarefa['id'])
+        # lista de item trabalho atividade
+        elif tarefa['atividade'] == lista_titulo_atividade[12]:
             lista_item_trabalho_atividade.append(tarefa['id'])
         # lista de item trabalho projeto
-        elif tarefa['atividade'] == lista_titulo_atividade[12]:
+        elif tarefa['atividade'] == lista_titulo_atividade[13]:
             lista_item_trabalho_projeto.append(tarefa['id'])
          # lista de kpa iacm
-        elif tarefa['atividade'] == lista_titulo_atividade[13]:
+        elif tarefa['atividade'] == lista_titulo_atividade[14]:
             lista_kpa_iacm.append(tarefa['id'])
         # lista de matriz planejamento
-        elif tarefa['atividade'] == lista_titulo_atividade[14]:
+        elif tarefa['atividade'] == lista_titulo_atividade[15]:
             lista_matriz_planejamento.append(tarefa['id'])
         # lista de minuta posicionamento
-        elif tarefa['atividade'] == lista_titulo_atividade[15]:
+        elif tarefa['atividade'] == lista_titulo_atividade[16]:
             lista_minuta_posicionamento.append(tarefa['id'])
         # lista de monitoramento
-        elif tarefa['atividade'] == lista_titulo_atividade[16]: 
+        elif tarefa['atividade'] == lista_titulo_atividade[17]: 
             lista_monitoramento.append(tarefa['id'])
         # lista de planejamento consultoria
-        elif tarefa['atividade'] == lista_titulo_atividade[17]:
+        elif tarefa['atividade'] == lista_titulo_atividade[18]:
             lista_planejamento_consultoria.append(tarefa['id'])
         # lista de projeto geral
-        elif tarefa['atividade'] == lista_titulo_atividade[18]: 
+        elif tarefa['atividade'] == lista_titulo_atividade[19]: 
             lista_projeto_geral.append(tarefa['id'])
         # lista de relatorio final
-        elif tarefa['atividade'] == lista_titulo_atividade[19]:
+        elif tarefa['atividade'] == lista_titulo_atividade[20]:
             lista_relatorio_final.append(tarefa['id'])
         # lista de relatorio preliminar
-        elif tarefa['atividade'] == lista_titulo_atividade[20]:
+        elif tarefa['atividade'] == lista_titulo_atividade[21]:
             lista_relatorio_preliminar.append(tarefa['id'])
         # lista de resultados consultoria
-        elif tarefa['atividade'] == lista_titulo_atividade[21]:
+        elif tarefa['atividade'] == lista_titulo_atividade[22]:
             lista_resultados_consultoria.append(tarefa['id'])
         # lista de termo compromisso consultoria
-        elif tarefa['atividade'] == lista_titulo_atividade[22]:
+        elif tarefa['atividade'] == lista_titulo_atividade[23]:
             lista_termo_compromisso_consultoria.append(tarefa['id'])
 
         else:
@@ -191,6 +193,7 @@ def listar():
     importacoes.execucaoconsultoria.get_execucao_consultoria(lista_execucao_consultoria)
     # def item processo analise tce
     importacoes.itemprocessoanalisetce.get_item_processo_analise_tce(lista_item_processo_analise_tce)
+    importacoes.itemprocessoanalisetce.get_item_processo_analise_tce(lista_item_processo_analise_tce1)
     # def item trabalho atividade
     importacoes.itemtrabalhoatividade.get_item_trabalho_atividade(lista_item_trabalho_atividade)
     # def item trabalho projeto #

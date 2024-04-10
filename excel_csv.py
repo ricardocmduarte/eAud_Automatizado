@@ -59,7 +59,7 @@ def converter():
             print(
                 f"Iniciando processo, convertendo tabela {tabela} para csv  - pasta de rede")
 
-            df.to_csv(f"U:\\30_Dashboards para E-aud\\4_Dados do E-aud\\dados_{datahora()}\\csv\\{tabela}.csv",
+            df.to_csv(f"U:\\30_Dashboards para E-aud\\4_Dados do E-aud\\dados1_{datahora()}\\csv\\{tabela}.csv",
                       index=False, encoding='utf-8-sig')
 
             print(
