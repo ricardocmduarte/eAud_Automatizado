@@ -2,7 +2,9 @@ import requests
 import dadosreader
 
 dados = dadosreader.read_ini_file()
-#url_data = 'https://eaud.cgu.gov.br/api/auth/'
+#antigo endpoint#
+#https://eaud.cgu.gov.br/api/auth/#
+#url_data = 'https://eaud-t.cgu.gov.br/api/auth/'
 #key_data = '83'
 #server_data = '10.15.1'
 #database_data = 'eAu'
@@ -24,8 +26,8 @@ database = dados[3] #database_data
 login = dados[4] #masp_data 
 password = dados[5] #pswd_data 
 
-#teams = dados[6] #teams_data 
-teamsteste = dados[6]
+teams = dados[6] #teams_data 
+teamsteste = dados[7] #teamsteste_data
 
 print("Iniciando o programa...")
 

@@ -25,9 +25,9 @@ def send_message():
             Atenciosamente,
             Ricardo via Python AutoMessage
         '''
-       # myTeamsMessage = pymsteams.connectorcard(dados[6])
-       # myTeamsMessage.text(msg)
-       # myTeamsMessage.send()
+        myTeamsMessage = pymsteams.connectorcard(dados[6])
+        myTeamsMessage.text(msg)
+        myTeamsMessage.send()
         get_log(f"Mensagem automática enviada com sucesso".upper())
 
     except NameError as err:

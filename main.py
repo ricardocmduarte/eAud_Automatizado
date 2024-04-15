@@ -4,15 +4,17 @@ import beneficios_id
 import tarefas
 import beneficios
 import interacao
-import listas_m
-import listas_m1
-import listas_m2
-import listas_m3
-import listas_m4
-import listas_m5
-import excel_csv
+import listas
+#import listas_m
+#import listas_m1
+#import listas_m2
+#import listas_m3
+#import listas_m4
+#import listas_m5
+#import excel_csv
 import excel_csv_m1
-import excel_csv_m
+#import excel_csv_m
+
 
 if __name__ == '__main__':
 
@@ -23,16 +25,16 @@ if __name__ == '__main__':
     tarefas.get_tarefas()
     beneficios.get_beneficios()
     interacao.get_interacao()
-    listas_m.listar()
-    listas_m1.listar()
-    listas_m2.listar()
-    listas_m3.listar()
-    listas_m4.listar()
-    listas_m5.listar()
-    
-    excel_csv.converter()
+    #listas_m.listar()
+    #listas_m1.listar()
+    #listas_m2.listar()
+    #listas_m3.listar()
+    #listas_m4.listar()
+    #listas_m5.listar()
+    listas.listar()    
+    #excel_csv.converter()
     excel_csv_m1.converter_m1()
-    excel_csv_m.converter_m()
+    #excel_csv_m.converter_m()
     
 
 
