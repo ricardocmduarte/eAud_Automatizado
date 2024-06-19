@@ -18,7 +18,7 @@ def get_beneficios_id():
 
     try:
         offset = 0
-        limite_offset = 50000 #100 #200 #20000 #30000 #50000 #80000 #100000
+        limite_offset = 50000  #20000 #30000 #50000 #80000 
         lista_final = []
 
         while offset < limite_offset:
@@ -85,7 +85,7 @@ def salvar_dados(resultado_array):
 def get_beneficios_id_requisicao(offset):
     try:
         url = geral.url + \
-            f"monitoramento/beneficio?tamanhoPagina=5&offset={offset}&apenasAbertas=false&apenasModificadasNosUltimos30Dias=false&dataInteracaoInicial=2024-04-13&dataInteracaoFinal=2024-04-20&colunasSelecionadas=id&colunasSelecionadas=atividade"
+            f"monitoramento/beneficio?tamanhoPagina=5&offset={offset}&apenasAbertas=false&apenasModificadasNosUltimos30Dias=false&dataInteracaoInicial=2024-06-15&dataInteracaoFinal=2024-06-21&colunasSelecionadas=id&colunasSelecionadas=atividade"
             
         #'''f"monitoramento/beneficio?tamanhoPagina=100&offset={offset}&apenasAtrasadas=false&apenasFinalizadas=false&apenasModificadasNosUltimos30Dias=false&apenasExcluidas=false&apenasAbertas=false&periodoInicialDataInicio=2024-03-17&colunasSelecionadas=id&colunasSelecionadas=atividade"'''
         

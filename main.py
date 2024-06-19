@@ -13,12 +13,13 @@ import listas
 #import listas_m5
 #import excel_csv
 import excel_csv_m1
+import finalizar_programa
 #import excel_csv_m
 
 
 if __name__ == '__main__':
 
-    # get_tarefas e get_beneficios_id devem ser executados primeiros para adquirirem os ids.
+    # get_tarefas_id e get_beneficios_id devem ser executados primeiros para adquirirem os ids.
     tarefas_id.get_tarefas_id()
     beneficios_id.get_beneficios_id()   
     # funções para buscar os dados por completo.
@@ -34,6 +35,7 @@ if __name__ == '__main__':
     listas.listar()    
     #excel_csv.converter()
     excel_csv_m1.converter_m1()
+    finalizar_programa.finalizar_programa()
     #excel_csv_m.converter_m()
     
 

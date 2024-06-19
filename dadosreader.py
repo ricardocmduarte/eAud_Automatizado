@@ -3,7 +3,6 @@ from getpass import getuser, getpass
 
 # Função responsável por ler extrair os dados sensíveis
 
-
 def read_ini_file():
     filename = "dados.pyc"
 
@@ -43,3 +42,32 @@ def read_ini_file():
         return masp
     def password():
         return getpass()"""
+
+#from geral import dados
+#
+#def read_ini_file():
+#    # Ler os dados exportados de geral.py
+#    lista_dados = []
+#
+#    keys = [
+#        'url',
+#        'key',
+#        'server',
+#        'database',
+#        'masp',
+#        'pswd',
+#        'teams',
+#        'teamsteste'
+#    ]
+#
+#    for key in keys:
+#        try:
+#            value = dados[key]
+#            lista_dados.append(value)
+#        except KeyError:
+#            print(f"No option '{key}' in data from 'geral.py'")
+#    return lista_dados
+
+
+
+

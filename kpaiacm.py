@@ -312,3 +312,4 @@ def get_kpa_requisicao(id):
     except requests.exceptions.RequestException as err:
         get_log(err)
         print(err)
+

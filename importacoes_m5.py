@@ -1,3 +1,7 @@
+import monitoramento
+import planejamentoconsultoria
+import projetogeral
+import relatoriofinal
 import relatoriopreliminar
 import resultadosconsultoria
 import termocompromissoconsultoria

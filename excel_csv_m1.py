@@ -39,9 +39,9 @@ def converter_m1():
                         'relatorio_preliminar_teste',
                         'resultados_consultoria_teste',
                         'tarefas_teste',
-                        'termo_compromisso_consultoria_teste',
                         'tarefas_id_teste',
-                        'beneficios_id_teste'
+                        'beneficios_id_teste',
+                        'termo_compromisso_consultoria_teste'
                         ]
 
         print("Lendo as tabelas")

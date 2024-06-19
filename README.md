@@ -1,6 +1,6 @@
 # eAud
 
-## Programa responsável por buscar os dados da API do e-Aud.
+## Programa responsável por buscar os dados da API do e-Aud
 
 ## Virtual env
 

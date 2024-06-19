@@ -172,11 +172,17 @@ def tratamento_dados(data):
 
                 nivelbeneficio = tarefa['campos']['nivelBeneficio']['valor']
 
-                classbnf = tarefa['campos']['classebnf']['valor']
+               # classbnf = tarefa['campos']['classebnf']['valor']
+               # classebnf = ''
+               # if classbnf:
+               #     classebnf = classbnf['valor']  
+
+                classbnf = tarefa['campos'].get('classebnf', None)
                 classebnf = ''
-                if classbnf:
+                if classbnf and 'valor' in  classbnf:
                     classebnf = classbnf['valor']
 
+                
                 estadosituacao = tarefa['estadoSituacao']
                 arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
 
