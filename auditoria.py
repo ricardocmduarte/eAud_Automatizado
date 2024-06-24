@@ -141,7 +141,9 @@ def tratamento_dados(data):
                 origemdemanda = tarefa['campos']['origemDemandaAuditoria']['valor']
                 origem = origemdemanda['nomeExibicao']
 
-                pessoajuridica = tarefa['campos']['pessoaJuridicaExaminadaAuditoria']['valor']
+                #pessoajuridica = tarefa['campos']['pessoaJuridicaExaminadaAuditoria']['valor']
+                
+                pessoajuridica = tarefa['campos'].get('pessoaJuridicaExaminadaAuditoria', {}).get('valor', None)
 
                 supervisores = tarefa['campos']['supervisoresAuditoria']['valor']
                 supervisor = []
