@@ -3,7 +3,7 @@ import db
 import pandas as pd
 import automessage
 
-from geral import login
+from geral_env import login
 from datetime import datetime
 from log import get_log
 import xlsxwriter
@@ -14,34 +14,34 @@ def converter_m1():
         mk_dir()
         banco = db.db_connection()
 
-        tabela_banco = ['achados_auditoria_teste',
-                        'analise_auditoria_teste',
-                        'analise_preliminar_teste',
-                        'apuracao_preliminar_teste',
-                        'atividade_continuada_teste',
-                        'auditorias_teste',
-                        'auto_avaliacao_iacm_teste',
-                        'beneficios_teste',
-                        'comunicacao_auditoria_teste',
-                        'escopo_auditoria_teste',
-                        'execucao_consultoria_teste',
-                        'interacoes_teste',
-                        'item_analise_tce_teste',
-                        'item_trabalho_atividade_teste',
-                        'item_trabalho_projeto_teste',
-                        'kpa_iacm_teste',
-                        'matriz_planejamento_teste',
-                        'minuta_posicionamento_teste',
-                        'monitoramento_teste',
-                        'planejamento_consultoria_teste',
-                        'projeto_geral_teste',
-                        'relatorio_final_teste',
-                        'relatorio_preliminar_teste',
-                        'resultados_consultoria_teste',
-                        'tarefas_teste',
-                        'tarefas_id_teste',
-                        'beneficios_id_teste',
-                        'termo_compromisso_consultoria_teste'
+        tabela_banco = ['achados_auditoria_auxiliar',
+                        'analise_auditoria_auxiliar',
+                        'analise_preliminar_auxiliar',
+                        'apuracao_preliminar_auxiliar',
+                        'atividade_continuada_auxiliar',
+                        'auditorias_auxiliar',
+                        'auto_avaliacao_iacm_auxiliar',
+                        'beneficios_auxiliar',
+                        'comunicacao_auditoria_auxiliar',
+                        'escopo_auditoria_auxiliar',
+                        'execucao_consultoria_auxiliar',
+                        'interacoes_auxiliar',
+                        'item_analise_tce_auxiliar',
+                        'item_trabalho_atividade_auxiliar',
+                        'item_trabalho_projeto_auxiliar',
+                        'kpa_iacm_auxiliar',
+                        'matriz_planejamento_auxiliar',
+                        'minuta_posicionamento_auxiliar',
+                        'monitoramento_auxiliar',
+                        'planejamento_consultoria_auxiliar',
+                        'projeto_geral_auxiliar',
+                        'relatorio_final_auxiliar',
+                        'relatorio_preliminar_auxiliar',
+                        'resultados_consultoria_auxiliar',
+                        'tarefas_auxiliar',
+                        'tarefas_id_auxiliar',
+                        'beneficios_id_auxiliar',
+                        'termo_compromisso_consultoria_auxiliar'
                         ]
 
         print("Lendo as tabelas")

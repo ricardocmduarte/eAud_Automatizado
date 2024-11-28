@@ -1,5 +1,5 @@
 import psycopg2
-import geral_db_datasaver as geral_db
+import geral_env as geral_db
 
 # Conectar ao banco de dados de origem
 def db_saver_beneficios():
@@ -11,7 +11,7 @@ def db_saver_beneficios():
     )
 
     # Consulta SQL para extrair os dados de origem
-    query = "SELECT id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada, dtprevisaoinicio, dtprevisaofim, dtrealizadainicio, dtrealizadafim, prioridade, assunto, idatividade, descricaoatividade, idsituacao, dataultimamodificacao, autorultimamodificacao, beneficioavulso, descricaobeneficio, valorbruto, descricaocusto, dimensaorepercussao, valorcusto, unidadesenvolvidas, unidadegestora, anexosbeneficio, providenciabeneficio, dimenssaobeneficio, parcelasbeneficio, titulofundamento, textofundamentobeneficio, valorliquido, classebeneficio, tipobeneficio, tarefasprecedentes, unidadeproponente, anofatogeradorbeneficio, situacaoanateriorbeneficio, anoimplementacaobeneficio, repercussaobeneficio, classebf, nivelbeneficio, classebnf, arquivocomportamentoespecifico, estadosituacao, tags, pendencias, abasatividade FROM beneficios_teste"
+    query = "SELECT id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada, dtprevisaoinicio, dtprevisaofim, dtrealizadainicio, dtrealizadafim, prioridade, assunto, idatividade, descricaoatividade, idsituacao, dataultimamodificacao, autorultimamodificacao, beneficioavulso, descricaobeneficio, valorbruto, descricaocusto, dimensaorepercussao, valorcusto, unidadesenvolvidas, unidadegestora, anexosbeneficio, providenciabeneficio, dimenssaobeneficio, parcelasbeneficio, titulofundamento, textofundamentobeneficio, valorliquido, classebeneficio, tipobeneficio, tarefasprecedentes, unidadeproponente, anofatogeradorbeneficio, situacaoanateriorbeneficio, anoimplementacaobeneficio, repercussaobeneficio, classebf, nivelbeneficio, classebnf, arquivocomportamentoespecifico, estadosituacao, tags, pendencias, abasatividade FROM beneficios_auxiliar"
 
     # Criar uma conexão para inserir os dados no destino
     cur = conn2.cursor()

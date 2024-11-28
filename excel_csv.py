@@ -3,7 +3,7 @@ import db
 import pandas as pd
 import automessage
 
-from geral import login
+from geral_env import login
 from datetime import datetime
 from log import get_log
 import xlsxwriter

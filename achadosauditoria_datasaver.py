@@ -1,5 +1,5 @@
 import psycopg2
-import geral_db_datasaver as geral_db
+import geral_env as geral_db
 
 
 def db_saver_achadosauditoria():
@@ -14,7 +14,7 @@ def db_saver_achadosauditoria():
     )
 
     # Consulta SQL para extrair os dados da origem
-    query = "SELECT id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada, dtprevisaoinicio, dtprevisaofim, dtrealizadainicio, dtRealizadaFim, prioridade, assunto, idatividade, descricaoatividade, idsituacao, dataultimamodificacao, autorultimamodificacao, unidadesenvolvidas, itensachadosauditoria, anexosgerais, relatoriocom, tarefaprecedentes, observadores, hipoteselegal, coordenadorequipe, equipegeral, supervisores, anexosrelatorio, mesconclusaorealizado, mesanoultimamodificacao, arquivocomportamentoespecifico, estadosituacao, tags, pendencias, abasatividade FROM achados_auditoria_teste"
+    query = "SELECT id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada, dtprevisaoinicio, dtprevisaofim, dtrealizadainicio, dtRealizadaFim, prioridade, assunto, idatividade, descricaoatividade, idsituacao, dataultimamodificacao, autorultimamodificacao, unidadesenvolvidas, itensachadosauditoria, anexosgerais, relatoriocom, tarefaprecedentes, observadores, hipoteselegal, coordenadorequipe, equipegeral, supervisores, anexosrelatorio, mesconclusaorealizado, mesanoultimamodificacao, arquivocomportamentoespecifico, estadosituacao, tags, pendencias, abasatividade FROM achados_auditoria_auxiliar"
 
     # Criar uma conexão para inserir os dados no destino
     cur = conn2.cursor()

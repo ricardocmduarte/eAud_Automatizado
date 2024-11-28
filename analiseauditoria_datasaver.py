@@ -1,5 +1,5 @@
 import psycopg2
-import geral_db_datasaver as geral_db
+import geral_env as geral_db
 
 def db_saver_analiseauditoria():
    # Conectar ao banco de dados da origem
@@ -13,7 +13,7 @@ def db_saver_analiseauditoria():
     ) 
     
    # Consulta SQL para extrair os dados da origem
-    query = " SELECT id, situacao, estado, atividade, titulo, titulotarefaassociada, idtarefaassociada, dtprevisaoinicio, dtprevisaofim, dtrealizadainicio, dtrealizadafim, prioridade, assunto, idatividade, descricaoatividade, idsituacao, dataultimamodificacao, autorultimamodificacao, unidadesenvolvidas, descteste, desccriterio, descricaoescopo, responsavelitem, anexoescopo, anexoevidencia, autoranexoevidencia, descinformacao, descfonte, desclimitacao, descachado, observacoes, arquivoComportamentoEspecifico, matrizachados, tarefasprecedentes, observadores, hipoteselegal, estadosituacao, coordenadorequipe, equipegeral, supervisores, tags, pendencias, abasatividade FROM analise_auditoria_teste"
+    query = " SELECT id, situacao, estado, atividade, titulo, titulotarefaassociada, idtarefaassociada, dtprevisaoinicio, dtprevisaofim, dtrealizadainicio, dtrealizadafim, prioridade, assunto, idatividade, descricaoatividade, idsituacao, dataultimamodificacao, autorultimamodificacao, unidadesenvolvidas, descteste, desccriterio, descricaoescopo, responsavelitem, anexoescopo, anexoevidencia, autoranexoevidencia, descinformacao, descfonte, desclimitacao, descachado, observacoes, arquivoComportamentoEspecifico, matrizachados, tarefasprecedentes, observadores, hipoteselegal, estadosituacao, coordenadorequipe, equipegeral, supervisores, tags, pendencias, abasatividade FROM analise_auditoria_auxiliar"
     
    # Criar uma conexão para inserir os dados no destino
     cur = conn2.cursor()

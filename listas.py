@@ -38,7 +38,7 @@ def dicionario():
 
 def listar():
     banco = db_connection()
-    data = get_idtarefas('tarefas_id_teste', banco)
+    data = get_idtarefas('tarefas_id_auxiliar', banco)
     lista_dicionario = dicionario()
     lista_titulo_atividade = lista_dicionario[0]
 

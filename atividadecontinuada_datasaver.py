@@ -1,5 +1,5 @@
 import psycopg2
-import geral_db_datasaver as geral_db
+import geral_env as geral_db
 
 # Conectar ao banco de dados de origem
 def db_saver_atividadecontinuada():
@@ -11,7 +11,7 @@ def db_saver_atividadecontinuada():
     )
 
     # Consulta SQL para extrair os dados de origem
-    query = "SELECT id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada, dtprevisaoinicio, dtprevisaofim, dtrealizadainicio, dtrealizadafim, prioridade, assunto, idatividade, descricaoatividade, idsituacao, dataultimamodificacao, autorultimamodificacao, detalhamento, proponenteplanotrabalho, etapaplanotrabalho, responsavelplanotrabalho, processoplanotrabalho, localidade, links, tarefasprecedentes, resultados, recurso, envolvidos, homemhora, gerentes, supervisorplanotrabalho, tipoplano, arquivocomportamentoespecifico, estadosituacao, tags, pendencias, abasatividade FROM atividade_continuada_teste"
+    query = "SELECT id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada, dtprevisaoinicio, dtprevisaofim, dtrealizadainicio, dtrealizadafim, prioridade, assunto, idatividade, descricaoatividade, idsituacao, dataultimamodificacao, autorultimamodificacao, detalhamento, proponenteplanotrabalho, etapaplanotrabalho, responsavelplanotrabalho, processoplanotrabalho, localidade, links, tarefasprecedentes, resultados, recurso, envolvidos, homemhora, gerentes, supervisorplanotrabalho, tipoplano, arquivocomportamentoespecifico, estadosituacao, tags, pendencias, abasatividade FROM atividade_continuada_auxiliar"
 
     # Criar uma conexão para inserir os dados no destino
     cur = conn2.cursor()

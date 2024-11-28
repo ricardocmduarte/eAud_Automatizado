@@ -1,8 +1,8 @@
-import geral
 import db
 import requests
-import json
+import geral_env as geral
 from log import get_log
+import json
 from datetime import datetime
 
 tipo_arquivo = 'get_interacao'
@@ -19,7 +19,7 @@ def get_interacao():
         lista_dados = []
         lista_final = []
         banco = db.db_connection()
-        lista_ids = db.get_idtarefas('tarefas_id_teste', banco)
+        lista_ids = db.get_idtarefas('tarefas_id_auxiliar', banco)
         
         if lista_ids:
             for i, id in enumerate(lista_ids):
@@ -95,7 +95,7 @@ def salvar_dados(resultado_array):
                 )]
                 array_records = ", ".join(["%s"] * len(lista))
                 insert_query = (
-                    f"""INSERT INTO interacoes_teste (tipointeracao, autor, unidadeautor, idtarefa, datamodificacao) VALUES {array_records}""")
+                    f"""INSERT INTO interacoes_auxiliar (tipointeracao, autor, unidadeautor, idtarefa, datamodificacao) VALUES {array_records}""")
 
                 cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso".upper())

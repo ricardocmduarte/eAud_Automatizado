@@ -1,5 +1,5 @@
 import psycopg2
-import geral_db_datasaver as geral_db
+import geral_env as geral_db
 
 def db_saver_analisepreliminar():
 
@@ -12,7 +12,7 @@ def db_saver_analisepreliminar():
         f" host = {geral_db.server2} dbname = {geral_db.database2} user = {geral_db.login2} password = {geral_db.password2}"
     )
     # Consulta SQL para extrair os dados da origem
-    query = " SELECT id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada, dtprevisaoinicio, dtprevisaofim, dtrealizadainicio, dtrealizadafim, prioridade, assunto, idatividade, descricaoatividade, idsituacao, dataultimamodificacao, autorultimamodificacao, unidadesenvolvidas, universosauditaveis, anexosgerais, objetosauditoria, matrizcontrole, tarefasprecedentes, observadores, hipoteselegal, coordenadorequipe, equipegeral, supervisores, arquivocomportamentoespecifico, estadosituacao, tags, pendencias, abasatividade FROM analise_preliminar_teste"
+    query = " SELECT id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada, dtprevisaoinicio, dtprevisaofim, dtrealizadainicio, dtrealizadafim, prioridade, assunto, idatividade, descricaoatividade, idsituacao, dataultimamodificacao, autorultimamodificacao, unidadesenvolvidas, universosauditaveis, anexosgerais, objetosauditoria, matrizcontrole, tarefasprecedentes, observadores, hipoteselegal, coordenadorequipe, equipegeral, supervisores, arquivocomportamentoespecifico, estadosituacao, tags, pendencias, abasatividade FROM analise_preliminar_auxiliar"
     # Criar uma conexão para inserir os dados no destino
     cur = conn2.cursor()
 

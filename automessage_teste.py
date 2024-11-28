@@ -1,12 +1,12 @@
 import pymsteams
-import dadosreader_teste
+import dadosreader_env as dadosreader
 
 from log_teste import get_log
 from datetime import datetime
 
 
 def send_message_teste():
-    dados = dadosreader_teste.read_ini_file_teste()
+    dados = dadosreader.read_env_file()
     try:
         get_log(f"Iniciando envio de mensagem automática".upper())
         msg = f'''

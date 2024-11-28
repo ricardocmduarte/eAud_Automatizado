@@ -1,12 +1,12 @@
 import pymsteams
-import dadosreader
+import dadosreader_env as dadosreader
 
 from log import get_log
 from datetime import datetime
 
 
 def send_message():
-    dados = dadosreader.read_ini_file()
+    dados = dadosreader.read_env_file()
     try:
         get_log(f"Iniciando envio de mensagem automática".upper())
         msg = f'''
@@ -18,7 +18,15 @@ def send_message():
                 - U:\30_Dashboards para E-aud\4_Dados do E-aud
             Na nuvem no formato csv e excel:
                 - https://cecad365-my.sharepoint.com/:f:/r/personal/m1503249_ca_mg_gov_br/Documents/Planilha%20e-Aud?csf=1&web=1&e=Tzjg2v
-                
+            
+            O banco de dados do eAud foi feito o backup automatico com sucesso 
+            
+            Os arquivos estão armazenados no computador local pasta:
+                - C:\Users\M1503249\Desktop\Backup_BD_eAud
+            Na nuvem na pasta:
+                - C:\Users\M1503249\\OneDrive - Cidade Administrativa MG\Backup_BD_eAud
+            
+               
             Caso não consiga acessar a pasta na nuvem, gentileza encaminhar uma mensagem/e-mail para
             ricardo.duarte@cge.mg.gov.br
 

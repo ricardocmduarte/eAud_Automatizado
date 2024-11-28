@@ -1,12 +1,12 @@
 import psycopg2
-import geral_db_verificador_dados_datasaver as geral_db
+import geral_env as geral_db
 import csv
 
 def exportar_dados_para_csv(result):
 
     if result:
         # Nome do Arquivo csv
-        arquivo = f"C://Users//M1503249//Documents//eAud_Arquivos//analise_preliminar_teste.csv"
+        arquivo = f"C://Users//M1503249//Documents//eAud_Arquivos//analise_preliminar_auxiliar.csv"
 
         try:
             # Abrir o arquivo csv em modo de escrita

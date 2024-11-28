@@ -1,6 +1,6 @@
 import db
 import requests
-import geral
+import geral_env as geral
 from log import get_log
 import json
 from join_function import join_data
@@ -24,7 +24,7 @@ def get_beneficios():
     lista_final = []
     try:
         banco = db.db_connection()
-        ids = db.get_idbeneficios('beneficios_id_teste', banco)
+        ids = db.get_idbeneficios('beneficios_id_auxiliar', banco)
         if ids:
             for i, id in enumerate(ids):
                 lista_dados.append(get_beneficios_requisicao(id['id']))
@@ -322,7 +322,7 @@ def salvar_dados(resultado_array):
                  tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
-            insert_query = (f"""INSERT INTO beneficios_teste (id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada,
+            insert_query = (f"""INSERT INTO beneficios_auxiliar (id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada,
                                                 dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,beneficioavulso,descricaobeneficio,valorbruto,

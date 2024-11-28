@@ -60,6 +60,8 @@ import relatoriopreliminar_verificador_dados_datasaver
 import resultadosconsultoria_verificador_dados_datasaver
 import termocompromissoconsultoria_verificador_dados_datasaver
 import contador_registros_tabelas_eAud
+import backup_banco_dados_eAud
+import backup_banco_dados_eAud_Auxiliar
 import finalizar_programa
 
 if __name__ == '__main__':
@@ -136,5 +138,9 @@ if __name__ == '__main__':
     relatoriopreliminar_verificador_dados_datasaver.relatorio_preliminar_verificador_dados()
     resultadosconsultoria_verificador_dados_datasaver.resultados_consultoria_verificador_dados()
     termocompromissoconsultoria_verificador_dados_datasaver.termo_compromisso_consultoria_verificador_dados()
-    contador_registros_tabelas_eAud.principal()    
+    contador_registros_tabelas_eAud.principal()
+    # Backup automatizado do banco de Dados eAud
+    backup_banco_dados_eAud.backup_banco_dados_eAud()
+    # Backup automatizado do banco de Dados eAud_Auxiliar
+    backup_banco_dados_eAud_Auxiliar.backup_banco_dados_eAud_auxiliar()   
     finalizar_programa.finalizar_programa() 

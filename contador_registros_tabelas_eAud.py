@@ -1,7 +1,8 @@
 import psycopg2
-import geral_db_verificador_dados_datasaver as geral_db
+import geral_env as geral_db
 import csv
 import os
+from datetime import datetime, timedelta
 
 def get_contador_linhas_tabelas(connection):
     # Consulta para obter todas as tabelas do esquema público do banco de dados
@@ -36,9 +37,12 @@ def escrever_contador_para_csv(table_counts, filename):
 def principal():
     # Conectar ao banco de dados PostgreSQL
     connection = psycopg2.connect(f"dbname={geral_db.database} user={geral_db.login} password={geral_db.password} host={geral_db.server}")
-    dia = '12'
-    mes = '11'
-    ano = '2024'
+    data_atual = datetime.now()
+    data_incremantada = data_atual + timedelta(days=1)
+    dia = data_incremantada.strftime("%d")
+    mes = data_incremantada.strftime("%m")
+    ano = data_incremantada.strftime("%Y")
+    print (f'{dia}/{mes}/{ano}')
     try:
         table_counts = get_contador_linhas_tabelas(connection)
         

@@ -1,5 +1,5 @@
 import psycopg2
-import geral_db_datasaver as geral_db
+import geral_env as geral_db
 
 # Conectar ao banco de dados de origem
 def db_saver_auditoria():
@@ -11,7 +11,7 @@ def db_saver_auditoria():
     )
 
     # Consulta SQL para extrair os dados de origem
-    query = "SELECT id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada, dtprevisaoinicio, dtprevisaofim, dtrealizadainicio, dtrealizadafim, prioridade, assunto, idatividade, descricaoatividade, idsituacao, dataultimamodificacao, autorultimamodificacao, objetosauditoria, processosassociados, dadosgerenciais, gerentesauditoria, relatoriopreliminar, proponenteauditoria, duracaomeses, recursofinanceiro, conhecimentostecnicos, localidadesauditoria, responsavelauditoria, anexorelatoriopreliminar, objetivosestrategicos, resultadosindicador, resultadosdescricao, origemdemanda, pessoajuridica, tipoconsultoria, numdenuncia, unidadesauditadas, homemhoras, equipeauditoria, anexorel, areasrequeridas, objetivoauditoria, tarefasprecedentes, envolvidosauditoria, processotrabalhoauditoria, anexosauditoria, linhaacaoauditoria, relatoriofinal, coordenadorequipe, supervisores, arquivocomportamentoespecifico, estadosituacao, tags, pendencias, abasatividade FROM auditorias_teste"
+    query = "SELECT id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada, dtprevisaoinicio, dtprevisaofim, dtrealizadainicio, dtrealizadafim, prioridade, assunto, idatividade, descricaoatividade, idsituacao, dataultimamodificacao, autorultimamodificacao, objetosauditoria, processosassociados, dadosgerenciais, gerentesauditoria, relatoriopreliminar, proponenteauditoria, duracaomeses, recursofinanceiro, conhecimentostecnicos, localidadesauditoria, responsavelauditoria, anexorelatoriopreliminar, objetivosestrategicos, resultadosindicador, resultadosdescricao, origemdemanda, pessoajuridica, tipoconsultoria, numdenuncia, unidadesauditadas, homemhoras, equipeauditoria, anexorel, areasrequeridas, objetivoauditoria, tarefasprecedentes, envolvidosauditoria, processotrabalhoauditoria, anexosauditoria, linhaacaoauditoria, relatoriofinal, coordenadorequipe, supervisores, arquivocomportamentoespecifico, estadosituacao, tags, pendencias, abasatividade FROM auditorias_auxiliar"
 
     # Criar uma conexão para inserir os dados no destino
     cur = conn2.cursor()

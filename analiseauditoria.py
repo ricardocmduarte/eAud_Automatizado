@@ -1,6 +1,6 @@
 import db
 import requests
-import geral
+import geral_env as geral
 from log import get_log
 import json
 from join_function import join_data
@@ -318,7 +318,7 @@ def salvar_dados(resultado_array):
                  tarefa['abasatividade']
                  )]
             array_records = ", ".join(["%s"] * len(lista))
-            insert_query = (f"""INSERT INTO analise_auditoria_teste (id, situacao, estado, atividade, titulo, titulotarefaassociada, idtarefaassociada,
+            insert_query = (f"""INSERT INTO analise_auditoria_auxiliar (id, situacao, estado, atividade, titulo, titulotarefaassociada, idtarefaassociada,
                                                 dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,unidadesenvolvidas,

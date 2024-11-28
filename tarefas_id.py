@@ -1,15 +1,17 @@
 import requests
 import json
-import geral as geral
+import geral_env as geral 
 from log import get_log
 import db
+from datetime import datetime
 
 tipo_arquivo = 'get_tarefas_id'
 
 
 def get_tarefas_id():
+    data_atual = datetime.now().strftime("%Y-%m-%d")
     response = geral.check_url_health('tarefa')
-    get_log(f"Iniciado {tipo_arquivo}")
+    get_log(f"Iniciado {tipo_arquivo} data {data_atual}")
 
     if response != 200:
         get_log(
@@ -22,14 +24,14 @@ def get_tarefas_id():
         lista_final = []
 
         while offset < limite_offset:
-            resultado_array = get_tarefas_id_requisicao(offset)
+            resultado_array = get_tarefas_id_requisicao(offset, data_atual)
             if resultado_array:
                 for i, lista_appended in enumerate(resultado_array):
                     lista_final.append({
                         'id': lista_appended['id'],
                         'atividade': lista_appended['atividade']
                     })
-                print(f"{offset} atual {tipo_arquivo}")
+                print(f"{offset} atual {tipo_arquivo} data {data_atual}")
 
                 offset += 5
             else:
@@ -67,7 +69,7 @@ def salvar_dados(resultado_array):
 
             array_records = ", ".join(["%s"] * len(lista))
             insert_query = (
-                f"""INSERT INTO tarefas_id_teste (id, atividade) VALUES {array_records}""")
+                f"""INSERT INTO tarefas_id_auxiliar (id, atividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)
         get_log(f"{tipo_arquivo} salvo com sucesso")
@@ -86,11 +88,11 @@ def salvar_dados(resultado_array):
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
 
-def get_tarefas_id_requisicao(offset):
+def get_tarefas_id_requisicao(offset, data_atual):
     try:
         url = geral.url + \
             f"tarefa?tamanhoPagina=5&offset={offset}&apenasAtrasadas=false&apenasFinalizadas=false&apenasModificadasNosUltimos30Dias=false&apenasExcluidas=false \
-    &apenasAbertas=false&periodoInicialDataInicio=2024-11-09&colunasSelecionadas=id&colunasSelecionadas=atividade"
+    &apenasAbertas=false&periodoInicialDataInicio={data_atual}&colunasSelecionadas=id&colunasSelecionadas=atividade"
             
            # f"tarefa?tamanhoPagina=5&offset={offset}&apenasAtrasadas=false&apenasFinalizadas=false&apenasModificadasNosUltimos30Dias=false&apenasExcluidas=false \
            #     &apenasAbertas=false&periodoInicialDataInicio=2024-09-14&periodoFinalDataInicio=2024-09-16&colunasSelecionadas=id&colunasSelecionadas=atividade"

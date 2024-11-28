@@ -1,5 +1,5 @@
 import psycopg2
-import geral_db_datasaver as geral_db
+import geral_env as geral_db
 
 def db_saver_resultadosconsultoria():
     # Conectar ao banco de dados de origem
@@ -11,7 +11,7 @@ def db_saver_resultadosconsultoria():
         f" host = {geral_db.server2} dbname = {geral_db.database2} user = {geral_db.login2} password = {geral_db.password2}"
     )
     # Consulta SQL para extrair os dados de origem
-    query = "SELECT id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada, dtprevisaoinicio, dtprevisaofim, dtrealizadainicio, dtrealizadafim, prioridade, assunto, idatividade, descricaoatividade, idsituacao, dataultimamodificacao, autorultimamodificacao, unidadesenvolvidas, anexosgerais, observadores, hipoteselegal, coordenadorequipe, supervisores, resultados, idplanotrabalho, tituloplanotrabalho, idatividadeplanotrabalho, atividadeplanotrabalho, assuntoatividadeplanotrabalho, equipegeral, arquivocomportamentoespecifico, estadosituacao, tags, pendencias, abasatividade FROM resultados_consultoria_teste"
+    query = "SELECT id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada, dtprevisaoinicio, dtprevisaofim, dtrealizadainicio, dtrealizadafim, prioridade, assunto, idatividade, descricaoatividade, idsituacao, dataultimamodificacao, autorultimamodificacao, unidadesenvolvidas, anexosgerais, observadores, hipoteselegal, coordenadorequipe, supervisores, resultados, idplanotrabalho, tituloplanotrabalho, idatividadeplanotrabalho, atividadeplanotrabalho, assuntoatividadeplanotrabalho, equipegeral, arquivocomportamentoespecifico, estadosituacao, tags, pendencias, abasatividade FROM resultados_consultoria_auxiliar"
     # Criar uma conexão para inserir os dados no destino
     cur = conn2.cursor()
     # Executar a consulta e inserir os dados no destino

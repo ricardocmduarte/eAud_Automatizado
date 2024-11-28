@@ -1,5 +1,5 @@
 import psycopg2
-import geral_db_datasaver as geral_db
+import geral_env as geral_db
 
 # Conectar ao banco de dados de origem
 def db_saver_beneficios_id():
@@ -11,7 +11,7 @@ def db_saver_beneficios_id():
     )
 
     # Consulta SQL para extrair os dados de origem
-    query = "SELECT id, atividade FROM beneficios_id_teste"
+    query = "SELECT id, atividade FROM beneficios_id_auxiliar"
 
     # Criar uma conexão para inserir os dados no destino
     cur = conn2.cursor()
