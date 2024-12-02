@@ -31,7 +31,7 @@ def beneficios_verificador_dados():
     # Conexão com o banco de dados
 
     conn = psycopg2.connect(
-        f" host = {geral_db.server} dbname = {geral_db.database} user = {geral_db.login} password = {geral_db.password}"
+        f"host = {geral_db.server3} dbname = {geral_db.database3} user = {geral_db.login3} password = {geral_db.password3}"
     )
     cur = conn.cursor()
 

@@ -5,7 +5,7 @@ a = Analysis(
     ['main_automatizado_eaud.py'],
     pathex=[],
     binaries=[],
-    datas=[('geral_env', 'geral_env')],
+    datas=[],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

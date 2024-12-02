@@ -22,12 +22,12 @@ def send_message():
             O banco de dados do eAud foi feito o backup automatico com sucesso 
             
             Os arquivos estão armazenados no computador local pasta:
-                - C:\Users\M1503249\Desktop\Backup_BD_eAud
+                - C:\\Users\\M1503249\\Desktop\\Backup_BD_eAud
             Na nuvem na pasta:
-                - C:\Users\M1503249\\OneDrive - Cidade Administrativa MG\Backup_BD_eAud
+                - C:\\Users\\M1503249\\OneDrive - Cidade Administrativa MG\\Backup_BD_eAud
             
                
-            Caso não consiga acessar a pasta na nuvem, gentileza encaminhar uma mensagem/e-mail para
+            Caso não consiga acessar a pasta na nuvem, gentileza encaminhar uma mensagem e-mail para
             ricardo.duarte@cge.mg.gov.br
 
             Atenciosamente,

@@ -7,10 +7,16 @@ def db_saver_analisepreliminar():
     conn1 = psycopg2.connect(
         f" host = {geral_db.server1} dbname = {geral_db.database1} user = {geral_db.login1} password = {geral_db.password1}"
     )
+    
+    print("Conexão com o banco de dados de origem estabelecida.")
+    
     # Conectar ao banco de dados do destino
     conn2 = psycopg2.connect(
         f" host = {geral_db.server2} dbname = {geral_db.database2} user = {geral_db.login2} password = {geral_db.password2}"
     )
+    
+    print("Conexão com o banco de dados de destino estabelecida.")
+    
     # Consulta SQL para extrair os dados da origem
     query = " SELECT id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada, dtprevisaoinicio, dtprevisaofim, dtrealizadainicio, dtrealizadafim, prioridade, assunto, idatividade, descricaoatividade, idsituacao, dataultimamodificacao, autorultimamodificacao, unidadesenvolvidas, universosauditaveis, anexosgerais, objetosauditoria, matrizcontrole, tarefasprecedentes, observadores, hipoteselegal, coordenadorequipe, equipegeral, supervisores, arquivocomportamentoespecifico, estadosituacao, tags, pendencias, abasatividade FROM analise_preliminar_auxiliar"
     # Criar uma conexão para inserir os dados no destino
@@ -18,8 +24,10 @@ def db_saver_analisepreliminar():
 
     # Executar a consulta e inserir os dados no destino
     with conn1.cursor() as cursor:
+        print("Executando consulta para extrair dados da tabela de origem.")
         cursor.execute(query)
         for row in cursor:
+            print(f"Inserindo/Atualizando dados: {row}")
             cur.execute ("""
                          INSERT INTO analise_preliminar (id, situacao, estado, atividade, titulo, idtarefaassociada, titulotarefaassociada, dtprevisaoinicio, dtprevisaofim, dtrealizadainicio, dtrealizadafim, prioridade, assunto, idatividade, descricaoatividade, idsituacao, dataultimamodificacao, autorultimamodificacao, unidadesenvolvidas, universosauditaveis, anexosgerais, objetosauditoria, matrizcontrole, tarefasprecedentes, observadores, hipoteselegal, coordenadorequipe, equipegeral, supervisores, arquivocomportamentoespecifico, estadosituacao, tags, pendencias, abasatividade) 
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) 
@@ -65,5 +73,7 @@ def db_saver_analisepreliminar():
     conn2.commit()
     conn2.close()
     conn1.close()
+    print(f"Inserção/Atualização de dados no banco de dados {geral_db.database2} na tabela analise_preliminar finalizada com sucesso!")
+    print("------------------------------------------------------------------------------------------------------------------------------------")
 
 db_saver_analisepreliminar()

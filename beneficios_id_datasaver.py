@@ -4,12 +4,18 @@ import geral_env as geral_db
 # Conectar ao banco de dados de origem
 def db_saver_beneficios_id():
     conn1 = psycopg2.connect(
-         f"host = {geral_db.server1}   dbname ={geral_db.database1}   user = {geral_db.login1}  password = {geral_db.password1}"
-         )
-    # Conectar ao banco de dados de destino
-    conn2 = psycopg2.connect(f"host = {geral_db.server2}   dbname ={geral_db.database2}   user = {geral_db.login2}  password = {geral_db.password2}"
+        f"host = {geral_db.server1}   dbname ={geral_db.database1}   user = {geral_db.login1}  password = {geral_db.password1}"
     )
-
+    
+    print("Conexão com o banco de dados de origem estabelecida.")
+    
+    # Conectar ao banco de dados de destino
+    conn2 = psycopg2.connect(
+        f"host = {geral_db.server2}   dbname ={geral_db.database2}   user = {geral_db.login2}  password = {geral_db.password2}"
+    )
+    
+    print("Conexão com o banco de dados de destino estabelecida.")
+    
     # Consulta SQL para extrair os dados de origem
     query = "SELECT id, atividade FROM beneficios_id_auxiliar"
 
@@ -18,8 +24,10 @@ def db_saver_beneficios_id():
 
     # Executar a consulta e inserir os dados no destino
     with conn1.cursor() as cursor:
+        print("Executando consulta para extrair dados da tabela de origem.")
         cursor.execute(query)
         for row in cursor:
+            print(f"Inserindo/Atualizando dados: {row}")
             cur.execute("""
                         INSERT INTO beneficios_id (id, atividade) 
                 VALUES (%s, %s) 
@@ -32,5 +40,8 @@ def db_saver_beneficios_id():
     # Commitar a transação     
     conn2.commit()
     conn2.close()
-    conn1.close()
+    conn1.close() 
+    print(f"Inserção/Atualização de dados no Banco de dados {geral_db.database2} na tabela beneficios_id finalizada com sucesso! ")
+    print("--------------------------------------------------------------------------------------------------------------------------------")
+    
 db_saver_beneficios_id()

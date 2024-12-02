@@ -29,7 +29,7 @@ def exportar_dados_para_csv(result):
 def termo_compromisso_consultoria_verificador_dados():
     # Conectar ao banco de dados de origem
     conn = psycopg2.connect(
-        f" host = {geral_db.server} dbname = {geral_db.database} user = {geral_db.login} password = {geral_db.password}"
+        f" host = {geral_db.server3} dbname = {geral_db.database3} user = {geral_db.login3} password = {geral_db.password3}"
     )
     cursor = conn.cursor()
 

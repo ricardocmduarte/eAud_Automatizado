@@ -32,10 +32,10 @@ def backup_banco_dados_eAud():
 
     # Diretório de backup
     diretorio_backup = caminho_diretorio_backup
-    if not os.path.exists(diretorio_backup):
+    diretorio_backup1 = caminho_diretorio_backup1
+    if not os.path.exists(diretorio_backup): 
         os.makedirs(diretorio_backup)
         
-    diretorio_backup1 = caminho_diretorio_backup1
     if not os.path.exists(diretorio_backup1):
         os.makedirs(diretorio_backup1)
         
@@ -57,16 +57,30 @@ def backup_banco_dados_eAud():
         '-U', geral.login2,
         '-F', 't',  # Formato tar
         '-b',       # Inclui blobs
-        '-v',       # Modo verbose
-        '-f', arquivo_backup, 
-        '-f', arquivo_backup1,
+        '-v',       # Modo verbose 
+        '-f', arquivo_backup,
         geral.database2
     ]
+    
+    comando1 = [
+        'C:\\Program Files\\PostgreSQL\\14\\bin\\pg_dump',  # Caminho completo para pg_dump
+        '-h', geral.server2,
+        '-p', '5432',
+        '-U', geral.login2,
+        '-F', 't',  # Formato tar
+        '-b',       # Inclui blobs
+        '-v',       # Modo verbose
+        '-f', arquivo_backup1, 
+        geral.database2
+    ]
+
 
     try:
         # Executa o comando pg_dump
         subprocess.run(comando, check=True)
-        logging.info(f'Backup do banco de dados {geral.database2} concluído com sucesso. Arquivo: {arquivo_backup} e {arquivo_backup1}')
+        subprocess.run(comando1, check=True)
+        logging.info(f'Backup do banco de dados {geral.database2} concluído com sucesso. Arquivo: {arquivo_backup}')
+        logging.info(f'Backup do banco de dados {geral.database2} concluído com sucesso. Arquivo: {arquivo_backup1}')
     except subprocess.CalledProcessError as e:
         logging.error(f'Erro ao realizar o backup do banco de dados: {e}')
     finally:
@@ -74,8 +88,5 @@ def backup_banco_dados_eAud():
         # Remover a variável de ambiente para segurança
         del os.environ['PGPASSWORD']
         
-
-if __name__ == '__main__':
-    
-  backup_banco_dados_eAud()
+backup_banco_dados_eAud()
     

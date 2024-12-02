@@ -29,7 +29,7 @@ def exportar_dados_para_csv(result):
 def relatorio_preliminar_verificador_dados():
     # Conectar ao banco de dados de origem
     conn = psycopg2.connect(
-        f" host = {geral_db.server} dbname = {geral_db.database} user = {geral_db.login} password = {geral_db.password}"
+        f" host = {geral_db.server3} dbname = {geral_db.database3} user = {geral_db.login3} password = {geral_db.password3}"
     )
     cur = conn.cursor()
     # Verificar IDs na tabela tarefas_id vinculados à atividade 'CGE - Relatório Preliminar' que não estão na tabela relatorio_preliminar

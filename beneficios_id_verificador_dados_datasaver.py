@@ -4,8 +4,8 @@ import geral_env as geral_db
 # Conectar ao banco de dados de origem
 def db_saver_beneficios_id():
     conn1 = psycopg2.connect(
-         f"host = {geral_db.server1}   dbname ={geral_db.database1}   user = {geral_db.login1}  password = {geral_db.password1}"
-         )
+        f"host = {geral_db.server1}   dbname ={geral_db.database1}   user = {geral_db.login1}  password = {geral_db.password1}"
+    )
     # Conectar ao banco de dados de destino
     conn2 = psycopg2.connect(f"host = {geral_db.server2}   dbname ={geral_db.database2}   user = {geral_db.login2}  password = {geral_db.password2}"
     )
