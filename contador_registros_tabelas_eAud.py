@@ -38,10 +38,10 @@ def principal():
     # Conectar ao banco de dados PostgreSQL
     connection = psycopg2.connect(f"dbname={geral_db.database3} user={geral_db.login3} password={geral_db.password3} host={geral_db.server3}")
     data_atual = datetime.now()
-    data_incremantada = data_atual + timedelta(days=1)
-    dia = data_incremantada.strftime("%d")
-    mes = data_incremantada.strftime("%m")
-    ano = data_incremantada.strftime("%Y")
+    #data_incremantada = data_atual + timedelta(days=1)
+    dia = data_atual.strftime("%d") #data_incremantada.strftime("%d")
+    mes = data_atual.strftime("%m") #data_incremantada.strftime("%m")
+    ano = data_atual.strftime("%Y") #data_incremantada.strftime("%Y")
     print (f'{dia}/{mes}/{ano}')
     try:
         table_counts = get_contador_linhas_tabelas(connection)
