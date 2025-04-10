@@ -8,9 +8,9 @@ import psycopg2  # Importação do psycopg2
 # Configuração do logging para salvar em um arquivo
 data_atual = datetime.now().strftime('%d-%m-%Y')
 caminho_diretorio = f"C:\\Users\\M1503249\\Documents\\logs_eAud\\log_eAud_Auxiliar_Automatizado_Backup_{data_atual}.log"
-caminho_diretorio1 = f"C:\\Users\\M1503249\\OneDrive - Cidade Administrativa MG\\Documents\\logs_eAud\\log_eAud_Auxiliar_Automatizado_Backup_{data_atual}.log"
-caminho_diretorio_backup = "C:\\Users\\M1503249\\Desktop\\Backup_BD_eAud_Auxiliar"
-caminho_diretorio_backup1 = "C:\\Users\M1503249\\OneDrive - Cidade Administrativa MG\\Backup_BD_eAud_Auxiliar"
+caminho_diretorio1 = f"C:\\Users\\M1503249\\OneDrive - CAMG\\Documents\\logs_eAud\\log_eAud_Auxiliar_Automatizado_Backup_{data_atual}.log"
+caminho_diretorio_backup = "C:\\Users\\M1503249\\Documents\\Backup_BD_eAud_Auxiliar"
+caminho_diretorio_backup1 = "C:\\Users\M1503249\\OneDrive - CAMG\\Backup_BD_eAud_Auxiliar"
 logging.basicConfig(filename=caminho_diretorio,  level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logging.basicConfig(filename=caminho_diretorio1,  level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 

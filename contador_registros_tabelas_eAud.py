@@ -46,7 +46,10 @@ def principal():
     try:
         table_counts = get_contador_linhas_tabelas(connection)
         
-        escrever_contador_para_csv(table_counts, f'C:\\Users\\M1503249\\Desktop\\E-aud\\table_counts_{dia}-{mes}-{ano}.csv')
+        escrever_contador_para_csv(table_counts, f'C:\\Users\\M1503249\\Documents\\E-aud\\table_counts_{dia}-{mes}-{ano}.csv')
+        print(f"Arquivo table_counts_{dia}-{mes}-{ano}.csv criado com sucesso na data {dia}/{mes}/{ano}.")
+        
+        escrever_contador_para_csv(table_counts, f'C:\\Users\\M1503249\\OneDrive - CAMG\\Documentos\\E-aud\\table_counts_{dia}-{mes}-{ano}.csv')
         print(f"Arquivo table_counts_{dia}-{mes}-{ano}.csv criado com sucesso na data {dia}/{mes}/{ano}.")
     except Exception as e:
         print(f"Ocorreu um erro: {e}")

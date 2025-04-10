@@ -8,9 +8,9 @@ import psycopg2  # Importação do psycopg2
 # Configuração do logging para salvar em um arquivo
 data_atual = datetime.now().strftime('%d-%m-%Y')
 caminho_diretorio = f"C:\\Users\\M1503249\\Documents\\logs_eAud\\log_eAud_Automatizado_Backup_{data_atual}.log"
-caminho_diretorio1 = f"C:\\Users\\M1503249\\OneDrive - Cidade Administrativa MG\\Documents\\logs_eAud\\log_eAud_Automatizado_Backup_{data_atual}.log"
-caminho_diretorio_backup = f"C:\\Users\\M1503249\\Desktop\\Backup_BD_eAud"
-caminho_diretorio_backup1 = f"C:\\Users\\M1503249\\OneDrive - Cidade Administrativa MG\\Backup_BD_eAud"
+caminho_diretorio1 = f"C:\\Users\\M1503249\\OneDrive - CAMG\\Documents\\logs_eAud\\log_eAud_Automatizado_Backup_{data_atual}.log"
+caminho_diretorio_backup = "C:\\Users\\M1503249\\Documents\\Backup_BD_eAud"
+caminho_diretorio_backup1 = "C:\\Users\\M1503249\\OneDrive - CAMG\\Backup_BD_eAud"
 logging.basicConfig(filename=caminho_diretorio, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logging.basicConfig(filename=caminho_diretorio1, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -63,7 +63,7 @@ def backup_banco_dados_eAud():
     ]
     
     comando1 = [
-        'C:\\Program Files\\PostgreSQL\\14\\bin\\pg_dump',  # Caminho completo para pg_dump
+        'C:\\Program Files\\PostgreSQL\\14\\bin\\pg_dump',
         '-h', geral.server2,
         '-p', '5432',
         '-U', geral.login2,
