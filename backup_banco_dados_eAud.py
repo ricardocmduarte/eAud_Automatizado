@@ -8,9 +8,9 @@ import psycopg2  # Importação do psycopg2
 # Configuração do logging para salvar em um arquivo
 data_atual = datetime.now().strftime('%d-%m-%Y')
 caminho_diretorio = f"C:\\Users\\M1503249\\Documents\\logs_eAud\\log_eAud_Automatizado_Backup_{data_atual}.log"
-caminho_diretorio1 = f"C:\\Users\\M1503249\\OneDrive - CAMG\\Documents\\logs_eAud\\log_eAud_Automatizado_Backup_{data_atual}.log"
+caminho_diretorio1 = f"U:\\30_Dashboards para E-aud\\7_logs_eAud\\log_eAud_Automatizado_Backup_{data_atual}.log"
 caminho_diretorio_backup = "C:\\Users\\M1503249\\Documents\\Backup_BD_eAud"
-caminho_diretorio_backup1 = "C:\\Users\\M1503249\\OneDrive - CAMG\\Backup_BD_eAud"
+caminho_diretorio_backup1 = "U:\\30_Dashboards para E-aud\\5_Backup_BD_eAud"
 logging.basicConfig(filename=caminho_diretorio, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logging.basicConfig(filename=caminho_diretorio1, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -33,11 +33,14 @@ def backup_banco_dados_eAud():
     # Diretório de backup
     diretorio_backup = caminho_diretorio_backup
     diretorio_backup1 = caminho_diretorio_backup1
+    
+    
     if not os.path.exists(diretorio_backup): 
         os.makedirs(diretorio_backup)
         
     if not os.path.exists(diretorio_backup1):
         os.makedirs(diretorio_backup1)
+        
         
     # Nome do arquivo de backup
     nome_arquivo_backup = f"{geral.database2}_{data_atual}.backup"
@@ -45,6 +48,7 @@ def backup_banco_dados_eAud():
     
     nome_arquivo_backup1 = f"{geral.database2}_{data_atual}.backup"
     arquivo_backup1 = os.path.join(diretorio_backup1, nome_arquivo_backup1)
+    
     
     # Definir a senha do banco de dados na variável de ambiente
     os.environ['PGPASSWORD'] = geral.password2
@@ -73,7 +77,8 @@ def backup_banco_dados_eAud():
         '-f', arquivo_backup1, 
         geral.database2
     ]
-
+    
+    
 
     try:
         # Executa o comando pg_dump

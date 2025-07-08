@@ -70,17 +70,17 @@ def converter_m1():
             ###################
             # Save cloud path #
             ###################
-            print(
-                f"Iniciando processo, convertendo tabela {tabela} para csv - nuvem")
-            get_log("Convertendos as tabelas em csv")
-            df.to_csv(f"C:\\Users\\m1503249\\OneDrive - Cidade Administrativa MG\\Planilha e-Aud\\dados_{datahora()}\\csv\\{tabela}.csv",
-                      index=False, encoding='utf-8-sig')
+            #print(
+            #    f"Iniciando processo, convertendo tabela {tabela} para csv - nuvem")
+            #get_log("Convertendos as tabelas em csv")
+            #df.to_csv(f"C:\\Users\\m1503249\\OneDrive - Cidade Administrativa MG\\Planilha e-Aud\\dados_{datahora()}\\csv\\{tabela}.csv",
+            #          index=False, encoding='utf-8-sig')
 
-            print(
-                f"Iniciando processo, convertendo tabela {tabela} para excel - nuvem")
-            get_log("Convertendo as tabelas em xlsx")
-            df.to_excel(f"C:\\Users\\m1503249\\OneDrive - Cidade Administrativa MG\\Planilha e-Aud\\dados_{datahora()}\\excel\\{tabela}.xlsx",
-                        index=False, engine='xlsxwriter')
+            #print(
+            #    f"Iniciando processo, convertendo tabela {tabela} para excel - nuvem")
+            #get_log("Convertendo as tabelas em xlsx")
+            #df.to_excel(f"C:\\Users\\m1503249\\OneDrive - Cidade Administrativa MG\\Planilha e-Aud\\dados_{datahora()}\\excel\\{tabela}.xlsx",
+            #            index=False, engine='xlsxwriter')
 
         automessage.send_message()
         return print("Processo finalizado")
@@ -102,11 +102,11 @@ def mk_dir():
     #####################
     # Save local server #
     #####################
-    cloud_path_csv = f'C:\\Users\\{login}\\OneDrive - Cidade Administrativa MG\\Planilha e-Aud\\dados_{datahora()}\\csv'
-    cloud_path_excel = f'C:\\Users\\{login}\\OneDrive - Cidade Administrativa MG\\Planilha e-Aud\\dados_{datahora()}\\excel'
+    #cloud_path_csv = f'C:\\Users\\{login}\\OneDrive - Cidade Administrativa MG\\Planilha e-Aud\\dados_{datahora()}\\csv'
+    #cloud_path_excel = f'C:\\Users\\{login}\\OneDrive - Cidade Administrativa MG\\Planilha e-Aud\\dados_{datahora()}\\excel'
 
-    path_list = [local_path_csv, local_path_excel,
-                 cloud_path_csv, cloud_path_excel]
+    path_list = [local_path_csv, local_path_excel]
+                 #cloud_path_csv, #cloud_path_excel]
 
     try:
         for dir in path_list:
