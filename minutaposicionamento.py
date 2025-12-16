@@ -70,84 +70,81 @@ def tratamento_dados(data):
                 dataultimamodificacao = datetime.strptime(tarefa['dataUltimaModificacao'], '%d/%m/%Y %H:%M:%S') if tarefa['dataUltimaModificacao'] else None                
                 autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-                provminuta = tarefa['campos']['providenciaMinuta']['valor']
+                # SOLUÇÃO: Usar get() para evitar KeyError quando campos não existirem
+                provminuta = tarefa['campos'].get('providenciaMinuta', {}).get('valor')
                 providenciaminuta = ''
                 if provminuta:
-                    providenciaminuta = provminuta['valor']
+                    providenciaminuta = provminuta.get('valor', '')
 
-                anexosgeral = tarefa['campos']['anexosGerais']['valor']
+                anexosgeral = tarefa['campos'].get('anexosGerais', {}).get('valor')
                 anexosgerais = []
                 if anexosgeral:
-                    for i, file in enumerate(anexosgeral):
-                        anexosgerais.append(file['nomeExibicao'])
-
+                    for file in anexosgeral:
+                        anexosgerais.append(file.get('nomeExibicao', ''))
                     anexosgerais = join_data(anexosgerais)
 
-                destiny = tarefa['campos']['destinatarioUsuarioUnidade']['valor']
+                destiny = tarefa['campos'].get('destinatarioUsuarioUnidade', {}).get('valor')
                 destinatariousuariounidade = ''
                 if destiny:
-                    destinatariousuariounidade = destiny['nomeExibicao']
+                    destinatariousuariounidade = destiny.get('nomeExibicao', '')
 
-                tarefasprec = tarefa['campos']['tarefasPrecedentes']['valor']
+                tarefasprec = tarefa['campos'].get('tarefasPrecedentes', {}).get('valor')
                 tarefasprecedentes = []
                 if tarefasprec:
-                    for i, tarefapre in enumerate(tarefasprec):
-                        tarefasprecedentes.append(tarefapre['nomeExibicao'])
-
+                    for tarefapre in tarefasprec:
+                        tarefasprecedentes.append(tarefapre.get('nomeExibicao', ''))
                     tarefasprecedentes = join_data(tarefasprecedentes)
 
-                textodohistorico = tarefa['campos']['textoDoHistorico']['valor']
-                acaoposicionamento = tarefa['campos']['acaoPosicionamento']['valor']
-                refmonitoramento = tarefa['campos']['refMonitoramento']['valor']['nomeExibicao']
+                textodohistorico = tarefa['campos'].get('textoDoHistorico', {}).get('valor')
+                acaoposicionamento = tarefa['campos'].get('acaoPosicionamento', {}).get('valor')
+                
+                # SOLUÇÃO: Acesso seguro a refMonitoramento com get() aninhado
+                refmonitoramento_val = tarefa['campos'].get('refMonitoramento', {}).get('valor')
+                refmonitoramento = refmonitoramento_val.get('nomeExibicao') if refmonitoramento_val else None
 
-                unidadeauditoria = tarefa['campos']['unidadesAuditoriaMinuta']['valor']
+                unidadeauditoria = tarefa['campos'].get('unidadesAuditoriaMinuta', {}).get('valor')
                 unidadesauditoriaminuta = []
                 if unidadeauditoria:
-                    for i, minuta in enumerate(unidadeauditoria):
-                        unidadesauditoriaminuta.append(minuta['nomeExibicao'])
+                    for minuta in unidadeauditoria:
+                        unidadesauditoriaminuta.append(minuta.get('nomeExibicao', ''))
+                    unidadesauditoriaminuta = join_data(unidadesauditoriaminuta)
 
-                    unidadesauditoriaminuta = join_data(
-                        unidadesauditoriaminuta)
-
-                tipoposicionamento = tarefa['campos']['tipoPosicionamentoMinuta']['valor']
+                tipoposicionamento = tarefa['campos'].get('tipoPosicionamentoMinuta', {}).get('valor')
                 tipoposicionamentominuta = []
                 if tipoposicionamento:
-                    for i, tipo in enumerate(tipoposicionamento):
-                        tipoposicionamentominuta.append(tipo['valor'])
+                    for tipo in tipoposicionamento:
+                        tipoposicionamentominuta.append(tipo.get('valor', ''))
+                    tipoposicionamentominuta = join_data(tipoposicionamentominuta)
 
-                    tipoposicionamentominuta = join_data(
-                        tipoposicionamentominuta)
+                # SOLUÇÃO: Acesso seguro a unidadeMonitorada com get() aninhado
+                unidademonitorada_val = tarefa['campos'].get('unidadeMonitorada', {}).get('valor')
+                unidademonitorada = unidademonitorada_val.get('nomeExibicao') if unidademonitorada_val else None
 
-                unidademonitorada = tarefa['campos']['unidadeMonitorada']['valor']['nomeExibicao']
+                recomendacaominuta = tarefa['campos'].get('RecMinutas', {}).get('valor')
+                detalhamentomonitoramento = tarefa['campos'].get('detalhesMonitoramentoMinuta', {}).get('valor')
 
-                recomendacaominuta = tarefa['campos']['RecMinutas']['valor']
-                detalhamentomonitoramento = tarefa['campos']['detalhesMonitoramentoMinuta']['valor']
+                estadosituacao = tarefa.get('estadoSituacao')
+                arquivocomportamento = tarefa.get('arquivoComportamentoEspecifico')
 
-                estadosituacao = tarefa['estadoSituacao']
-                arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
-
-                descricaotag = tarefa['campos']['tags']['valor']
+                descricaotag = tarefa['campos'].get('tags', {}).get('valor')
                 tags = []
                 if descricaotag:
-                    for i, tagdesc in enumerate(descricaotag):
-                        tags.append(tagdesc['descricao'])
-
+                    for tagdesc in descricaotag:
+                        tags.append(tagdesc.get('descricao', ''))
                     tags = join_data(tags)
 
-                pendencias = tarefa['pendencias']
+                pendencias = tarefa.get('pendencias')
                 listapendencia = []
                 if pendencias:
-                    for i, pendencia in enumerate(pendencias):
-                        listapendencia.append(pendencia['nomeUsuarioUnidade'])
-
+                    for pendencia in pendencias:
+                        listapendencia.append(pendencia.get('nomeUsuarioUnidade', ''))
                     listapendencia = join_data(listapendencia)
 
-                abasatividade = tarefa['abasAtividade']
+                abasatividade = tarefa.get('abasAtividade')
                 listaabaatividades = []
                 if abasatividade:
-                    for i, abas in enumerate(abasatividade):
-                        listaabaatividades.append(abas['descricao'])
-
+                    for abas in abasatividade:
+                        listaabaatividades.append(abas.get('descricao', ''))
                     listaabaatividades = join_data(listaabaatividades)
 
                 lista_final.append({
@@ -172,7 +169,7 @@ def tratamento_dados(data):
                     'providenciaminuta': providenciaminuta,
                     'anexosgerais': anexosgerais,
                     'destinatariousuariounidade': destinatariousuariounidade,
-                    'tarefasprecedentes': tarefasprec,
+                    'tarefasprecedentes': tarefasprecedentes,  # Corrigido: estava tarefasprec
                     'textohistorico': textodohistorico,
                     'acaoposicionamento': acaoposicionamento,
                     'referenciarecomendacao': refmonitoramento,
@@ -230,8 +227,10 @@ def salvar_dados(resultado_array):
                  tarefa['tarefasprecedentes'],
                  tarefa['textohistorico'],
                  tarefa['acaoposicionamento'],
+                 tarefa['referenciarecomendacao'],  # Adicionado campo faltante
                  tarefa['unidadesauditorias'],
                  tarefa['tipoposicionamento'],
+                 tarefa['unidademonitorada'],  # Adicionado campo faltante
                  tarefa['recomendacaominuta'],
                  tarefa['detalhamentomonitoramento'],
                  tarefa['arquivocomportamentoespecifico'],
@@ -245,8 +244,8 @@ def salvar_dados(resultado_array):
                                                 dtprevisaoinicio,dtprevisaofim,dtrealizadainicio,dtrealizadafim,
                                                 prioridade,assunto,idatividade,descricaoatividade, idsituacao,
                                                 dataultimamodificacao,autorultimamodificacao,providenciaminuta,anexosgerais,destinatariousuariounidade, 
-                                                tarefasprecedentes, textohistorico,acaoposicionamento,unidadesauditorias, tipoposicionamento,
-                                                recomendacaominuta, detalhamentomonitoramento,arquivocomportamentoespecifico, estadosituacao,
+                                                tarefasprecedentes, textohistorico,acaoposicionamento,referenciarecomendacao,unidadesauditorias, tipoposicionamento,
+                                                unidademonitorada,recomendacaominuta, detalhamentomonitoramento,arquivocomportamentoespecifico, estadosituacao,
                                                 tags,pendencias,abasatividade) VALUES {array_records}""")
 
             cur.execute(insert_query, lista)

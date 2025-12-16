@@ -8,7 +8,6 @@ from datetime import datetime
 
 tipo_arquivo = 'get_relatorio_final'
 
-
 def get_relatorio_final(ids):
     response = geral.check_url_health('tarefa')
     get_log(f"Iniciado {tipo_arquivo}")
@@ -24,7 +23,6 @@ def get_relatorio_final(ids):
         if ids:
             for i, id in enumerate(ids):
                 lista_dados.append(get_relatorio_final_requisicao(id))
-
                 print(
                     f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
 
@@ -44,7 +42,6 @@ def get_relatorio_final(ids):
         get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
-
 
 def tratamento_dados(data):
     try:
@@ -70,120 +67,110 @@ def tratamento_dados(data):
                 dataultimamodificacao = datetime.strptime(tarefa['dataUltimaModificacao'], '%d/%m/%Y %H:%M:%S') if tarefa['dataUltimaModificacao'] else None
                 autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-                relprelimintar = tarefa['campos']['relatorioPreliminar']['valor']
+                # SOLUÇÃO: Usar get() para evitar KeyError quando campos não existirem
+                relprelimintar = tarefa['campos'].get('relatorioPreliminar', {}).get('valor')
                 relatoriopreliminar = ''
-                if relprelimintar:
-                    relatoriopreliminar = file['nome']
+                # CORREÇÃO: Variável 'file' não estava definida - usar 'relprelimintar' diretamente
+                if relprelimintar and 'nome' in relprelimintar:
+                    relatoriopreliminar = relprelimintar['nome']
 
-                hipotese = tarefa['campos']['hipoteseLegal']['valor']
+                hipotese = tarefa['campos'].get('hipoteseLegal', {}).get('valor')
                 hipoteselegal = []
                 if hipotese:
-                    for i, hip in enumerate(hipotese):
+                    for hip in hipotese:
                         hipoteselegal.append(hip['nomeExibicao'])
-
                     hipoteselegal = join_data(hipoteselegal)
-
                 else:
                     hipoteselegal = ''
 
-                finalrel = tarefa['campos']['relatorioFinal']['valor']
+                finalrel = tarefa['campos'].get('relatorioFinal', {}).get('valor')
                 relatoriofinal = '[]'
-                if finalrel:
+                if finalrel and 'nome' in finalrel:
                     relatoriofinal = finalrel['nome']
 
-                coordequipe = tarefa['campos']['CoordenadorEquipe']['valor']
+                coordequipe = tarefa['campos'].get('CoordenadorEquipe', {}).get('valor')
                 coordenadorequipe = []
                 if coordequipe:
-                    for i, coord in enumerate(coordequipe):
+                    for coord in coordequipe:
                         coordenadorequipe.append(coord['nomeExibicao'])
-
                     coordenadorequipe = join_data(coordenadorequipe)
 
-                supervisor = tarefa['campos']['supervisores']['valor']
+                supervisor = tarefa['campos'].get('supervisores', {}).get('valor')
                 supervisores = []
                 if supervisor:
-                    for i, super in enumerate(supervisor):
+                    for super in supervisor:
                         supervisores.append(super['nomeExibicao'])
-
                     supervisores = join_data(supervisores)
 
-                parecer = tarefa['campos']['parecer']['valor']
+                parecer = tarefa['campos'].get('parecer', {}).get('valor')
                 pareceres = []
                 if parecer:
-                    for i, file in enumerate(parecer):
+                    for file in parecer:
                         pareceres.append(file['nome'])
-
                     pareceres = join_data(pareceres)
                 else:
                     pareceres = ''
 
-                anexrel = tarefa['campos']['anexRel']['valor']
+                anexrel = tarefa['campos'].get('anexRel', {}).get('valor')
                 anexorel = []
                 if anexrel:
-                    for i, file in enumerate(anexrel):
+                    for file in anexrel:
                         anexorel.append(file['nome'])
-
                     anexorel = join_data(anexorel)
                 else:
                     anexorel = ''
 
-                relword = tarefa['campos']['relatorioWord']['valor']
+                relword = tarefa['campos'].get('relatorioWord', {}).get('valor')
                 relatorioword = ''
-                if relword:
+                if relword and 'nome' in relword:
                     relatorioword = relword['nome']
 
-                unidenvolvidas = tarefa['campos']['unidEnvolvidas']['valor']
+                unidenvolvidas = tarefa['campos'].get('unidEnvolvidas', {}).get('valor')
                 unidadesenvolvidas = []
                 if unidenvolvidas:
-                    for i, envolvidos in enumerate(unidenvolvidas):
+                    for envolvidos in unidenvolvidas:
                         unidadesenvolvidas.append(envolvidos['nomeExibicao'])
-
                     unidadesenvolvidas = join_data(unidadesenvolvidas)
 
-                relcom = tarefa['campos']['RelatorioCom']['valor']
+                relcom = tarefa['campos'].get('RelatorioCom', {}).get('valor')
                 relatoriocom = []
                 if relcom:
-                    for i, file in enumerate(relcom):
+                    for file in relcom:
                         relatoriocom.append(file['nome'])
-
                     relatoriocom = join_data(relatoriocom)
                 else:
                     relatoriocom = ''
 
-                obser = tarefa['campos']['observadores']['valor']
+                obser = tarefa['campos'].get('observadores', {}).get('valor')
                 observadores = []
                 if obser:
-                    for i, obs in enumerate(obser):
+                    for obs in obser:
                         observadores.append(obs['nomeExibicao'])
-
                     observadores = join_data(observadores)
                 else:
                     observadores = ''
 
-                certificado = tarefa['campos']['certificado']['valor']
+                certificado = tarefa['campos'].get('certificado', {}).get('valor')
                 certificados = []
                 if certificado:
-                    for i, file in enumerate(certificado):
+                    for file in certificado:
                         certificados.append(file['nome'])
-
                     certificados = join_data(certificados)
                 else:
                     certificados = ''
 
-                tag = tarefa['campos']['tags']['valor']
+                tag = tarefa['campos'].get('tags', {}).get('valor')
                 tags = []
                 if tag:
-                    for i, tagtag in enumerate(tag):
+                    for tagtag in tag:
                         tags.append(tagtag['descricao'])
-
                     tags = join_data(tags)
 
-                equipe = tarefa['campos']['EquipeGeral']['valor']
+                equipe = tarefa['campos'].get('EquipeGeral', {}).get('valor')
                 equipegeral = []
                 if equipe:
-                    for i, team in enumerate(equipe):
+                    for team in equipe:
                         equipegeral.append(team['nomeExibicao'])
-
                     equipegeral = join_data(equipegeral)
 
                 arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
@@ -192,9 +179,8 @@ def tratamento_dados(data):
                 pendencias = tarefa['pendencias']
                 listapendencia = []
                 if pendencias:
-                    for i, pendencia in enumerate(pendencias):
+                    for pendencia in pendencias:
                         listapendencia.append(pendencia['nomeUsuarioUnidade'])
-
                     listapendencia = join_data(listapendencia)
                 else:
                     listapendencia = ''
@@ -202,9 +188,8 @@ def tratamento_dados(data):
                 abasatividade = tarefa['abasAtividade']
                 listaabaatividades = []
                 if abasatividade:
-                    for i, abas in enumerate(abasatividade):
+                    for abas in abasatividade:
                         listaabaatividades.append(abas['descricao'])
-
                     listaabaatividades = join_data(listaabaatividades)
 
                 lista_final.append({
@@ -252,7 +237,6 @@ def tratamento_dados(data):
         get_log(f"Erro ao tratar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao tratar os dados {tipo_arquivo}", err)
-
 
 def salvar_dados(resultado_array):
     try:
@@ -317,7 +301,6 @@ def salvar_dados(resultado_array):
         get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
-
 
 def get_relatorio_final_requisicao(id):
     try:

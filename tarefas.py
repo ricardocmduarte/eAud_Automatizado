@@ -7,9 +7,7 @@ from join_function import join_data
 import db
 from datetime import datetime
 
-
 tipo_arquivo = 'get_tarefas'
-
 
 def get_tarefas():
     response = geral.check_url_health('tarefa')
@@ -49,7 +47,6 @@ def get_tarefas():
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
-
 def tratamento_dados(data):
     try:
         lista_final = []
@@ -74,7 +71,8 @@ def tratamento_dados(data):
                 dataultimamodificacao = datetime.strptime(tarefa['dataUltimaModificacao'], '%d/%m/%Y %H:%M:%S') if tarefa['dataUltimaModificacao'] else None
                 autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-                descricaotag = tarefa['campos']['tags']['valor']
+                # SOLUÇÃO: Usar get() para evitar KeyError quando campos não existirem
+                descricaotag = tarefa['campos'].get('tags', {}).get('valor')
                 tags = []
                 if descricaotag:
                     for i, tagdesc in enumerate(descricaotag):
@@ -84,19 +82,20 @@ def tratamento_dados(data):
                 else:
                     tags = ''
 
-                concluprevisto = tarefa['mesConclusaoPrevisto']
+                # SOLUÇÃO: Usar get() para evitar KeyError quando campos não existirem
+                concluprevisto = tarefa.get('mesConclusaoPrevisto')
                 mesconclusaoprevisto = concluprevisto if concluprevisto else ''
 
-                conclurealizado = tarefa['mesConclusaoRealizado']
+                conclurealizado = tarefa.get('mesConclusaoRealizado')
                 mesconclusaorealizado = conclurealizado if conclurealizado else ''
 
-                estsituacao = tarefa['estadoSituacao']
+                estsituacao = tarefa.get('estadoSituacao')
                 estadosituacao = estsituacao if estsituacao else ''
 
-                filecomport = tarefa['arquivoComportamentoEspecifico']
+                filecomport = tarefa.get('arquivoComportamentoEspecifico')
                 arquivocomportamento = filecomport if filecomport else ''
 
-                pendencias = tarefa['pendencias']
+                pendencias = tarefa.get('pendencias')
                 listapendencia = []
                 if pendencias:
                     for i, pendencia in enumerate(pendencias):
@@ -106,7 +105,7 @@ def tratamento_dados(data):
                 else:
                     listapendencia = ''
 
-                abasatividade = tarefa['abasAtividade']
+                abasatividade = tarefa.get('abasAtividade')
                 listaabaatividades = []
                 if abasatividade:
                     for i, abas in enumerate(abasatividade):
@@ -150,7 +149,6 @@ def tratamento_dados(data):
         get_log(f"Erro ao tratar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao tratar os dados {tipo_arquivo}", err)
-
 
 def salvar_dados(resultado_array):
     try:
@@ -203,7 +201,6 @@ def salvar_dados(resultado_array):
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
-
 def get_tarefas_requisicao(id):
     try:
         url = geral.url + \
@@ -237,4 +234,5 @@ def get_tarefas_requisicao(id):
     except requests.exceptions.RequestException as err:
         get_log(err)
         print(err)
+
 get_tarefas()

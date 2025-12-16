@@ -8,7 +8,6 @@ from datetime import datetime
 
 tipo_arquivo = 'get_autoavaliacao_iacm'
 
-
 def get_autoavaliacao_iacm(ids):
     response = geral.check_url_health('tarefa')
     get_log(f"Iniciado {tipo_arquivo}")
@@ -24,7 +23,6 @@ def get_autoavaliacao_iacm(ids):
         if ids:
             for i, id in enumerate(ids):
                 lista_dados.append(get_iacm_requisicao(id))
-
                 print(
                     f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
 
@@ -45,12 +43,12 @@ def get_autoavaliacao_iacm(ids):
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
-
 def tratamento_dados(data):
     try:
         lista_final = []
         for i, tarefa in enumerate(data):
             if tarefa:
+                # Extração dos campos básicos da tarefa
                 id = tarefa['id']
                 situacao = tarefa['situacao']
                 estado = tarefa['estado']
@@ -70,79 +68,79 @@ def tratamento_dados(data):
                 dataultimamodificacao = datetime.strptime(tarefa['dataUltimaModificacao'], '%d/%m/%Y %H:%M:%S') if tarefa['dataUltimaModificacao'] else None                                
                 autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-                filegeral = tarefa['campos']['anexosGerais']['valor']
+                # SOLUÇÃO: Usar get() para evitar KeyError em campos opcionais
+                filegeral = tarefa['campos'].get('anexosGerais', {}).get('valor')
                 anexosgerais = []
                 if filegeral:
-                    for i, file in enumerate(filegeral):
+                    for file in filegeral:
                         anexosgerais.append(file['nome'])
-
                     anexosgerais = join_data(anexosgerais)
 
-                teamexterno = tarefa['campos']['equipeValidacaoExternaIACM']['valor']
+                teamexterno = tarefa['campos'].get('equipeValidacaoExternaIACM', {}).get('valor')
                 equipevalidacaoexterna = []
                 if teamexterno:
-                    for i, team in enumerate(teamexterno):
+                    for team in teamexterno:
                         equipevalidacaoexterna.append(team['nomeExibicao'])
                     equipevalidacaoexterna = join_data(equipevalidacaoexterna)
 
-                unidval = tarefa['campos']['unidadesValidadorasIACM']['valor']
+                unidval = tarefa['campos'].get('unidadesValidadorasIACM', {}).get('valor')
                 unidadevalidadoras = []
                 if unidval:
-                    for i, uni in enumerate(unidval):
+                    for uni in unidval:
                         unidadevalidadoras.append(uni['nomeExibicao'])
                     unidadevalidadoras = join_data(unidadevalidadoras)
 
-                relatoriovalidacao = tarefa['campos']['relvalex']['valor']
+                relatoriovalidacao = tarefa['campos'].get('relvalex', {}).get('valor')
 
-                equipeavaliacao = tarefa['campos']['equipeAvaliacaoIACM']['valor']
+                equipeavaliacao = tarefa['campos'].get('equipeAvaliacaoIACM', {}).get('valor')
                 equipeiacm = []
                 if equipeavaliacao:
-                    for i, equipe in enumerate(equipeavaliacao):
+                    for equipe in equipeavaliacao:
                         equipeiacm.append(equipe['nomeExibicao'])
-
                     equipeiacm = join_data(equipeiacm)
 
-                unidadeauditoriasuptec = tarefa['campos']['unidadeAuditoriaSupTec']['valor']
-                tarefaprecedentes = tarefa['campos']['tarefasPrecedentes']['valor']
+                unidadeauditoriasuptec = tarefa['campos'].get('unidadeAuditoriaSupTec', {}).get('valor')
+                tarefaprecedentes = tarefa['campos'].get('tarefasPrecedentes', {}).get('valor')
 
-                nivel = tarefa['campos']['nivelIACM']['valor']
+                nivel = tarefa['campos'].get('nivelIACM', {}).get('valor')
                 valorniveliacm = 0
                 if nivel:
-                    for i, level in enumerate(nivel):
+                    for level in nivel:
                         valorniveliacm = level['valor']
 
-                textohistorico = tarefa['campos']['textoDoHistorico']['valor']
+                textohistorico = tarefa['campos'].get('textoDoHistorico', {}).get('valor')
 
-                iacmplanoacao = tarefa['campos']['iacmPlanoDeAcao']['valor']
-                nomeexibicaosup = tarefa['campos']['unidadeSup']['valor']['nomeExibicao']
+                iacmplanoacao = tarefa['campos'].get('iacmPlanoDeAcao', {}).get('valor')
+                
+                # SOLUÇÃO: Verificar campos aninhados antes de acessar
+                unidadesup_valor = tarefa['campos'].get('unidadeSup', {}).get('valor')
+                nomeexibicaosup = unidadesup_valor['nomeExibicao'] if unidadesup_valor else None
+                
                 mesconclusaoprevisto = tarefa['mesConclusaoPrevisto']
                 textoajuda = tarefa['textoAjudaSituacao']
-
                 estadosituacao = tarefa['estadoSituacao']
                 arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
 
-                descricaotag = tarefa['campos']['tags']['valor']
+                # SOLUÇÃO: Corrigir variável - estava usando descricaotag no loop
+                descricaotag_valor = tarefa['campos'].get('tags', {}).get('valor')
                 tags = []
-                '''if descricaotag:
-                    for i, tagdesc in enumerate(descricaotag):
-                        descricaotag.append(tagdesc['descricao'])
-
-                    tags = join_data(tags)'''
+                if descricaotag_valor:
+                    for tagdesc in descricaotag_valor:
+                        tags.append(tagdesc['descricao'])
+                    tags = join_data(tags)
 
                 pendencias = tarefa['pendencias']
                 listapendencia = []
                 if pendencias:
-                    for i, pendencia in enumerate(pendencias):
+                    for pendencia in pendencias:
                         listapendencia.append(pendencia['nomeUsuarioUnidade'])
-
                     listapendencia = join_data(listapendencia)
 
                 abasatividade = tarefa['abasAtividade']
                 listaabaatividades = []
                 if abasatividade:
-                    for i, abas in enumerate(abasatividade):
+                    for abas in abasatividade:
                         listaabaatividades.append(abas['descricao'])
-
                     listaabaatividades = join_data(listaabaatividades)
 
                 lista_final.append({
@@ -189,7 +187,6 @@ def tratamento_dados(data):
         get_log(f"Erro ao tratar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao tratar os dados {tipo_arquivo}", err)
-
 
 def salvar_dados(resultado_array):
     try:
@@ -254,7 +251,6 @@ def salvar_dados(resultado_array):
         get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
-
 
 def get_iacm_requisicao(id):
     try:

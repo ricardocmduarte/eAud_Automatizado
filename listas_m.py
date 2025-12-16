@@ -56,7 +56,7 @@ def listar():
     # def monitoramento #
     importacoes_m.monitoramento.get_monitoramento(lista_monitoramento)    
     # def auditoria
-    importacoes_m.auditoria.get_auditoria(lista_auditoria)
+    importacoes_m.auditoria_original_falha.get_auditoria(lista_auditoria)
     # def atividade continuada
     importacoes_m.atividadecontinuada.get_atividade_continuada(lista_atividade_continuada)
     # def projeto geral #

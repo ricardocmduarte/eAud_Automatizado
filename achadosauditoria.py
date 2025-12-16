@@ -8,7 +8,6 @@ from datetime import datetime
 
 tipo_arquivo = 'get_achados'
 
-
 def get_achados(ids):
     response = geral.check_url_health('tarefa')
     get_log(f"Iniciado {tipo_arquivo}")
@@ -19,13 +18,11 @@ def get_achados(ids):
         return print(f"Erro ao conectar com a url {tipo_arquivo}, código do erro HTTP:  {str(response)}")
 
     try:
-
         lista_dados = []
         lista_final = []
         if ids:
             for i, id in enumerate(ids):
                 lista_dados.append(get_achados_requisicao(id))
-
                 print(f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
 
         get_log(
@@ -45,12 +42,12 @@ def get_achados(ids):
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
-
 def tratamento_dados(data):
     try:
         lista_final = []
         for i, tarefa in enumerate(data):
             if tarefa:
+                # Extração de campos básicos da tarefa
                 id = tarefa['id']
                 situacao = tarefa['situacao']
                 estado = tarefa['estado']
@@ -70,118 +67,107 @@ def tratamento_dados(data):
                 dataultimamodificacao = datetime.strptime(tarefa['dataUltimaModificacao'], '%d/%m/%Y %H:%M:%S') if tarefa['dataUltimaModificacao'] else None
                 autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-                unidadeenvolvida = tarefa['campos']['unidEnvolvidas']['valor']
+                # SOLUÇÃO: Usar get() para evitar KeyError quando campos não existirem
+                unidadeenvolvida = tarefa['campos'].get('unidEnvolvidas', {}).get('valor')
                 unidadesenvolvidas = []
                 if unidadeenvolvida:
-                    for i, uni in enumerate(unidadeenvolvida):
-                        unidadesenvolvidas.append(
-                            uni['nomeExibicao'] + ' | ' + uni['localidade']['nomeExibicao'])
-
+                    for uni in unidadeenvolvida:
+                        nome_exibicao = uni.get('nomeExibicao', '')
+                        localidade_nome = uni.get('localidade', {}).get('nomeExibicao', '')
+                        unidadesenvolvidas.append(f"{nome_exibicao} | {localidade_nome}")
                     unidadesenvolvidas = join_data(unidadesenvolvidas)
-
                 else:
                     unidadesenvolvidas = ''
 
-                itemachado = tarefa['campos']['itensAchadoAuditoria']['valor']
+                itemachado = tarefa['campos'].get('itensAchadoAuditoria', {}).get('valor')
                 itensachadosauditoria = []
                 if itemachado:
-                    for i, item in enumerate(itemachado):
-                        itensachadosauditoria.append(item['descricaoSumaria'])
-
+                    for item in itemachado:
+                        itensachadosauditoria.append(item.get('descricaoSumaria', ''))
                     itensachadosauditoria = join_data(itensachadosauditoria)
                 else:
                     itensachadosauditoria = ''
 
-                anexgerais = tarefa['campos']['anexosGerais']['valor']
+                anexgerais = tarefa['campos'].get('anexosGerais', {}).get('valor')
                 anexosgerais = []
                 if anexgerais:
-                    for i, file in enumerate(anexgerais):
-                        anexosgerais.append(file['nome'])
-
+                    for file in anexgerais:
+                        anexosgerais.append(file.get('nome', ''))
                     anexosgerais = join_data(anexosgerais)
                 else:
                     anexosgerais = ''
 
-                relcom = tarefa['campos']['RelatorioCom']['valor']
-                relatoriocom = relcom['nome'] if relcom else ''
+                relcom = tarefa['campos'].get('RelatorioCom', {}).get('valor')
+                relatoriocom = relcom.get('nome') if relcom else ''
 
-                prectarefas = tarefa['campos']['tarefasPrecedentes']['valor']
+                prectarefas = tarefa['campos'].get('tarefasPrecedentes', {}).get('valor')
                 tarefaprecedentes = prectarefas if prectarefas else ''
 
-                observador = tarefa['campos']['observadores']['valor']
+                observador = tarefa['campos'].get('observadores', {}).get('valor')
                 observadores = []
                 if observador:
-                    for i, obs in enumerate(observador):
-                        observadores.append(obs['nomeExibicao'])
-
+                    for obs in observador:
+                        observadores.append(obs.get('nomeExibicao', ''))
                     observadores = join_data(observadores)
                 else:
                     observadores = ''
 
-                hiplegal = tarefa['campos']['hipoteseLegal']['valor']
+                hiplegal = tarefa['campos'].get('hipoteseLegal', {}).get('valor')
                 hipoteselegal = []
                 if hiplegal:
-                    for i, hip in enumerate(hiplegal):
-                        hipoteselegal.append(hip['nomeExibicao'])
-
+                    for hip in hiplegal:
+                        hipoteselegal.append(hip.get('nomeExibicao', ''))
                     hipoteselegal = join_data(hipoteselegal)
                 else:
                     hipoteselegal = ''
 
-                coordequipe = tarefa['campos']['CoordenadorEquipe']['valor']
+                coordequipe = tarefa['campos'].get('CoordenadorEquipe', {}).get('valor')
                 coordenadorequipe = []
                 if coordequipe:
-                    for i, coord in enumerate(coordequipe):
-                        coordenadorequipe.append(coord['nomeExibicao'])
-
+                    for coord in coordequipe:
+                        coordenadorequipe.append(coord.get('nomeExibicao', ''))
                     coordenadorequipe = join_data(coordenadorequipe)
                 else:
                     coordenadorequipe = ''
 
-                equipgeral = tarefa['campos']['EquipeGeral']['valor']
+                equipgeral = tarefa['campos'].get('EquipeGeral', {}).get('valor')
                 equipegeral = []
                 if equipgeral:
-                    for i, equipe in enumerate(equipgeral):
-                        equipegeral.append(equipe['nomeExibicao'])
-
+                    for equipe in equipgeral:
+                        equipegeral.append(equipe.get('nomeExibicao', ''))
                     equipegeral = join_data(equipegeral)
                 else:
                     equipegeral = ''
 
-                supervisor = tarefa['campos']['supervisores']['valor']
+                supervisor = tarefa['campos'].get('supervisores', {}).get('valor')
                 supervisores = []
                 if supervisor:
-                    for i, super in enumerate(supervisor):
-                        supervisores.append(super['nomeExibicao'])
-
+                    for super in supervisor:
+                        supervisores.append(super.get('nomeExibicao', ''))
                     supervisores = join_data(supervisores)
                 else:
                     supervisores = ''
 
-                anexrelatorio = tarefa['campos']['anexosRelatorio']['valor']
+                anexrelatorio = tarefa['campos'].get('anexosRelatorio', {}).get('valor')
                 anexosrelatorios = []
                 if anexrelatorio:
-                    for i, file in enumerate(anexrelatorio):
-                        anexosrelatorios.append(file['nome'])
-
+                    for file in anexrelatorio:
+                        anexosrelatorios.append(file.get('nome', ''))
                     anexosrelatorios = join_data(anexosrelatorios)
                 else:
                     anexosrelatorios = ''
 
                 mesconclusaorealizado = tarefa['mesConclusaoRealizado']
                 mesanoultimamodificacao = tarefa['mesAnoUltimaModificacao']
-
                 estadosituacao = tarefa['estadoSituacao']
-
                 filecomport = tarefa['arquivoComportamentoEspecifico']
                 arquivocomportamento = filecomport if filecomport else ''
 
-                descricaotag = tarefa['campos']['tags']['valor']
+                descricaotag = tarefa['campos'].get('tags', {}).get('valor')
                 tags = []
                 if descricaotag:
-                    for i, tagdesc in enumerate(descricaotag):
-                        tags.append(tagdesc['descricao'])
-
+                    for tagdesc in descricaotag:
+                        tags.append(tagdesc.get('descricao', ''))
                     tags = join_data(tags)
                 else:
                     tags = ''
@@ -189,9 +175,8 @@ def tratamento_dados(data):
                 pendencias = tarefa['pendencias']
                 listapendencia = []
                 if pendencias:
-                    for i, pendencia in enumerate(pendencias):
-                        listapendencia.append(pendencia['nomeUsuarioUnidade'])
-
+                    for pendencia in pendencias:
+                        listapendencia.append(pendencia.get('nomeUsuarioUnidade', ''))
                     listapendencia = join_data(listapendencia)
                 else:
                     listapendencia = ''
@@ -199,9 +184,8 @@ def tratamento_dados(data):
                 abasatividade = tarefa['abasAtividade']
                 listaabaatividades = []
                 if abasatividade:
-                    for i, abas in enumerate(abasatividade):
-                        listaabaatividades.append(abas['descricao'])
-
+                    for abas in abasatividade:
+                        listaabaatividades.append(abas.get('descricao', ''))
                     listaabaatividades = join_data(listaabaatividades)
                 else:
                     listaabaatividades = ''
@@ -250,7 +234,6 @@ def tratamento_dados(data):
         get_log(f"Erro ao tratar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao tratar os dados {tipo_arquivo}", err)
-
 
 def salvar_dados(resultado_array):
     try:
@@ -316,13 +299,10 @@ def salvar_dados(resultado_array):
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
-
 def get_achados_requisicao(id):
     try:
         url = geral.url + \
              f"tarefa/{id}/dto/json"
-        #url = geral.url + \
-             #f"execucao/achado-auditoria?ids={id}"
             
         resp = requests.get(url, headers=geral.header)
 
@@ -352,6 +332,4 @@ def get_achados_requisicao(id):
     except requests.exceptions.RequestException as err:
         get_log(err)
         print(err)
-
-   
-            
+        

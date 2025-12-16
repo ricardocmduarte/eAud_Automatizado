@@ -8,7 +8,6 @@ from datetime import datetime
 
 tipo_arquivo = 'get_kpa_iacm'
 
-
 def get_kpa_iacm(ids):
     response = geral.check_url_health('tarefa')
     get_log(f"Iniciado {tipo_arquivo}")
@@ -24,12 +23,9 @@ def get_kpa_iacm(ids):
         if ids:
             for i, id in enumerate(ids):
                 lista_dados.append(get_kpa_requisicao(id))
+                print(f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
 
-                print(
-                    f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
-
-        get_log(
-            f"Esta requisicao {tipo_arquivo} contém {len(lista_dados)} itens")
+        get_log(f"Esta requisicao {tipo_arquivo} contém {len(lista_dados)} itens")
 
         # lista final passa por um tratamento de dados
         if lista_dados:
@@ -45,12 +41,12 @@ def get_kpa_iacm(ids):
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
-
 def tratamento_dados(data):
     try:
         lista_final = []
         for i, tarefa in enumerate(data):
             if tarefa:
+                # Extração de campos básicos da tarefa
                 id = tarefa['id']
                 situacao = tarefa['situacao']
                 estado = tarefa['estado']
@@ -70,94 +66,82 @@ def tratamento_dados(data):
                 dataultimamodificacao = datetime.strptime(tarefa['dataUltimaModificacao'], '%d/%m/%Y %H:%M:%S') if tarefa['dataUltimaModificacao'] else None                
                 autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-                kpaconclusao = tarefa['campos']['conclusaoKPA']['valor']
-                conclusaokpa = []
-                if kpaconclusao:
-                    conclusaokpa = kpaconclusao['valor']
-                objetivokpa = tarefa['campos']['objkpa']['valor']
-
-                anexgeral = tarefa['campos']['anexosGerais']['valor']
+                # SOLUÇÃO: Usar get() para evitar KeyError quando campos não existirem
+                kpaconclusao = tarefa['campos'].get('conclusaoKPA', {}).get('valor')
+                conclusaokpa = kpaconclusao['valor'] if kpaconclusao else []
+                
+                objetivokpa = tarefa['campos'].get('objkpa', {}).get('valor')
+                anexgeral = tarefa['campos'].get('anexosGerais', {}).get('valor')
                 anexosgerais = []
                 if anexgeral:
-                    for i, file in enumerate(anexgeral):
+                    for file in anexgeral:
                         anexosgerais.append(file['nome'])
-
                     anexosgerais = join_data(anexosgerais)
 
-                equipevalicadacao = tarefa['campos']['equipeValidacaoExternaIACM']['valor']
+                equipevalicadacao = tarefa['campos'].get('equipeValidacaoExternaIACM', {}).get('valor')
                 equipevalidacaoexternaiacm = []
                 if equipevalicadacao:
-                    for i, equipe in enumerate(equipevalicadacao):
-                        equipevalidacaoexternaiacm.append(
-                            equipe['nomeExibicao'])
+                    for equipe in equipevalicadacao:
+                        equipevalidacaoexternaiacm.append(equipe['nomeExibicao'])
+                    equipevalidacaoexternaiacm = join_data(equipevalidacaoexternaiacm)
 
-                    equipevalidacaoexternaiacm = join_data(
-                        equipevalidacaoexternaiacm)
-
-                atividadeskpa = tarefa['campos']['atividadesKPA']['valor']
-
-                equipeavaliacao = tarefa['campos']['equipeAvaliacaoIACM']['valor']
+                atividadeskpa = tarefa['campos'].get('atividadesKPA', {}).get('valor')
+                equipeavaliacao = tarefa['campos'].get('equipeAvaliacaoIACM', {}).get('valor')
                 equipeavaliacaoiacm = []
                 if equipeavaliacao:
-                    for i, equipe in enumerate(equipeavaliacao):
+                    for equipe in equipeavaliacao:
                         equipeavaliacaoiacm.append(equipe['nomeExibicao'])
-
                     equipeavaliacaoiacm = join_data(equipeavaliacaoiacm)
 
-                kpamodel = tarefa['campos']['kpaModelo']['valor']
-                titulokpamodelo = kpamodel['nomeExibicao']
-                dtrealizadamodelokpa = datetime.strptime(kpamodel['dataRealizadaInicio'], '%d/%m/%Y') if kpamodel['dataRealizadaInicio'] else None                 
-                dtfimmodelokpa = datetime.strptime(kpamodel['dataRealizadaFim'], '%d/%m/%Y') if kpamodel['dataRealizadaFim'] else None
-                assuntomodelokpa = kpamodel['assunto']
+                # SOLUÇÃO: Verificar se kpamodel existe antes de acessar seus atributos
+                kpamodel = tarefa['campos'].get('kpaModelo', {}).get('valor')
+                titulokpamodelo = kpamodel.get('nomeExibicao') if kpamodel else None
+                dtrealizadamodelokpa = datetime.strptime(kpamodel['dataRealizadaInicio'], '%d/%m/%Y') if kpamodel and kpamodel.get('dataRealizadaInicio') else None                 
+                dtfimmodelokpa = datetime.strptime(kpamodel['dataRealizadaFim'], '%d/%m/%Y') if kpamodel and kpamodel.get('dataRealizadaFim') else None
+                assuntomodelokpa = kpamodel.get('assunto') if kpamodel else None
 
-                unidadevalidadora = tarefa['campos']['unidadesValidadorasIACM']['valor']
+                unidadevalidadora = tarefa['campos'].get('unidadesValidadorasIACM', {}).get('valor')
                 unidadesvalidadoras = []
                 if unidadevalidadora:
-                    for i, unidade in enumerate(unidadevalidadora):
+                    for unidade in unidadevalidadora:
                         unidadesvalidadoras.append(unidade['nomeExibicao'])
-
                     unidadesvalidadoras = join_data(unidadesvalidadoras)
 
-                produtokpa = tarefa['campos']['produtoKPA']['valor']
-                resultadoskpa = tarefa['campos']['resultadosKPA']['valor']
-
-                tag = tarefa['campos']['tags']['valor']
+                produtokpa = tarefa['campos'].get('produtoKPA', {}).get('valor')
+                resultadoskpa = tarefa['campos'].get('resultadosKPA', {}).get('valor')
+                tag = tarefa['campos'].get('tags', {}).get('valor')
                 tags = []
                 if tag:
-                    for i, tagtag in enumerate(tag):
+                    for tagtag in tag:
                         tags.append(tagtag['descricao'])
-
                     tags = join_data(tags)
 
-                praticakpa = tarefa['campos']['praticasKPA']['valor']
-
-                link = tarefa['campos']['links']['valor']
+                praticakpa = tarefa['campos'].get('praticasKPA', {}).get('valor')
+                link = tarefa['campos'].get('links', {}).get('valor')
                 links = []
                 if link:
-                    for i, lin in enumerate(link):
+                    for lin in link:
                         links.append(lin['descricao'] + '|' + lin['url'])
-
                     links = join_data(links)
 
-                uaig = tarefa['campos']['uaig']['valor']['nomeExibicao']
+                # SOLUÇÃO: Verificação encadeada para uaig
+                uaig_valor = tarefa['campos'].get('uaig', {}).get('valor')
+                uaig = uaig_valor.get('nomeExibicao') if uaig_valor else None
 
                 arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
                 estadosituacao = tarefa['estadoSituacao']
-
                 pendencias = tarefa['pendencias']
                 listapendencia = []
                 if pendencias:
-                    for i, pendencia in enumerate(pendencias):
+                    for pendencia in pendencias:
                         listapendencia.append(pendencia['nomeUsuarioUnidade'])
-
                     listapendencia = join_data(listapendencia)
 
                 abasatividade = tarefa['abasAtividade']
                 listaabaatividades = []
                 if abasatividade:
-                    for i, abas in enumerate(abasatividade):
+                    for abas in abasatividade:
                         listaabaatividades.append(abas['descricao'])
-
                     listaabaatividades = join_data(listaabaatividades)
 
                 lista_final.append({
@@ -182,7 +166,7 @@ def tratamento_dados(data):
                     'conclusaokpa': conclusaokpa,
                     'anexosgerais': anexosgerais,
                     'objetivokpa': objetivokpa,
-                    'equipevalidacaoexternaiacm': equipeavaliacaoiacm,
+                    'equipevalidacaoexternaiacm': equipevalidacaoexternaiacm,
                     'atividaeskpa': atividadeskpa,
                     'equipeavaliacaoiacm': equipeavaliacaoiacm,
                     'titulokpamodelo': titulokpamodelo,
@@ -208,7 +192,6 @@ def tratamento_dados(data):
         get_log(f"Erro ao tratar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao tratar os dados {tipo_arquivo}", err)
-
 
 def salvar_dados(resultado_array):
     try:
@@ -278,11 +261,9 @@ def salvar_dados(resultado_array):
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
-
 def get_kpa_requisicao(id):
     try:
-        url = geral.url + \
-            f"tarefa/{id}/dto/json"
+        url = geral.url + f"tarefa/{id}/dto/json"
         resp = requests.get(url, headers=geral.header)
 
         if resp.status_code != 200:
@@ -312,4 +293,3 @@ def get_kpa_requisicao(id):
     except requests.exceptions.RequestException as err:
         get_log(err)
         print(err)
-

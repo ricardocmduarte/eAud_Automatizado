@@ -8,7 +8,6 @@ from datetime import datetime
 
 tipo_arquivo = 'get_item_trabalho_projeto'
 
-
 def get_item_trabalho_projeto(ids):
     response = geral.check_url_health('tarefa')
     get_log(f"Iniciado {tipo_arquivo}")
@@ -45,7 +44,6 @@ def get_item_trabalho_projeto(ids):
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
-
 def tratamento_dados(data):
     try:
         lista_final = []
@@ -70,80 +68,81 @@ def tratamento_dados(data):
                 dataultimamodificacao = datetime.strptime(tarefa['dataUltimaModificacao'], '%d/%m/%Y %H:%M:%S') if tarefa['dataUltimaModificacao'] else None                
                 autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-                unidadeexec = tarefa['campos']['unidadeExecutora']['valor']
+                # SOLUÇÃO: Usar get() para evitar KeyError quando campos não existirem
+                unidadeexec = tarefa['campos'].get('unidadeExecutora', {}).get('valor')
                 unidadeexecutoras = []
                 if unidadeexec:
-                    for i, unidade in enumerate(unidadeexec):
+                    for unidade in unidadeexec:
                         unidadeexecutoras.append(unidade['nomeExibicao'])
-
                     unidadeexecutoras = join_data(unidadeexecutoras)
 
-                detalhamento = tarefa['campos']['Detalhamento']['valor']
-
-                anexosgerais = tarefa['campos']['anexosGerais']['valor']
+                detalhamento = tarefa['campos'].get('Detalhamento', {}).get('valor')
+                anexosgerais = tarefa['campos'].get('anexosGerais', {}).get('valor')
                 anexos = []
                 if anexosgerais:
-                    for i, file in enumerate(anexosgerais):
-                        anexos.append(file['nomeExibicao'])
-
+                    for file in anexosgerais:
+                        anexos.append(file.get('nomeExibicao', ''))
                     anexos = join_data(anexos)
 
-                processosassociados = tarefa['campos']['processosAssociados']['valor']
-                produtouaig = tarefa['campos']['produtoUaig']['valor']
+                processosassociados = tarefa['campos'].get('processosAssociados', {}).get('valor')
+                produtouaig = tarefa['campos'].get('produtoUaig', {}).get('valor')
 
-                supervisor = tarefa['campos']['unidEnvolvidas']['valor']
+                supervisor = tarefa['campos'].get('unidEnvolvidas', {}).get('valor')
                 supervisores = []
                 if supervisor:
-                    for i, super in enumerate(supervisor):
+                    for super in supervisor:
                         supervisores.append(super['nomeExibicao'])
-
                     supervisores = join_data(supervisores)
 
-                link = tarefa['campos']['tarefasPrecedentes']['valor']
+                link = tarefa['campos'].get('tarefasPrecedentes', {}).get('valor')
                 links = []
                 if link:
-                    for i, lin in enumerate(link):
-                        links.append(lin['descricao'] + '|' + lin['url'])
-
+                    for lin in link:
+                        # SOLUÇÃO: Usar get() para campos dentro de objetos
+                        descricao = lin.get('descricao', '')
+                        url = lin.get('url', '')
+                        links.append(f"{descricao}|{url}")
                     links = join_data(links)
 
-                homemhora = tarefa['campos']['hhTarefa']['valor']
-
-                unidadeenvolvida = tarefa['campos']['unidEnvolvidas']['valor']
+                homemhora = tarefa['campos'].get('hhTarefa', {}).get('valor')
+                unidadeenvolvida = tarefa['campos'].get('unidEnvolvidas', {}).get('valor')
                 unidadesenvolvidas = []
                 if unidadeenvolvida:
-                    for i, unidade in enumerate(unidadeenvolvida):
+                    for unidade in unidadeenvolvida:
                         unidadesenvolvidas.append(unidade['nomeExibicao'])
-
                     unidadesenvolvidas = join_data(unidadesenvolvidas)
 
-                destusuariounidade = tarefa['campos']['destinatarioUsuarioUnidade']['valor']
+                # SOLUÇÃO: Corrigido o erro na variável 'unidade' não definida
+                destusuariounidade = tarefa['campos'].get('destinatarioUsuarioUnidade', {}).get('valor')
                 destinatariousuariounidade = []
                 if destusuariounidade:
-                    destinatariousuariounidade = unidade['nomeExibicao']
+                    # SOLUÇÃO: Verificar se é lista ou objeto único
+                    if isinstance(destusuariounidade, list):
+                        for dest in destusuariounidade:
+                            destinatariousuariounidade.append(dest.get('nomeExibicao', ''))
+                    else:
+                        destinatariousuariounidade.append(destusuariounidade.get('nomeExibicao', ''))
+                    destinatariousuariounidade = join_data(destinatariousuariounidade)
 
-                tarefasprec = tarefa['campos']['tarefasPrecedentes']['valor']
+                tarefasprec = tarefa['campos'].get('tarefasPrecedentes', {}).get('valor')
                 tarefasprecedentes = []
                 if tarefasprec:
-                    for i, tarefapre in enumerate(tarefasprec):
-                        tarefasprecedentes.append(tarefapre['nomeExibicao'])
-
+                    for tarefapre in tarefasprec:
+                        tarefasprecedentes.append(tarefapre.get('nomeExibicao', ''))
                     tarefasprecedentes = join_data(tarefasprecedentes)
 
-                executor = tarefa['campos']['executores']['valor']
+                executor = tarefa['campos'].get('executores', {}).get('valor')
                 executores = []
                 if executor:
-                    for i, obs in enumerate(executor):
-                        executores.append(obs['nomeExibicao'])
-
+                    for obs in executor:
+                        executores.append(obs.get('nomeExibicao', ''))
                     executores = join_data(executores)
 
-                descricaotag = tarefa['campos']['tags']['valor']
+                descricaotag = tarefa['campos'].get('tags', {}).get('valor')
                 tags = []
                 if descricaotag:
-                    for i, tagdesc in enumerate(descricaotag):
-                        tags.append(tagdesc['descricao'])
-
+                    for tagdesc in descricaotag:
+                        tags.append(tagdesc.get('descricao', ''))
                     tags = join_data(tags)
 
                 estadosituacao = tarefa['estadoSituacao']
@@ -152,17 +151,15 @@ def tratamento_dados(data):
                 pendencias = tarefa['pendencias']
                 listapendencia = []
                 if pendencias:
-                    for i, pendencia in enumerate(pendencias):
-                        listapendencia.append(pendencia['nomeUsuarioUnidade'])
-
+                    for pendencia in pendencias:
+                        listapendencia.append(pendencia.get('nomeUsuarioUnidade', ''))
                     listapendencia = join_data(listapendencia)
 
                 abasatividade = tarefa['abasAtividade']
                 listaabaatividades = []
                 if abasatividade:
-                    for i, abas in enumerate(abasatividade):
-                        listaabaatividades.append(abas['descricao'])
-
+                    for abas in abasatividade:
+                        listaabaatividades.append(abas.get('descricao', ''))
                     listaabaatividades = join_data(listaabaatividades)
 
                 lista_final.append({
@@ -209,7 +206,6 @@ def tratamento_dados(data):
         get_log(f"Erro ao tratar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao tratar os dados {tipo_arquivo}", err)
-
 
 def salvar_dados(resultado_array):
     try:
@@ -273,7 +269,6 @@ def salvar_dados(resultado_array):
         get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
-
 
 def get_item_projeto_requisicao(id):
     try:

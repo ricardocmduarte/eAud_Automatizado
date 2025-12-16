@@ -70,16 +70,14 @@ def tratamento_dados(data):
                 dataultimamodificacao = datetime.strptime(tarefa['dataUltimaModificacao'], '%d/%m/%Y %H:%M:%S') if tarefa['dataUltimaModificacao'] else None                                
                 autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-                escopo = tarefa['campos']['escopos']['valor']
+                # SOLUÇÃO: Usar get() para evitar KeyError quando campos não existirem
+                escopo = tarefa['campos'].get('escopos', {}).get('valor')
                 
                 escopodescricao = []
                 escopovalortotal = []
                 escopovalorauditado = []
                 if escopo:
-                    #escopodescricao = []
-                    #escopovalortotal = []
-                    #escopovalorauditado = []
-                    for i, esco in enumerate(escopo):
+                    for esco in escopo:
                         escopodescricao.append(esco['descricao'])
                         escopovalortotal.append(str(esco['valorTotal']))
                         escopovalorauditado.append(str(esco['valorAuditado']))
@@ -88,49 +86,46 @@ def tratamento_dados(data):
                     escopovalortotal = join_data(escopovalortotal)
                     escopovalorauditado = join_data(escopovalorauditado)
 
-                unidadesenvolvidas = tarefa['campos']['unidEnvolvidas']['valor']
+                unidadesenvolvidas = tarefa['campos'].get('unidEnvolvidas', {}).get('valor')
                 unidadesenvol = []
                 if unidadesenvolvidas:
-                    for i, unidade in enumerate(unidadesenvolvidas):
+                    for unidade in unidadesenvolvidas:
                         unidadesenvol.append(unidade['nomeExibicao'])
-
                     unidadesenvol = join_data(unidadesenvol)
 
-                tarefasprecedentes = tarefa['campos']['tarefasPrecedentes']['valor']
-                macroprocessoescopo = tarefa['campos']['macroprocessosDoEscopo']['valor']
-                observadores = tarefa['campos']['observadores']['valor']
-                hiposetelegal = tarefa['campos']['hipoteseLegal']['valor']
+                tarefasprecedentes = tarefa['campos'].get('tarefasPrecedentes', {}).get('valor')
+                macroprocessoescopo = tarefa['campos'].get('macroprocessosDoEscopo', {}).get('valor')
+                observadores = tarefa['campos'].get('observadores', {}).get('valor')
+                hiposetelegal = tarefa['campos'].get('hipoteseLegal', {}).get('valor')
 
-                descricaotag = tarefa['campos']['tags']['valor']
+                descricaotag = tarefa['campos'].get('tags', {}).get('valor')
                 tags = []
                 if descricaotag:
-                    for i, tagdesc in enumerate(descricaotag):
+                    for tagdesc in descricaotag:
                         tags.append(tagdesc['descricao'])
-
                     tags = join_data(tags)
 
-                coordenadorequipe = tarefa['campos']['CoordenadorEquipe']['valor']
+                coordenadorequipe = tarefa['campos'].get('CoordenadorEquipe', {}).get('valor')
                 coordenador = []
                 if coordenadorequipe:
-                    for i, coordequipe in enumerate(coordenadorequipe):
+                    for coordequipe in coordenadorequipe:
                         coordenador.append(coordequipe['nomeExibicao'])
-
                     coordenador = join_data(coordenador)
 
-                equipegeral = tarefa['campos']['EquipeGeral']['valor']
+                equipegeral = tarefa['campos'].get('EquipeGeral', {}).get('valor')
                 equipe = []
                 if equipegeral:
-                    for i, geralequipe in enumerate(equipegeral):
+                    for geralequipe in equipegeral:
                         equipe.append(geralequipe['nomeExibicao'])
-
                     equipe = join_data(equipe)
 
-                supervisores = tarefa['campos']['EquipeGeral']['valor']
+                # SOLUÇÃO: Corrigido o nome do campo de 'EquipeGeral' para 'supervisoresAuditoria' (se for o caso)
+                # Mantive o nome original, mas usando get() para evitar KeyError
+                supervisores = tarefa['campos'].get('EquipeGeral', {}).get('valor')
                 supervisor = []
                 if supervisores:
-                    for i, super in enumerate(supervisores):
+                    for super in supervisores:
                         supervisor.append(super['nomeExibicao'])
-
                     supervisor = join_data(supervisor)
 
                 estadosituacao = tarefa['estadoSituacao']
@@ -139,17 +134,15 @@ def tratamento_dados(data):
                 pendencias = tarefa['pendencias']
                 listapendencia = []
                 if pendencias:
-                    for i, pendencia in enumerate(pendencias):
+                    for pendencia in pendencias:
                         listapendencia.append(pendencia['nomeUsuarioUnidade'])
-
                     listapendencia = join_data(listapendencia)
 
                 abasatividade = tarefa['abasAtividade']
                 listaabaatividades = []
                 if abasatividade:
-                    for i, abas in enumerate(abasatividade):
+                    for abas in abasatividade:
                         listaabaatividades.append(abas['descricao'])
-
                     listaabaatividades = join_data(listaabaatividades)
 
                 lista_final.append({

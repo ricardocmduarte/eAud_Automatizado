@@ -7,9 +7,7 @@ from join_function import join_data
 import db
 from datetime import datetime
 
-
 tipo_arquivo = 'get_beneficios'
-
 
 def get_beneficios():
     response = geral.check_url_health('tarefa')
@@ -28,7 +26,6 @@ def get_beneficios():
         if ids:
             for i, id in enumerate(ids):
                 lista_dados.append(get_beneficios_requisicao(id['id']))
-
                 print(
                     f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
 
@@ -49,12 +46,12 @@ def get_beneficios():
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
-
 def tratamento_dados(data):
     try:
         lista_final = []
         for i, tarefa in enumerate(data):
             if tarefa:
+                # Extração de campos básicos da tarefa
                 id = tarefa['id']
                 situacao = tarefa['situacao']
                 estado = tarefa['estado']
@@ -74,132 +71,123 @@ def tratamento_dados(data):
                 dataultimamodificacao = datetime.strptime(tarefa['dataUltimaModificacao'], '%d/%m/%Y %H:%M:%S') if tarefa['dataUltimaModificacao'] else None
                 autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-                beneficioavulso = tarefa['campos']['benAvulso']['valor']
+                # SOLUÇÃO: Usar get() para evitar KeyError quando campos não existirem
+                # Extração de campos específicos de benefícios
+                beneficioavulso = tarefa['campos'].get('benAvulso', {}).get('valor')
+                descricaobeneficio = tarefa['campos'].get('descricaoBenef', {}).get('valor')
+                valorbruto = tarefa['campos'].get('valorBruto', {}).get('valor')
+                descricaocusto = tarefa['campos'].get('descricaoCusto', {}).get('valor')
 
-                descricaobeneficio = tarefa['campos']['descricaoBenef']['valor']
-
-                valorbruto = tarefa['campos']['valorBruto']['valor']
-                descricaocusto = tarefa['campos']['descricaoCusto']['valor']
-
-                drben = tarefa['campos']['drben']['valor']
+                drben = tarefa['campos'].get('drben', {}).get('valor')
                 dimensaoerepercussao = []
                 if drben:
                     dimensaoerepercussao = drben['valor']
 
-                valorcusto = tarefa['campos']['valorCusto']['valor']
+                valorcusto = tarefa['campos'].get('valorCusto', {}).get('valor')
 
-                unidadeenvolvida = tarefa['campos']['unidadesEnvolvidas']['valor']
+                unidadeenvolvida = tarefa['campos'].get('unidadesEnvolvidas', {}).get('valor')
                 unidadesenvolvidas = []
                 if unidadeenvolvida:
-                    for i, envol in enumerate(unidadeenvolvida):
+                    for envol in unidadeenvolvida:
                         unidadesenvolvidas.append(envol['nomeExibicao'])
-
                     unidadesenvolvidas = join_data(unidadesenvolvidas)
 
-                unidgestora = tarefa['campos']['unidadeGestoraBeneficio']['valor']
+                unidgestora = tarefa['campos'].get('unidadeGestoraBeneficio', {}).get('valor')
                 unidadegestora = []
                 if unidgestora:
                     unidadegestora = unidgestora['nomeExibicao']
 
-                anexoben = tarefa['campos']['anexosBeneficio']['valor']
+                anexoben = tarefa['campos'].get('anexosBeneficio', {}).get('valor')
                 anexosbeneficio = []
                 if anexoben:
-                    for i, file in enumerate(anexoben):
+                    for file in anexoben:
                         anexosbeneficio.append(file['nome'])
-
                     anexosbeneficio = join_data(anexosbeneficio)
 
-                providenciabeneficio = tarefa['campos']['providenciaBenef']['valor']
+                providenciabeneficio = tarefa['campos'].get('providenciaBenef', {}).get('valor')
 
-                dimensaoben = tarefa['campos']['dimensaoMEBeneficio']['valor']
+                dimensaoben = tarefa['campos'].get('dimensaoMEBeneficio', {}).get('valor')
                 dimensaomebeneficio = []
                 if dimensaoben:
-                    dimensaoerepercussao = dimensaoben['descricao']
+                    # CORREÇÃO: Aqui estava atribuindo à variável errada
+                    dimensaomebeneficio = dimensaoben['descricao']
 
-                parcelasbeneficio = tarefa['campos']['parcelasBeneficio']['valor']
+                parcelasbeneficio = tarefa['campos'].get('parcelasBeneficio', {}).get('valor')
 
-                fundbeneficio = tarefa['campos']['fundamentoBenef']['valor']
+                fundbeneficio = tarefa['campos'].get('fundamentoBenef', {}).get('valor')
                 titulofundamento = ''
                 if fundbeneficio:
                     titulofundamento = fundbeneficio['nomeExibicao']
 
-                textofundamentobeneficio = tarefa['campos']['textoFundamentoBenef']['valor']
-                valorliquido = tarefa['campos']['valorLiquido']['valor']
+                textofundamentobeneficio = tarefa['campos'].get('textoFundamentoBenef', {}).get('valor')
+                valorliquido = tarefa['campos'].get('valorLiquido', {}).get('valor')
 
-                classben = tarefa['campos']['classeBenef']['valor']
+                classben = tarefa['campos'].get('classeBenef', {}).get('valor')
                 classebeneficio = ''
                 if classben:
                     classebeneficio = classben['valor']
-                bentipo = tarefa['campos']['tipoBeneficio']['valor']
+                
+                bentipo = tarefa['campos'].get('tipoBeneficio', {}).get('valor')
                 tipobeneficio = []
                 if bentipo:
                     tipobeneficio = bentipo['valor']
 
-                tarefasprec = tarefa['campos']['tarefasPrecedentes']['valor']
+                tarefasprec = tarefa['campos'].get('tarefasPrecedentes', {}).get('valor')
                 tarefasprecedentes = []
                 if tarefasprec:
-                    for i, tarefapre in enumerate(tarefasprec):
+                    for tarefapre in tarefasprec:
                         tarefasprecedentes.append(tarefapre['nomeExibicao'])
                     tarefasprecedentes = join_data(tarefasprecedentes)
 
-                unidproponente = tarefa['campos']['unidadeProponenteBenef']['valor']
+                unidproponente = tarefa['campos'].get('unidadeProponenteBenef', {}).get('valor')
                 unidadeproponente = ''
                 if unidproponente:
                     unidadeproponente = unidproponente['nomeExibicao']
 
-                anofatogeradorbeneficio = tarefa['campos']['anoFatoGeradorBeneficio']['valor']
-
-                descricaotag = tarefa['campos']['tags']['valor']
+                anofatogeradorbeneficio = tarefa['campos'].get('anoFatoGeradorBeneficio', {}).get('valor')
+                descricaotag = tarefa['campos'].get('tags', {}).get('valor')
                 tags = []
                 if descricaotag:
-                    for i, tagdesc in enumerate(descricaotag):
+                    for tagdesc in descricaotag:
                         tags.append(tagdesc['descricao'])
-
                     tags = join_data(tags)
 
-                situacaoanteriorbeneficio = tarefa['campos']['situacaoAnteriorBenef']['valor']
-                anoimplementacaobeneficio = tarefa['campos']['anoImplementacaoBeneficio']['valor']
+                situacaoanteriorbeneficio = tarefa['campos'].get('situacaoAnteriorBenef', {}).get('valor')
+                anoimplementacaobeneficio = tarefa['campos'].get('anoImplementacaoBeneficio', {}).get('valor')
 
-                benrepercussao = tarefa['campos']['repercussaoDoBeneficio']['valor']
+                benrepercussao = tarefa['campos'].get('repercussaoDoBeneficio', {}).get('valor')
                 repercussaobeneficio = ''
                 if benrepercussao:
                     repercussaobeneficio = benrepercussao['descricao']
 
-                classbf = tarefa['campos']['classeBF']['valor']
+                classbf = tarefa['campos'].get('classeBF', {}).get('valor')
                 classebf = ''
                 if classbf:
                     classebf = classbf['valor']
 
-                nivelbeneficio = tarefa['campos']['nivelBeneficio']['valor']
+                nivelbeneficio = tarefa['campos'].get('nivelBeneficio', {}).get('valor')
 
-               # classbnf = tarefa['campos']['classebnf']['valor']
-               # classebnf = ''
-               # if classbnf:
-               #     classebnf = classbnf['valor']  
-
-                classbnf = tarefa['campos'].get('classebnf', None)
+                # SOLUÇÃO APLICADA: Usar get() com dicionário vazio como fallback
+                classbnf = tarefa['campos'].get('classebnf', {}).get('valor')
                 classebnf = ''
-                if classbnf and 'valor' in  classbnf:
+                if classbnf:
                     classebnf = classbnf['valor']
 
-                
                 estadosituacao = tarefa['estadoSituacao']
                 arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
 
                 pendencias = tarefa['pendencias']
                 listapendencia = []
                 if pendencias:
-                    for i, pendencia in enumerate(pendencias):
+                    for pendencia in pendencias:
                         listapendencia.append(pendencia['nomeUsuarioUnidade'])
-
                     listapendencia = join_data(listapendencia)
 
                 abasatividade = tarefa['abasAtividade']
                 listaabaatividades = []
                 if abasatividade:
-                    for i, abas in enumerate(abasatividade):
+                    for abas in abasatividade:
                         listaabaatividades.append(abas['descricao'])
-
                     listaabaatividades = join_data(listaabaatividades)
 
                 lista_final.append({
@@ -260,7 +248,6 @@ def tratamento_dados(data):
         get_log(f"Erro ao tratar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao tratar os dados {tipo_arquivo}", err)
-
 
 def salvar_dados(resultado_array):
     try:
@@ -342,7 +329,6 @@ def salvar_dados(resultado_array):
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
-
 def get_beneficios_requisicao(id):
     try:
         url = geral.url + \
@@ -377,4 +363,4 @@ def get_beneficios_requisicao(id):
         get_log(err)
         print(err)
 
-get_beneficios()           
+get_beneficios()

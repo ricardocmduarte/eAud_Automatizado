@@ -8,7 +8,6 @@ from datetime import datetime
 
 tipo_arquivo = 'get_item_processo_analise_tce'
 
-
 def get_item_processo_analise_tce(ids):
     response = geral.check_url_health('tarefa')
     get_log(f"Iniciado {tipo_arquivo}")
@@ -24,7 +23,6 @@ def get_item_processo_analise_tce(ids):
         if ids:
             for i, id in enumerate(ids):
                 lista_dados.append(get_item_tce_requisicao(id))
-
                 print(
                     f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
 
@@ -45,12 +43,12 @@ def get_item_processo_analise_tce(ids):
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
-
 def tratamento_dados(data):
     try:
         lista_final = []
         for i, tarefa in enumerate(data):
             if tarefa:
+                # Extração de campos básicos da tarefa
                 id = tarefa['id']
                 situacao = tarefa['situacao']
                 estado = tarefa['estado']
@@ -70,127 +68,129 @@ def tratamento_dados(data):
                 dataultimamodificacao = datetime.strptime(tarefa['dataUltimaModificacao'], '%d/%m/%Y %H:%M:%S') if tarefa['dataUltimaModificacao'] else None                
                 autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-                unidadeexecutora = tarefa['campos']['unidadeExecutora']['valor']
-                fatosobapuracao = tarefa['campos']['FATOtce']['valor']['valor']
+                # SOLUÇÃO: Usar get() para evitar KeyError quando campos não existirem
+                unidadeexecutora = tarefa['campos'].get('unidadeExecutora', {}).get('valor')
+                
+                # SOLUÇÃO: Para campos aninhados ['valor']['valor'], usar get() em cadeia
+                fatosobapuracao_dict = tarefa['campos'].get('FATOtce', {}).get('valor', {})
+                fatosobapuracao = fatosobapuracao_dict.get('valor') if fatosobapuracao_dict else None
 
-                anexgeral = tarefa['campos']['anexosGerais']['valor']
+                anexgeral = tarefa['campos'].get('anexosGerais', {}).get('valor')
                 anexosgerais = []
                 if anexgeral:
-                    for i, file in enumerate(anexgeral):
+                    for file in anexgeral:
                         anexosgerais.append(file['nome'])
-
                     anexosgerais = join_data(anexosgerais)
 
-                processosassociados = tarefa['campos']['processosAssociados']['valor']
-                tceorigem = tarefa['campos']['TCEorigem']['valor']['valor']
-                produtouaig = tarefa['campos']['produtoUaig']['valor']
-                numprocessotribunal = tarefa['campos']['numproceTrib']['valor']
+                processosassociados = tarefa['campos'].get('processosAssociados', {}).get('valor')
+                
+                # SOLUÇÃO: Para campos aninhados ['valor']['valor']
+                tceorigem_dict = tarefa['campos'].get('TCEorigem', {}).get('valor', {})
+                tceorigem = tceorigem_dict.get('valor') if tceorigem_dict else None
+                
+                produtouaig = tarefa['campos'].get('produtoUaig', {}).get('valor')
+                numprocessotribunal = tarefa['campos'].get('numproceTrib', {}).get('valor')
 
+                # SOLUÇÃO: Este campo já usava get(), mantido
                 localinteracao = tarefa['campos'].get('localidadesinteracao', {}).get('valor', None)
                 localidadesinteracao = []
                 if localinteracao:
-                    for i, local in enumerate(localinteracao):
+                    for local in localinteracao:
                         localidadesinteracao.append(local['nomeExibicao'])
-
                     localidadesinteracao = join_data(localidadesinteracao)
+
+                numresolucaoportaria = tarefa['campos'].get('numpor', {}).get('valor')
                 
-
-                numresolucaoportaria = tarefa['campos']['numpor']['valor']
-                dataencaminhado = datetime.strptime(tarefa['campos']['dataEnc']['valor'], '%d/%m/%Y') if tarefa['campos']['dataEnc']['valor'] else None                                 
-                fatoapuracao = tarefa['campos']['fatoApuracao']['valor']
-
-                link = tarefa['campos']['links']['valor']
+                # SOLUÇÃO: Verificar se o campo existe antes de acessar
+                dataenc_valor = tarefa['campos'].get('dataEnc', {}).get('valor')
+                dataencaminhado = datetime.strptime(dataenc_valor, '%d/%m/%Y') if dataenc_valor else None                                 
+                
+                fatoapuracao = tarefa['campos'].get('fatoApuracao', {}).get('valor')
+                link = tarefa['campos'].get('links', {}).get('valor')
                 links = []
                 if link:
-                    for i, lin in enumerate(link):
+                    for lin in link:
                         links.append(lin['descricao'] + '|' + lin['url'])
-
                     links = join_data(links)
 
-                datainstauracao = datetime.strptime(tarefa['campos']['CrgDthInstauracao']['valor'], '%Y-%m-%dT%H:%M:%S') if tarefa['campos']['CrgDthInstauracao']['valor'] else None 
+                # SOLUÇÃO: Verificar se o campo existe antes de acessar
+                datainstauracao_valor = tarefa['campos'].get('CrgDthInstauracao', {}).get('valor')
+                datainstauracao = datetime.strptime(datainstauracao_valor, '%Y-%m-%dT%H:%M:%S') if datainstauracao_valor else None 
 
-                unidenvolvidas = tarefa['campos']['unidEnvolvidas']['valor']
+                unidenvolvidas = tarefa['campos'].get('unidEnvolvidas', {}).get('valor')
                 unidadesenvolvidas = []
                 if unidenvolvidas:
-                    for i, envolvidos in enumerate(unidenvolvidas):
+                    for envolvidos in unidenvolvidas:
                         unidadesenvolvidas.append(envolvidos['nomeExibicao'])
-
                     unidadesenvolvidas = join_data(unidadesenvolvidas)
 
-                procedenciatce = tarefa['campos']['ProcedenciaTCE']['valor']['valor']
+                # SOLUÇÃO: Para campos aninhados ['valor']['valor']
+                procedenciatce_dict = tarefa['campos'].get('ProcedenciaTCE', {}).get('valor', {})
+                procedenciatce = procedenciatce_dict.get('valor') if procedenciatce_dict else None
 
-                destinatario = tarefa['campos']['destinatarioUsuarioUnidade']['valor']
+                destinatario = tarefa['campos'].get('destinatarioUsuarioUnidade', {}).get('valor')
                 destinatariousuariounidade = []
                 if destinatario:
-                    for i, destiny in enumerate(destinatario):
-                        destinatariousuariounidade.append(
-                            destiny['nomeExibicao'])
+                    for destiny in destinatario:
+                        destinatariousuariounidade.append(destiny['nomeExibicao'])
+                    destinatariousuariounidade = join_data(destinatariousuariounidade)
 
-                    destinatariousuariounidade = join_data(
-                        destinatariousuariounidade)
-
-                executor = tarefa['campos']['executores']['valor']
+                executor = tarefa['campos'].get('executores', {}).get('valor')
                 executores = []
                 if executor:
-                    for i, obs in enumerate(executor):
+                    for obs in executor:
                         executores.append(obs['nomeExibicao'])
-
                     executores = join_data(executores)
 
-                valorprejuizoestimado = tarefa['campos']['valorPrejuizoEstimado']['valor']
-
-                tag = tarefa['campos']['tags']['valor']
+                valorprejuizoestimado = tarefa['campos'].get('valorPrejuizoEstimado', {}).get('valor')
+                tag = tarefa['campos'].get('tags', {}).get('valor')
                 tags = []
                 if tag:
-                    for i, tagtag in enumerate(tag):
+                    for tagtag in tag:
                         tags.append(tagtag['descricao'])
-
                     tags = join_data(tags)
 
-                gerentesub = tarefa['campos']['gersubp']['valor']
+                gerentesub = tarefa['campos'].get('gersubp', {}).get('valor')
                 gerentesubprojeto = []
                 if gerentesub:
-                    for i, gerente in enumerate(gerentesub):
+                    for gerente in gerentesub:
                         gerentesubprojeto.append(gerente['nomeExibicao'])
-
                     gerentesubprojeto = join_data(gerentesubprojeto)
 
-                tipopessoa = tarefa['campos']['tpjpf']['valor']['valor']
+                # SOLUÇÃO: Para campos aninhados ['valor']['valor']
+                tipopessoa_dict = tarefa['campos'].get('tpjpf', {}).get('valor', {})
+                tipopessoa = tipopessoa_dict.get('valor') if tipopessoa_dict else None
 
-                cp = tarefa['campos']['CPF']['valor']
+                cp = tarefa['campos'].get('CPF', {}).get('valor')
                 cpf = []
                 if cp:
-                    for i, c in enumerate(cp):
+                    for c in cp:
                         cpf.append(c['nomeExibicao'])
-
                     cpf = join_data(cpf)
 
-                cnpj = tarefa['campos']['CNPJs']['valor']
+                cnpj = tarefa['campos'].get('CNPJs', {}).get('valor')
                 cnpjs = []
                 if cnpj:
-                    for i, file in enumerate(cnpj):
+                    for file in cnpj:
                         cnpjs.append(file['nomeExibicao'])
-
                     cnpjs = join_data(cnpjs)
 
-                valoratualizado = tarefa['campos']['valoratu']['valor']
+                valoratualizado = tarefa['campos'].get('valoratu', {}).get('valor')
                 arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
                 estadosituacao = tarefa['estadoSituacao']
 
                 pendencias = tarefa['pendencias']
                 listapendencia = []
                 if pendencias:
-                    for i, pendencia in enumerate(pendencias):
+                    for pendencia in pendencias:
                         listapendencia.append(pendencia['nomeUsuarioUnidade'])
-
                     listapendencia = join_data(listapendencia)
 
                 abasatividade = tarefa['abasAtividade']
                 listaabaatividades = []
                 if abasatividade:
-                    for i, abas in enumerate(abasatividade):
+                    for abas in abasatividade:
                         listaabaatividades.append(abas['descricao'])
-
                     listaabaatividades = join_data(listaabaatividades)
 
                 lista_final.append({
@@ -248,7 +248,6 @@ def tratamento_dados(data):
         get_log(f"Erro ao tratar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao tratar os dados {tipo_arquivo}", err)
-
 
 def salvar_dados(resultado_array):
     try:
@@ -324,7 +323,6 @@ def salvar_dados(resultado_array):
         get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
-
 
 def get_item_tce_requisicao(id):
     try:

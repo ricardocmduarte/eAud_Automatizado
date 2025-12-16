@@ -8,7 +8,6 @@ from datetime import datetime
 
 tipo_arquivo = 'get_analise_preliminar'
 
-
 def get_analise_preliminar(ids):
     response = geral.check_url_health('tarefa')
     get_log(f"Iniciado {tipo_arquivo}")
@@ -45,7 +44,6 @@ def get_analise_preliminar(ids):
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
-
 def tratamento_dados(data):
     try:
         lista_final = []
@@ -70,7 +68,9 @@ def tratamento_dados(data):
                 dataultimamodificacao = datetime.strptime(tarefa['dataUltimaModificacao'], '%d/%m/%Y %H:%M:%S') if tarefa['dataUltimaModificacao'] else None
                 autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-                unidadesenvolvidas = tarefa['campos']['unidEnvolvidas']['valor']
+                # SOLUÇÃO: Usar get() para evitar KeyError quando campos não existirem
+                # Extração de campos específicos da análise preliminar
+                unidadesenvolvidas = tarefa['campos'].get('unidEnvolvidas', {}).get('valor')
                 nomeunidadesenvolvidas = []
                 if unidadesenvolvidas:
                     for i, envolvidasunidades in enumerate(unidadesenvolvidas):
@@ -81,7 +81,7 @@ def tratamento_dados(data):
                 else:
                     nomeunidadesenvolvidas = ''
 
-                anexosgerais = tarefa['campos']['anexosGerais']['valor']
+                anexosgerais = tarefa['campos'].get('anexosGerais', {}).get('valor')
                 anexos = []
                 if anexosgerais:
                     for i, anexo in enumerate(anexosgerais):
@@ -91,7 +91,7 @@ def tratamento_dados(data):
                 else:
                     anexos = ''
 
-                anexosanalisepreliminar = tarefa['campos']['anexosAnalisePreliminar']['valor']
+                anexosanalisepreliminar = tarefa['campos'].get('anexosAnalisePreliminar', {}).get('valor')
                 anexosanalise = []
                 if anexosanalisepreliminar:
                     for i, anexo in enumerate(anexosanalisepreliminar):
@@ -101,17 +101,17 @@ def tratamento_dados(data):
                 else:
                     anexosanalise = ''
 
-                tarefasprecedentes = tarefa['campos']['tarefasPrecedentes']['valor']
-                observadores = tarefa['campos']['observadores']['valor']
-                hipoteselegal = tarefa['campos']['hipoteseLegal']['valor']
+                tarefasprecedentes = tarefa['campos'].get('tarefasPrecedentes', {}).get('valor')
+                observadores = tarefa['campos'].get('observadores', {}).get('valor')
+                hipoteselegal = tarefa['campos'].get('hipoteseLegal', {}).get('valor')
 
-                auduniverso = tarefa['campos']['universosAuditaveisAnalisePreliminar']['valor']
+                auduniverso = tarefa['campos'].get('universosAuditaveisAnalisePreliminar', {}).get('valor')
                 universoauditavel = auduniverso if auduniverso else ''
 
-                audobj = tarefa['campos']['objetosAuditoriaAnalisePreliminar']['valor']
+                audobj = tarefa['campos'].get('objetosAuditoriaAnalisePreliminar', {}).get('valor')
                 objetosauditoria = audobj if audobj else ''
 
-                coordenadorequipe = tarefa['campos']['CoordenadorEquipe']['valor']
+                coordenadorequipe = tarefa['campos'].get('CoordenadorEquipe', {}).get('valor')
                 coordenador = []
                 if coordenadorequipe:
                     for i, coordequipe in enumerate(coordenadorequipe):
@@ -121,10 +121,11 @@ def tratamento_dados(data):
                 else:
                     coordenador = ''
 
-                matriz = tarefa['campos']['matrizRiscosControles']['valor']
+                matriz = tarefa['campos'].get('matrizRiscosControles', {}).get('valor')
+                # SOLUÇÃO: Verificar se matriz existe antes de acessar ['nome']
                 matrizcontrole = matriz['nome'] if matriz else ''
 
-                equipegeral = tarefa['campos']['EquipeGeral']['valor']
+                equipegeral = tarefa['campos'].get('EquipeGeral', {}).get('valor')
                 equipe = []
                 if equipegeral:
                     for i, geralequipe in enumerate(equipegeral):
@@ -134,7 +135,7 @@ def tratamento_dados(data):
                 else:
                     equipe = ''
 
-                supervisores = tarefa['campos']['EquipeGeral']['valor']
+                supervisores = tarefa['campos'].get('EquipeGeral', {}).get('valor')
                 supervisor = []
                 if supervisores:
                     for i, super in enumerate(supervisores):
@@ -149,7 +150,7 @@ def tratamento_dados(data):
                 filecomport = tarefa['arquivoComportamentoEspecifico']
                 arquivocomportamento = filecomport if filecomport else ''
 
-                descricaotag = tarefa['campos']['tags']['valor']
+                descricaotag = tarefa['campos'].get('tags', {}).get('valor')
                 tags = []
                 if descricaotag:
                     for i, tagdesc in enumerate(descricaotag):
@@ -179,49 +180,48 @@ def tratamento_dados(data):
                 else:
                     listaabaatividades = ''
 
-            lista_final.append({
-                'id': id,
-                'situacao': situacao,
-                'estado': estado,
-                'atividade': atividade,
-                'titulo': titulo,
-                'idtarefaassociada': idtarefaassociada,
-                'titulotarefaassociada': titulotarefaassociada,
-                'dtprevisaoinicio': dtprevisaoinicio,
-                'dtprevisaofim': dtprevisaofim,
-                'dtrealizadainicio': dtrealizadainicio,
-                'dtrealizadafim': dtrealizadafim,
-                'prioridade': prioridade,
-                'assunto': assunto,
-                'idatividade': idatividade,
-                'descricaoatividade': descricaoatividade,
-                'idsituacao': idsituacao,
-                'dataultimamodificacao': dataultimamodificacao,
-                'autorultimamodificacao': autorultimamodificacao,
-                'unidadesenvolvidas': nomeunidadesenvolvidas,
-                'universosauditaveis': universoauditavel,
-                'anexosgerais': anexos,
-                'objetosauditoria': objetosauditoria,
-                'matrizcontrole': matrizcontrole,
-                'tarefasprecedentes': tarefasprecedentes,
-                'observadores': observadores,
-                'hipoteselegal': hipoteselegal,
-                'coordenadorequipe': coordenador,
-                'equipegeral': equipe,
-                'supervisores': supervisor,
-                'arquivocomportamentoespecifico': arquivocomportamento,
-                'estadosituacao': estadosituacao,
-                'tags': tags,
-                'pendencias': listapendencia,
-                'abasatividade': listaabaatividades,
-            })
+                lista_final.append({
+                    'id': id,
+                    'situacao': situacao,
+                    'estado': estado,
+                    'atividade': atividade,
+                    'titulo': titulo,
+                    'idtarefaassociada': idtarefaassociada,
+                    'titulotarefaassociada': titulotarefaassociada,
+                    'dtprevisaoinicio': dtprevisaoinicio,
+                    'dtprevisaofim': dtprevisaofim,
+                    'dtrealizadainicio': dtrealizadainicio,
+                    'dtrealizadafim': dtrealizadafim,
+                    'prioridade': prioridade,
+                    'assunto': assunto,
+                    'idatividade': idatividade,
+                    'descricaoatividade': descricaoatividade,
+                    'idsituacao': idsituacao,
+                    'dataultimamodificacao': dataultimamodificacao,
+                    'autorultimamodificacao': autorultimamodificacao,
+                    'unidadesenvolvidas': nomeunidadesenvolvidas,
+                    'universosauditaveis': universoauditavel,
+                    'anexosgerais': anexos,
+                    'objetosauditoria': objetosauditoria,
+                    'matrizcontrole': matrizcontrole,
+                    'tarefasprecedentes': tarefasprecedentes,
+                    'observadores': observadores,
+                    'hipoteselegal': hipoteselegal,
+                    'coordenadorequipe': coordenador,
+                    'equipegeral': equipe,
+                    'supervisores': supervisor,
+                    'arquivocomportamentoespecifico': arquivocomportamento,
+                    'estadosituacao': estadosituacao,
+                    'tags': tags,
+                    'pendencias': listapendencia,
+                    'abasatividade': listaabaatividades,
+                })
         get_log(f"Lista {tipo_arquivo} tratada com sucesso")
         return lista_final
     except NameError as err:
         get_log(f"Erro ao tratar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao tratar os dados {tipo_arquivo}", err)
-
 
 def salvar_dados(resultado_array):
     try:
@@ -282,7 +282,6 @@ def salvar_dados(resultado_array):
         get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
-
 
 def get_analise_preliminar_requisicao(id):
     try:

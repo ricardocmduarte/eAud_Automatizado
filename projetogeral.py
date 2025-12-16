@@ -6,9 +6,7 @@ import json
 from join_function import join_data
 from datetime import datetime
 
-
 tipo_arquivo = 'get_projeto_geral'
-
 
 def get_projeto_geral(ids):
     response = geral.check_url_health('tarefa')
@@ -25,7 +23,6 @@ def get_projeto_geral(ids):
         if ids:
             for i, id in enumerate(ids):
                 lista_dados.append(get_projeto_requisicao(id))
-
                 print(
                     f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
 
@@ -45,7 +42,6 @@ def get_projeto_geral(ids):
         get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
-
 
 def tratamento_dados(data):
     try:
@@ -71,9 +67,9 @@ def tratamento_dados(data):
                 dataultimamodificacao = datetime.strptime(tarefa['dataUltimaModificacao'], '%d/%m/%Y %H:%M:%S') if tarefa['dataUltimaModificacao'] else None
                 autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-                detalhamento = tarefa['campos']['Detalhamento']['valor']
-
-                denuncianum = tarefa['campos']['numDenuncia']['valor']
+                # SOLUÇÃO: Usar get() para evitar KeyError quando campos não existirem
+                detalhamento = tarefa['campos'].get('Detalhamento', {}).get('valor')
+                denuncianum = tarefa['campos'].get('numDenuncia', {}).get('valor')
                 numdenuncia = ''
                 if denuncianum:
                     if denuncianum.startswith('&#34;'):
@@ -81,134 +77,120 @@ def tratamento_dados(data):
                     else:
                         numdenuncia = denuncianum
 
-                localtrabalho = tarefa['campos']['localidadesPlanoTrabalho']['valor']
+                localtrabalho = tarefa['campos'].get('localidadesPlanoTrabalho', {}).get('valor')
                 localidadesplanotrabalho = []
                 if localtrabalho:
-                    for i, local in enumerate(localtrabalho):
-                        localidadesplanotrabalho.append(
-                            local['nomeExibicao'] + local['gruposLocalidade'])
+                    for local in localtrabalho:
+                        local_nome = local.get('nomeExibicao', '')
+                        local_grupos = local.get('gruposLocalidade', '')
+                        localidadesplanotrabalho.append(f"{local_nome}{local_grupos}")
+                    localidadesplanotrabalho = join_data(localidadesplanotrabalho)
 
-                    localidadesplanotrabalho = join_data(
-                        localidadesplanotrabalho)
-
-                proponenteplanotrabalho = tarefa['campos']['proponentePlanoTrabalho']['valor']
-                planoetapa = tarefa['campos']['etapaPlanoTrabalho']['valor']
+                proponenteplanotrabalho = tarefa['campos'].get('proponentePlanoTrabalho', {}).get('valor')
+                planoetapa = tarefa['campos'].get('etapaPlanoTrabalho', {}).get('valor')
                 etapaplanotrabalho = ''
                 if planoetapa:
-                    etapaplanotrabalho = planoetapa['valor']
+                    etapaplanotrabalho = planoetapa.get('valor', '')
 
-                tprocess = tarefa['campos']['processT']['valor']
+                tprocess = tarefa['campos'].get('processT', {}).get('valor')
                 processt = ''
                 if tprocess:
-                    processt = tprocess['valor']
+                    processt = tprocess.get('valor', '')
 
-                responsavelplanotrabalho = tarefa['campos']['responsavelPlanoTrabalho']['valor']
-                origindemadna = tarefa['campos']['origemDemanda']['valor']
+                responsavelplanotrabalho = tarefa['campos'].get('responsavelPlanoTrabalho', {}).get('valor')
+                origindemadna = tarefa['campos'].get('origemDemanda', {}).get('valor')
                 origemdemanda = ''
                 if origindemadna:
-                    origemdemanda = origindemadna['valor']
+                    origemdemanda = origindemadna.get('valor', '')
 
-                link = tarefa['campos']['links']['valor']
+                link = tarefa['campos'].get('links', {}).get('valor')
                 links = []
                 if link:
-                    for i, lin in enumerate(link):
-                        links.append(lin['descricao'] + ' | ' + lin['url'])
-
+                    for lin in link:
+                        link_descricao = lin.get('descricao', '')
+                        link_url = lin.get('url', '')
+                        links.append(f"{link_descricao} | {link_url}")
                     links = join_data(links)
 
-                anexplanotrabalho = tarefa['campos']['anexosPlanoTrabalho']['valor']
+                anexplanotrabalho = tarefa['campos'].get('anexosPlanoTrabalho', {}).get('valor')
                 anexoplanotrabalho = []
                 if anexplanotrabalho:
-                    for i, file in enumerate(anexoplanotrabalho):
-                        anexoplanotrabalho.append(file['nomeExibicao'])
-
+                    for file in anexplanotrabalho:
+                        anexoplanotrabalho.append(file.get('nomeExibicao', ''))
                     anexoplanotrabalho = join_data(anexoplanotrabalho)
 
-                processoplanotrabalho = tarefa['campos']['processoTrabalhoPlanoTrabalho']['valor']
-
-                resulesperado = tarefa['campos']['resultadosEsperadosPlanoTrabalho']['valor']
+                processoplanotrabalho = tarefa['campos'].get('processoTrabalhoPlanoTrabalho', {}).get('valor')
+                resulesperado = tarefa['campos'].get('resultadosEsperadosPlanoTrabalho', {}).get('valor')
                 resultadosesperados = []
                 if resulesperado:
-                    for i, resultado in enumerate(resulesperado):
-                        resultadosesperados.append(resultado['nomeExibicao'])
-
+                    for resultado in resulesperado:
+                        resultadosesperados.append(resultado.get('nomeExibicao', ''))
                     resultadosesperados = join_data(resultadosesperados)
 
-                objetocge = tarefa['campos']['objetoscgemg']['valor']
+                objetocge = tarefa['campos'].get('objetoscgemg', {}).get('valor')
                 objetoscgemg = []
                 if objetocge:
-                    for i, objetos in enumerate(objetocge):
-                        objetoscgemg.append(objetos['valor'])
-
+                    for objetos in objetocge:
+                        objetoscgemg.append(objetos.get('valor', ''))
                     objetoscgemg = join_data(objetoscgemg)
 
-                duracaomeses = tarefa['campos']['duracaoMesesPlanoTrabalho']['valor']
-                recursofinanceiro = str(
-                    tarefa['campos']['recursoFinanceiroPlanoTrabalho']['valor'])
+                duracaomeses = tarefa['campos'].get('duracaoMesesPlanoTrabalho', {}).get('valor')
+                recursofinanceiro_valor = tarefa['campos'].get('recursoFinanceiroPlanoTrabalho', {}).get('valor')
+                recursofinanceiro = str(recursofinanceiro_valor) if recursofinanceiro_valor is not None else ''
 
-                envolplanotrabalho = tarefa['campos']['envolvidosPlanoTrabalho']['valor']
+                envolplanotrabalho = tarefa['campos'].get('envolvidosPlanoTrabalho', {}).get('valor')
                 envolvidosplanotrabalho = []
                 if envolplanotrabalho:
-                    for i, envolvidos in enumerate(envolplanotrabalho):
-                        envolvidosplanotrabalho.append(
-                            envolvidos['nomeExibicao'])
+                    for envolvidos in envolplanotrabalho:
+                        envolvidosplanotrabalho.append(envolvidos.get('nomeExibicao', ''))
+                    envolvidosplanotrabalho = join_data(envolvidosplanotrabalho)
 
-                    envolvidosplanotrabalho = join_data(
-                        envolvidosplanotrabalho)
-
-                tag = tarefa['campos']['tags']['valor']
+                tag = tarefa['campos'].get('tags', {}).get('valor')
                 tags = []
                 if tag:
-                    for i, tagtag in enumerate(tag):
-                        tags.append(tagtag['descricao'])
-
+                    for tagtag in tag:
+                        tags.append(tagtag.get('descricao', ''))
                     tags = join_data(tags)
 
-                homemhora = tarefa['campos']['homemHorasPlanoTrabalho']['valor']
-
-                gerenteplanotrabalho = tarefa['campos']['gerentesPlanoTrabalho']['valor']
+                homemhora = tarefa['campos'].get('homemHorasPlanoTrabalho', {}).get('valor')
+                gerenteplanotrabalho = tarefa['campos'].get('gerentesPlanoTrabalho', {}).get('valor')
                 gerentesplanotrabalho = []
                 if gerenteplanotrabalho:
-                    for i, gerente in enumerate(gerenteplanotrabalho):
-                        gerentesplanotrabalho.append(gerente['nomeExibicao'])
-
+                    for gerente in gerenteplanotrabalho:
+                        gerentesplanotrabalho.append(gerente.get('nomeExibicao', ''))
                     gerentesplanotrabalho = join_data(gerentesplanotrabalho)
 
-                equipe = tarefa['campos']['EquipeGeral']['valor']
+                equipe = tarefa['campos'].get('EquipeGeral', {}).get('valor')
                 equipegeral = []
                 if equipe:
-                    for i, team in enumerate(equipe):
-                        equipegeral.append(team['nomeExibicao'])
-
+                    for team in equipe:
+                        equipegeral.append(team.get('nomeExibicao', ''))
                     equipegeral = join_data(equipegeral)
 
-                supervisor = tarefa['campos']['supervisoresPlanoTrabalho']['valor']
+                supervisor = tarefa['campos'].get('supervisoresPlanoTrabalho', {}).get('valor')
                 supervisores = []
                 if supervisor:
-                    for i, super in enumerate(supervisor):
-                        supervisores.append(super['nomeExibicao'])
-
+                    for super in supervisor:
+                        supervisores.append(super.get('nomeExibicao', ''))
                     supervisores = join_data(supervisores)
 
-                objetivoplanotrabalho = tarefa['campos']['objetivoPlanoTrabalho']['valor']
-                tipoplanotrablho = tarefa['campos']['tipoPlanoTrabalho']['valor']
-                arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
-                estadosituacao = tarefa['estadoSituacao']
+                objetivoplanotrabalho = tarefa['campos'].get('objetivoPlanoTrabalho', {}).get('valor')
+                tipoplanotrablho = tarefa['campos'].get('tipoPlanoTrabalho', {}).get('valor')
+                arquivocomportamento = tarefa.get('arquivoComportamentoEspecifico')
+                estadosituacao = tarefa.get('estadoSituacao')
 
-                pendencias = tarefa['pendencias']
+                pendencias = tarefa.get('pendencias')
                 listapendencia = []
                 if pendencias:
-                    for i, pendencia in enumerate(pendencias):
-                        listapendencia.append(pendencia['nomeUsuarioUnidade'])
-
+                    for pendencia in pendencias:
+                        listapendencia.append(pendencia.get('nomeUsuarioUnidade', ''))
                     listapendencia = join_data(listapendencia)
 
-                abasatividade = tarefa['abasAtividade']
+                abasatividade = tarefa.get('abasAtividade')
                 listaabaatividades = []
                 if abasatividade:
-                    for i, abas in enumerate(abasatividade):
-                        listaabaatividades.append(abas['descricao'])
-
+                    for abas in abasatividade:
+                        listaabaatividades.append(abas.get('descricao', ''))
                     listaabaatividades = join_data(listaabaatividades)
 
                 lista_final.append({
@@ -265,7 +247,6 @@ def tratamento_dados(data):
         get_log(f"Erro ao tratar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao tratar os dados {tipo_arquivo}", err)
-
 
 def salvar_dados(resultado_array):
     try:
@@ -338,7 +319,6 @@ def salvar_dados(resultado_array):
         get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
-
 
 def get_projeto_requisicao(id):
     try:

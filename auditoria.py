@@ -6,9 +6,7 @@ import json
 from join_function import join_data
 from datetime import datetime
 
-
 tipo_arquivo = 'get_auditoria'
-
 
 def get_auditoria(ids):
     response = geral.check_url_health('tarefa')
@@ -45,13 +43,12 @@ def get_auditoria(ids):
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
-
 def tratamento_dados(data):
     try:
         lista_final = []
         for i, tarefa in enumerate(data):
             if tarefa:
-
+                # Extração de campos básicos da tarefa
                 id = tarefa['id']
                 situacao = tarefa['situacao']
                 estado = tarefa['estado']
@@ -71,61 +68,58 @@ def tratamento_dados(data):
                 dataultimamodificacao = datetime.strptime(tarefa['dataUltimaModificacao'],'%d/%m/%Y %H:%M:%S') if tarefa['dataUltimaModificacao'] else None               
                 autorultimamodificacao = tarefa['autorUltimaModificacao']
                 
-                objetosauditoria = tarefa['campos']['objetosAuditoriaAuditoria']['valor']
-                processosassociados = tarefa['campos']['processosAssociados']['valor']
-                dadosgerenciais = tarefa['campos']['dadosGerenciaisAuditoria']['valor']
-
-                gerentesauditoria = tarefa['campos']['gerentesAuditoria']['valor']
+                # SOLUÇÃO: Usar get() para evitar KeyError quando campos não existirem
+                # Extração de campos específicos da auditoria
+                objetosauditoria = tarefa['campos'].get('objetosAuditoriaAuditoria', {}).get('valor')
+                processosassociados = tarefa['campos'].get('processosAssociados', {}).get('valor')
+                dadosgerenciais = tarefa['campos'].get('dadosGerenciaisAuditoria', {}).get('valor')
+                gerentesauditoria = tarefa['campos'].get('gerentesAuditoria', {}).get('valor')
                 gerenteauditoria = []
                 if gerentesauditoria:
-                    for i, ger in enumerate(gerentesauditoria):
+                    for ger in gerentesauditoria:
                         gerenteauditoria.append(ger['nomeExibicao'])
-
                     gerenteauditoria = join_data(gerenteauditoria)
 
-                rrelpreli = tarefa['campos']['relPreliminarAud']['valor']
+                rrelpreli = tarefa['campos'].get('relPreliminarAud', {}).get('valor')
                 relatoriopreliminar = []
                 if rrelpreli:
                     relatoriopreliminar = rrelpreli['nome']
 
-                proponenteauditoria = tarefa['campos']['proponenteAuditoria']['valor']
-                duracaomeses = tarefa['campos']['duracaoMesesAuditoria']['valor']
-                recursofinanceiro = tarefa['campos']['recursoFinanceiroAuditoria']['valor']
-
-                conhecimentostecnicos = tarefa['campos']['conhecimentosTecnicosRequeridosAuditoria']['valor']
+                proponenteauditoria = tarefa['campos'].get('proponenteAuditoria', {}).get('valor')
+                duracaomeses = tarefa['campos'].get('duracaoMesesAuditoria', {}).get('valor')
+                recursofinanceiro = tarefa['campos'].get('recursoFinanceiroAuditoria', {}).get('valor')
+                conhecimentostecnicos = tarefa['campos'].get('conhecimentosTecnicosRequeridosAuditoria', {}).get('valor')
                 conhecimentostec = []
                 if conhecimentostecnicos:
-                    for i, conhecimento in enumerate(conhecimentostecnicos):
+                    for conhecimento in conhecimentostecnicos:
                         conhecimentostec.append(conhecimento['nomeExibicao'])
-
                     conhecimentostec = join_data(conhecimentostec)
 
-                localidadeauditoria = tarefa['campos']['localidadesAuditoria']['valor']
+                localidadeauditoria = tarefa['campos'].get('localidadesAuditoria', {}).get('valor')
                 locaisauditoria = []
                 if localidadeauditoria:
-                    for i, local in enumerate(localidadeauditoria):
+                    for local in localidadeauditoria:
                         locaisauditoria.append(local['nomeExibicao'])
-
                     locaisauditoria = join_data(locaisauditoria)
 
-                responsavelauditoria = tarefa['campos']['responsavelAuditoria']['valor']
-                anexrel = tarefa['campos']['AnexRelpre']['valor']
+                # SOLUÇÃO APLICADA: Usar get() para evitar KeyError no campo responsavelAuditoria
+                responsavelauditoria = tarefa['campos'].get('responsavelAuditoria', {}).get('valor')
+                
+                anexrel = tarefa['campos'].get('AnexRelpre', {}).get('valor')
                 anexorelpreliminar = []
                 if anexrel:
-                    for i, file in enumerate(anexrel):
+                    for file in anexrel:
                         anexorelpreliminar.append(file['nome'])
-
                     anexorelpreliminar = join_data(anexorelpreliminar)
 
-                objestrategico = tarefa['campos']['resultadosEsperadosAuditoria']['valor']
+                objestrategico = tarefa['campos'].get('resultadosEsperadosAuditoria', {}).get('valor')
                 objetivoestrategico = []
                 resultadosindicador = []
                 resultadosdescricao = []
                 if objestrategico:
-                    for i, obj in enumerate(objestrategico):
+                    for obj in objestrategico:
                         objetivoestrategico.append(
                             obj['objetivoEstrategico']['nome'])
-
                         if obj['indicador'] is None:
                             pass
                         else:
@@ -133,137 +127,109 @@ def tratamento_dados(data):
                                 obj['indicador']['nome'])
                             resultadosdescricao.append(
                                 obj['indicador']['descricao'])
-
                     objetivoestrategico = join_data(objetivoestrategico)
                     resultadosindicador = join_data(resultadosindicador)
                     resultadosdescricao = join_data(resultadosdescricao)
 
-                origemdemanda = tarefa['campos']['origemDemandaAuditoria']['valor']
-                origem = origemdemanda['nomeExibicao']
-
-                #pessoajuridica = tarefa['campos']['pessoaJuridicaExaminadaAuditoria']['valor']
+                origemdemanda = tarefa['campos'].get('origemDemandaAuditoria', {}).get('valor')
+                origem = origemdemanda['nomeExibicao'] if origemdemanda else None
                 
-                pessoajuridica = tarefa['campos'].get('pessoaJuridicaExaminadaAuditoria', {}).get('valor', None)
-
-                supervisores = tarefa['campos']['supervisoresAuditoria']['valor']
+                pessoajuridica = tarefa['campos'].get('pessoaJuridicaExaminadaAuditoria', {}).get('valor')
+                supervisores = tarefa['campos'].get('supervisoresAuditoria', {}).get('valor')
                 supervisor = []
                 if supervisores:
-                    for i, super in enumerate(supervisores):
+                    for super in supervisores:
                         supervisor.append(super['nomeExibicao'])
-
                     supervisor = join_data(supervisor)
 
-                tipoconsultoria = tarefa['campos']['tipoConsultoria']['valor']
+                tipoconsultoria = tarefa['campos'].get('tipoConsultoria', {}).get('valor')
                 tipo = []
                 if tipoconsultoria:
-                    for i, tip in enumerate(tipoconsultoria):
+                    for tip in tipoconsultoria:
                         tipo.append(tip['valor'])
-
                     tipo = join_data(tipo)
 
-                numdenuncia = tarefa['campos']['numDenuncia']['valor']
-
-                coordenadorequipe = tarefa['campos']['coordenadorEquipeAuditoria']['valor']
+                numdenuncia = tarefa['campos'].get('numDenuncia', {}).get('valor')
+                coordenadorequipe = tarefa['campos'].get('coordenadorEquipeAuditoria', {}).get('valor')
                 coordenador = []
                 if coordenadorequipe:
-                    for i, coordequipe in enumerate(coordenadorequipe):
+                    for coordequipe in coordenadorequipe:
                         coordenador.append(coordequipe['nomeExibicao'])
-
                     coordenador = join_data(coordenador)
 
-                unidadesauditadas = tarefa['campos']['unidadesAuditadasAuditoria']['valor']
+                unidadesauditadas = tarefa['campos'].get('unidadesAuditadasAuditoria', {}).get('valor')
                 nomeunidadesauditadas = []
                 if unidadesauditadas:
-                    for i, unidades in enumerate(unidadesauditadas):
+                    for unidades in unidadesauditadas:
                         nomeunidadesauditadas.append(unidades['nome'])
-
                     nomeunidadesauditadas = join_data(nomeunidadesauditadas)
 
-                homemhoras = tarefa['campos']['homemHorasAuditoria']['valor']
-
-                equipeauditoria = tarefa['campos']['equipeAuditoria']['valor']
+                homemhoras = tarefa['campos'].get('homemHorasAuditoria', {}).get('valor')
+                equipeauditoria = tarefa['campos'].get('equipeAuditoria', {}).get('valor')
                 equipe = []
                 if equipeauditoria:
-                    for i, geralequipe in enumerate(equipeauditoria):
+                    for geralequipe in equipeauditoria:
                         equipe.append(geralequipe['nomeExibicao'])
-
                     equipe = join_data(equipe)
 
-                aanexrel = tarefa['campos']['anexRel']['valor']
+                aanexrel = tarefa['campos'].get('anexRel', {}).get('valor')
                 anexorel = []
                 if aanexrel:
-                    for i, file in enumerate(aanexrel):
+                    for file in aanexrel:
                         anexorel.append(file['nome'])
-
                     anexorel = join_data(anexorel)
 
-                areasrequeridas = tarefa['campos']['areasRequeridasAuditoria']['valor']
+                areasrequeridas = tarefa['campos'].get('areasRequeridasAuditoria', {}).get('valor')
                 arearequerida = []
                 if areasrequeridas:
-                    for i, area in enumerate(areasrequeridas):
+                    for area in areasrequeridas:
                         arearequerida.append(area['nomeExibicao'])
-
                     arearequerida = join_data(arearequerida)
 
-                objetivoauditoria = tarefa['campos']['objetivoAuditoria']['valor']
-
-                tarefasprecedentes = tarefa['campos']['tarefasPrecedentes']['valor']
-
-                envolvidosauditoria = tarefa['campos']['envolvidosAuditoria']['valor']
+                objetivoauditoria = tarefa['campos'].get('objetivoAuditoria', {}).get('valor')
+                tarefasprecedentes = tarefa['campos'].get('tarefasPrecedentes', {}).get('valor')
+                envolvidosauditoria = tarefa['campos'].get('envolvidosAuditoria', {}).get('valor')
                 envolauditoria = []
                 if envolvidosauditoria:
-                    for i, envolvido in enumerate(envolvidosauditoria):
+                    for envolvido in envolvidosauditoria:
                         envolauditoria.append(envolvido['nomeExibicao'])
-
                     envolauditoria = join_data(envolauditoria)
 
-                processotrabalhoauditoria = tarefa['campos']['processoTrabalhoAuditoria']['valor']
-
-                anexosauditoria = tarefa['campos']['anexosAuditoria']['valor']
+                processotrabalhoauditoria = tarefa['campos'].get('processoTrabalhoAuditoria', {}).get('valor')
+                anexosauditoria = tarefa['campos'].get('anexosAuditoria', {}).get('valor')
                 anexoauditoria = []
                 if anexosauditoria:
-                    for i, anex in enumerate(anexosauditoria):
+                    for anex in anexosauditoria:
                         anexoauditoria.append(anex['nome'])
-
                     anexoauditoria = join_data(anexoauditoria)
 
-                acaolinha = tarefa['campos']['linhaAcaoAuditoria']['valor']
-                linhaacao = []
-                if acaolinha:
-                    linhaacao = acaolinha['valor']
-                else:
-                    linhaacao = ''
+                acaolinha = tarefa['campos'].get('linhaAcaoAuditoria', {}).get('valor')
+                linhaacao = acaolinha['valor'] if acaolinha else ''
 
-                relfinal = tarefa['campos']['relFinalAud']['valor']
-                relatorifinal = []
-                if relfinal:
-                    relatorifinal = relfinal['nome']
+                relfinal = tarefa['campos'].get('relFinalAud', {}).get('valor')
+                relatorifinal = relfinal['nome'] if relfinal else []
 
                 estadosituacao = tarefa['estadoSituacao']
                 arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
-
-                descricaotag = tarefa['campos']['tags']['valor']
+                descricaotag = tarefa['campos'].get('tags', {}).get('valor')
                 tags = []
                 if descricaotag:
-                    for i, tagdesc in enumerate(descricaotag):
+                    for tagdesc in descricaotag:
                         tags.append(tagdesc['descricao'])
-
                     tags = join_data(tags)
 
                 pendencias = tarefa['pendencias']
                 listapendencia = []
                 if pendencias:
-                    for i, pendencia in enumerate(pendencias):
+                    for pendencia in pendencias:
                         listapendencia.append(pendencia['nomeUsuarioUnidade'])
-
                     listapendencia = join_data(listapendencia)
 
                 abasatividade = tarefa['abasAtividade']
                 listaabaatividades = []
                 if abasatividade:
-                    for i, abas in enumerate(abasatividade):
+                    for abas in abasatividade:
                         listaabaatividades.append(abas['descricao'])
-
                     listaabaatividades = join_data(listaabaatividades)
 
                 lista_final.append({
@@ -330,7 +296,6 @@ def tratamento_dados(data):
         get_log(f"Erro ao tratar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao tratar os dados {tipo_arquivo}", err)
-
 
 def salvar_dados(resultado_array):
     try:
@@ -418,7 +383,6 @@ def salvar_dados(resultado_array):
         get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
-
 
 def get_auditoria_requisicao(id):
     try:

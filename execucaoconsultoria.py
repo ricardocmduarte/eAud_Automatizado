@@ -8,7 +8,6 @@ from datetime import datetime
 
 tipo_arquivo = 'get_execucao_consultoria'
 
-
 def get_execucao_consultoria(ids):
     response = geral.check_url_health('tarefa')
     get_log(f"Iniciado {tipo_arquivo}")
@@ -45,7 +44,6 @@ def get_execucao_consultoria(ids):
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
-
 def tratamento_dados(data):
     try:
         lista_final = []
@@ -70,102 +68,92 @@ def tratamento_dados(data):
                 dataultimamodificacao = datetime.strptime(tarefa['dataUltimaModificacao'], '%d/%m/%Y %H:%M:%S') if tarefa['dataUltimaModificacao'] else None                                
                 autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-                unidadesenvolvidas = tarefa['campos']['unidEnvolvidas']['valor']
+                # SOLUÇÃO: Usar get() para evitar KeyError quando campos não existirem
+                unidadesenvolvidas = tarefa['campos'].get('unidEnvolvidas', {}).get('valor')
                 unidadesenvol = []
                 if unidadesenvolvidas:
-                    for i, unidade in enumerate(unidadesenvolvidas):
+                    for unidade in unidadesenvolvidas:
                         unidadesenvol.append(unidade['nomeExibicao'])
                     unidadesenvol = join_data(unidadesenvol)
 
-                anexosgerais = tarefa['campos']['anexosGerais']['valor']
+                anexosgerais = tarefa['campos'].get('anexosGerais', {}).get('valor')
                 anexos = []
                 if anexosgerais:
-                    for i, file in enumerate(anexosgerais):
+                    for file in anexosgerais:
                         anexos.append(file['nomeExibicao'])
-
                     anexos = join_data(anexos)
 
-                tarefasprecedentes = tarefa['campos']['tarefasPrecedentes']['valor']
+                tarefasprecedentes = tarefa['campos'].get('tarefasPrecedentes', {}).get('valor')
                 tarefasprec = []
                 if tarefasprecedentes:
-                    for i, tarefapre in enumerate(tarefasprecedentes):
+                    for tarefapre in tarefasprecedentes:
                         tarefasprec.append(tarefapre['nomeExibicao'])
-
                     tarefasprec = join_data(tarefasprec)
 
-                observador = tarefa['campos']['observadores']['valor']
+                observador = tarefa['campos'].get('observadores', {}).get('valor')
                 observadores = []
                 if observador:
-                    for i, obs in enumerate(observador):
+                    for obs in observador:
                         observadores.append(obs['nomeExibicao'])
-
                     observadores = join_data(observadores)
 
-                hipotese = tarefa['campos']['hipoteseLegal']['valor']
+                hipotese = tarefa['campos'].get('hipoteseLegal', {}).get('valor')
                 hipoteselegal = []
                 if hipotese:
-                    for i, hip in enumerate(hipotese):
+                    for hip in hipotese:
                         hipoteselegal.append(hip['nomeExibicao'])
-
                     hipoteselegal = join_data(hipoteselegal)
 
-                coordenadorequipe = tarefa['campos']['CoordenadorEquipe']['valor']
+                coordenadorequipe = tarefa['campos'].get('CoordenadorEquipe', {}).get('valor')
                 coordenador = []
                 if coordenadorequipe:
-                    for i, coordequipe in enumerate(coordenadorequipe):
+                    for coordequipe in coordenadorequipe:
                         coordenador.append(coordequipe['nomeExibicao'])
-
                     coordenador = join_data(coordenador)
 
-                equipegeral = tarefa['campos']['EquipeGeral']['valor']
+                equipegeral = tarefa['campos'].get('EquipeGeral', {}).get('valor')
                 equipe = []
                 if equipegeral:
-                    for i, geralequipe in enumerate(equipegeral):
+                    for geralequipe in equipegeral:
                         equipe.append(geralequipe['nomeExibicao'])
-
                     equipe = join_data(equipe)
 
-                supervisores = tarefa['campos']['EquipeGeral']['valor']
+                supervisores = tarefa['campos'].get('EquipeGeral', {}).get('valor')  # Nota: campo duplicado
                 supervisor = []
                 if supervisores:
-                    for i, super in enumerate(supervisores):
+                    for super in supervisores:
                         supervisor.append(super['nomeExibicao'])
-
                     supervisor = join_data(supervisor)
 
-                papeis = tarefa['campos']['papeisTrabalho']['valor']
+                papeis = tarefa['campos'].get('papeisTrabalho', {}).get('valor')
                 papeistrabalho = []
                 if papeis:
-                    for i, papers in enumerate(papeis):
+                    for papers in papeis:
                         papeistrabalho.append(papers['nomeExibicao'])
-
                     papeistrabalho = join_data(papeistrabalho)
 
                 estadosituacao = tarefa['estadoSituacao']
                 arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
 
-                descricaotag = tarefa['campos']['tags']['valor']
+                descricaotag = tarefa['campos'].get('tags', {}).get('valor')
                 tags = []
                 if descricaotag:
-                    for i, tagdesc in enumerate(descricaotag):
+                    for tagdesc in descricaotag:
                         tags.append(tagdesc['descricao'])
-
                     tags = join_data(tags)
 
                 pendencias = tarefa['pendencias']
                 listapendencia = []
                 if pendencias:
-                    for i, pendencia in enumerate(pendencias):
+                    for pendencia in pendencias:
                         listapendencia.append(pendencia['nomeUsuarioUnidade'])
-
                     listapendencia = join_data(listapendencia)
 
                 abasatividade = tarefa['abasAtividade']
                 listaabaatividades = []
                 if abasatividade:
-                    for i, abas in enumerate(abasatividade):
+                    for abas in abasatividade:
                         listaabaatividades.append(abas['descricao'])
-
                     listaabaatividades = join_data(listaabaatividades)
 
                 lista_final.append({
@@ -209,7 +197,6 @@ def tratamento_dados(data):
         get_log(f"Erro ao tratar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao tratar os dados {tipo_arquivo}", err)
-
 
 def salvar_dados(resultado_array):
     try:
@@ -269,7 +256,6 @@ def salvar_dados(resultado_array):
         get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
-
 
 def get_execucao_requisicao(id):
     try:

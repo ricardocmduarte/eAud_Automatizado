@@ -8,7 +8,6 @@ from datetime import datetime
 
 tipo_arquivo = 'get_atividade_continuada'
 
-
 def get_atividade_continuada(ids):
     response = geral.check_url_health('tarefa')
     get_log(f"Iniciado {tipo_arquivo}")
@@ -24,7 +23,6 @@ def get_atividade_continuada(ids):
         if ids:
             for i, id in enumerate(ids):
                 lista_dados.append(get_atividade_continuada_requisicao(id))
-
                 print(
                     f"Iteração {tipo_arquivo} {str(i)} registrada com sucesso")
 
@@ -45,12 +43,12 @@ def get_atividade_continuada(ids):
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
 
-
 def tratamento_dados(data):
     try:
         lista_final = []
         for i, tarefa in enumerate(data):
             if tarefa:
+                # Extração de campos básicos da tarefa
                 id = tarefa['id']
                 situacao = tarefa['situacao']
                 estado = tarefa['estado']
@@ -70,107 +68,89 @@ def tratamento_dados(data):
                 dataultimamodificacao = datetime.strptime(tarefa['dataUltimaModificacao'], '%d/%m/%Y %H:%M:%S') if tarefa['dataUltimaModificacao'] else None
                 autorultimamodificacao = tarefa['autorUltimaModificacao']
 
-                detalhamento = tarefa['campos']['Detalhamento']['valor']
-                localidades = tarefa['campos']['localidadesPlanoTrabalho']['valor']
+                # SOLUÇÃO: Usar get() para evitar KeyError quando campos não existirem
+                detalhamento = tarefa['campos'].get('Detalhamento', {}).get('valor')
+                localidades = tarefa['campos'].get('localidadesPlanoTrabalho', {}).get('valor')
                 localtrabalho = []
                 if localidades:
-                    for i, local in enumerate(localidades):
+                    for local in localidades:
                         localtrabalho.append(local['nomeExibicao'])
-
                     localtrabalho = join_data(localtrabalho)
 
-                proponenteplanotrabalho = tarefa['campos']['proponentePlanoTrabalho']['valor']
-                etapaplanotrabalho = tarefa['campos']['etapaPlanoTrabalho']['valor']
-                responsavelplanotrabalho = tarefa['campos']['responsavelPlanoTrabalho']['valor']
-
-                links = tarefa['campos']['links']['valor']
+                proponenteplanotrabalho = tarefa['campos'].get('proponentePlanoTrabalho', {}).get('valor')
+                etapaplanotrabalho = tarefa['campos'].get('etapaPlanoTrabalho', {}).get('valor')
+                responsavelplanotrabalho = tarefa['campos'].get('responsavelPlanoTrabalho', {}).get('valor')
+                links = tarefa['campos'].get('links', {}).get('valor')
                 linktarefa = []
                 if links:
-                    for i, link in enumerate(links):
+                    for link in links:
                         linktarefa.append(
                             link['descricao'] + ' | ' + link['url'])
-
                     linktarefa = join_data(linktarefa)
 
-                anexosplanotrabalho = tarefa['campos']['anexosPlanoTrabalho']['valor']
+                anexosplanotrabalho = tarefa['campos'].get('anexosPlanoTrabalho', {}).get('valor')
                 anexos = []
                 if anexosplanotrabalho:
-                    for i, anexo in enumerate(anexosplanotrabalho):
+                    for anexo in anexosplanotrabalho:
                         anexos.append(anexo['nomeExibicao'])
-
                     anexos = join_data(anexos)
 
-                processoplanotrabalho = tarefa['campos']['processoTrabalhoPlanoTrabalho']['valor']
-
-                resultadoesperado = tarefa['campos']['resultadosEsperadosPlanoTrabalho']['valor']
+                processoplanotrabalho = tarefa['campos'].get('processoTrabalhoPlanoTrabalho', {}).get('valor')
+                resultadoesperado = tarefa['campos'].get('resultadosEsperadosPlanoTrabalho', {}).get('valor')
                 resultados = []
                 if resultadoesperado:
-                    for i, resul in enumerate(resultadoesperado):
+                    for resul in resultadoesperado:
                         resultados.append(resul['nomeExibicao'])
-
                     resultados = join_data(resultados)
 
-                tarefasprecedentes = tarefa['campos']['tarefasPrecedentes']['valor']
-                recursofinanceiro = tarefa['campos']['recursoFinanceiroPlanoTrabalho']['valor']
-
-                envolvidosplanotrabalho = tarefa['campos']['envolvidosPlanoTrabalho']['valor']
+                tarefasprecedentes = tarefa['campos'].get('tarefasPrecedentes', {}).get('valor')
+                recursofinanceiro = tarefa['campos'].get('recursoFinanceiroPlanoTrabalho', {}).get('valor')
+                envolvidosplanotrabalho = tarefa['campos'].get('envolvidosPlanoTrabalho', {}).get('valor')
                 envolvidos = []
                 if envolvidosplanotrabalho:
-                    for i, envolv in enumerate(envolvidosplanotrabalho):
+                    for envolv in envolvidosplanotrabalho:
                         envolvidos.append(envolv['nomeExibicao'])
-
                     envolvidos = join_data(envolvidos)
 
-                homemhora = tarefa['campos']['homemHorasPlanoTrabalho']['valor']
-
-                gerentes = tarefa['campos']['gerentesPlanoTrabalho']['valor']
+                homemhora = tarefa['campos'].get('homemHorasPlanoTrabalho', {}).get('valor')
+                gerentes = tarefa['campos'].get('gerentesPlanoTrabalho', {}).get('valor')
                 gerente = []
                 if gerentes:
-                    for i, gere in enumerate(gerentes):
+                    for gere in gerentes:
                         gerente.append(gere['nomeExibicao'])
-
                     gerente = join_data(gerente)
 
-                supervisoresplano = tarefa['campos']['supervisoresPlanoTrabalho']['valor']
+                supervisoresplano = tarefa['campos'].get('supervisoresPlanoTrabalho', {}).get('valor')
                 supervisorplano = []
                 if supervisoresplano:
-                    for i, supervi in enumerate(supervisoresplano):
+                    for supervi in supervisoresplano:
                         supervisorplano.append(supervi['nomeExibicao'])
-
                     supervisorplano = join_data(supervisorplano)
 
-                planotipo = tarefa['campos']['tipoPlanoTrabalho']['valor']
-                tipoplano = []
-                if planotipo:
-                    tipoplano = planotipo['valor']
-                else:
-                    tipoplano = ''
+                planotipo = tarefa['campos'].get('tipoPlanoTrabalho', {}).get('valor')
+                tipoplano = planotipo['valor'] if planotipo else ''
 
                 estadosituacao = tarefa['estadoSituacao']
                 arquivocomportamento = tarefa['arquivoComportamentoEspecifico']
-
-                descricaotag = tarefa['campos']['tags']['valor']
+                descricaotag = tarefa['campos'].get('tags', {}).get('valor')
                 tags = []
                 if descricaotag:
-                    for i, tagdesc in enumerate(descricaotag):
+                    for tagdesc in descricaotag:
                         tags.append(tagdesc['descricao'])
-
                     tags = join_data(tags)
 
                 pendencias = tarefa['pendencias']
                 listapendencia = []
                 if pendencias:
-                    for i, pendencia in enumerate(pendencias):
+                    for pendencia in pendencias:
                         listapendencia.append(pendencia['nomeUsuarioUnidade'])
-
                     listapendencia = join_data(listapendencia)
 
                 abasatividade = tarefa['abasAtividade']
                 listaabaatividades = []
                 if abasatividade:
-                    for i, abas in enumerate(abasatividade):
+                    for abas in abasatividade:
                         listaabaatividades.append(abas['descricao'])
-
                     listaabaatividades = join_data(listaabaatividades)
 
                 lista_final.append({
@@ -219,7 +199,6 @@ def tratamento_dados(data):
         get_log(f"Erro ao tratar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao tratar os dados {tipo_arquivo}", err)
-
 
 def salvar_dados(resultado_array):
     try:
@@ -286,7 +265,6 @@ def salvar_dados(resultado_array):
         get_log(f"Erro ao salvar os dados {tipo_arquivo}".upper())
         get_log(err)
         return print(f"Erro ao salvar os dados {tipo_arquivo}", err)
-
 
 def get_atividade_continuada_requisicao(id):
     try:
